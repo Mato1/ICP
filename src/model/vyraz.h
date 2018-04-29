@@ -112,6 +112,11 @@ namespace icp
                     return this->premenna;
                 }
 
+                inline std::string get_infix() const
+                {
+                    return this->infix;
+                }
+
                 inline double get_vysledok() const
                 {
                     return this->vysledok;

@@ -8,6 +8,8 @@
 #include "model/schema.h"
 #include "model/port.h"
 #include "model/prepojenie.h"
+#include <iostream>
+#include <fstream>
 
 namespace icp
 {
@@ -209,7 +211,87 @@ namespace icp
 
         void Schema::save(std::string file)
         {
+            std::ofstream outfile(file);
+
+            outfile << "schema " << get_nazov() <<std::endl;
+
+            outfile << "\t" "blocks" << std::endl;
+
+
+            for(Block * b : blocks)
+            {
+               outfile << "\t" "\t" "block "<< b->get_nazov() << std::endl;
+               outfile << "\t" "\t" "\t" "inputs" << std::endl;
+               for (Port *p : b->get_input_ports())
+               {
+                    outfile << "\t" "\t" "\t" "\t" "port "<< p->get_nazov() << std::endl;
+                    outfile << "\t" "\t" "\t" "\t" "\t" "type" << std::endl;
+                    std::map<std::string, double*> hodnoty = p->get_data_type().data;
+
+                    for (auto it = hodnoty.begin(); it != hodnoty.end(); ++it)
+                    {
+                        std::cout << "\t" "\t" "\t" "\t" "\t" "\t" << it->first << " " << it->second << '\n';
+                    }
+
+                    outfile << "\t" "\t" "\t" "\t" "\t" "end type" << std::endl;
+                    outfile << "\t" "\t" "\t" "\t""end port" << std::endl;
+               }
+               outfile << "\t" "\t" "\t" "end inputs" << std::endl;
             
+                for (Port *p : b->get_output_ports())
+                {
+                    outfile << "\t" "\t" "\t" "\t" "port "<< p->get_nazov() << std::endl;
+                    outfile << "\t" "\t" "\t" "\t" "\t" "type" << std::endl;
+                    std::map<std::string, double*> hodnoty = p->get_data_type().data;
+
+                    for (auto it = hodnoty.begin(); it != hodnoty.end(); ++it)
+                    {
+                        std::cout << "\t" "\t" "\t" "\t" "\t" "\t" << it->first << " " << it->second << '\n';
+                    }
+
+                    outfile << "\t" "\t" "\t" "\t" "\t" "end type" << std::endl;
+                    outfile << "\t" "\t" "\t" "\t" "end port" << std::endl;
+                }
+                outfile << "\t" "\t" "\t" "end outputs" << std::endl;
+                
+                outfile << "\t" "\t" "\t" "\t" "vypocty" << std::endl;
+                for (auto v: b->get_vypocty())
+                {
+                    outfile << "\t" "\t" "\t" "\t" "\t" << v->get_infix() << std::endl;
+
+                    outfile << "\t" "\t" "\t" "\t" "\t" "\t" "inputs" << std::endl;
+                    for (Port *vp : v->get_input_ports())
+                    {
+                        outfile << "\t" "\t" "\t" "\t" "\t" "\t" "\t" << vp->get_nazov() << std::endl;
+                    }
+                    outfile << "\t" "\t" "\t" "\t" "\t" "\t" "end inputs" << std::endl;
+
+                    outfile << "\t" "\t" "\t" "\t" "\t" "\t" "outputs" << std::endl;
+                    for (Port *vp : v->get_output_ports())
+                    {
+                        outfile << "\t" "\t" "\t" "\t" "\t" "\t" "\t" << vp->get_nazov() << std::endl;
+                    }
+                    outfile << "\t" "\t" "\t" "\t" "\t" "\t" "end inputs" << std::endl;
+
+                    outfile << "\t" "\t" "\t" "\t" "\t" "\t" "premenna " << v->get_premenna() << std::endl;
+                    outfile << "\t" "\t" "\t" "\t" "\t" "\t" "end premenna " << v->get_premenna() << std::endl;
+
+                    outfile << "\t" "\t" "\t" "\t" "\t" "end " << v->get_infix() << std::endl;
+                }
+
+                outfile << "\t" "\t" "\t" "\t" "end vypocty" << std::endl;
+                outfile << "\t" "\t" "block "<< b->get_nazov() << std::endl;
+            }
+            outfile << "\t" "\t" "end blocks " << std::endl << std::endl;
+
+            outfile << "\t" "\t" "prepojenia" << std::endl;
+            for(Prepojenie * prepoj : prepojenia)
+            {
+                outfile << "\t" "\t" "\t" << prepoj->get_output_block()<<" "<< prepoj->get_output_port()<< " " << prepoj->get_input_block()<< " "<< prepoj->get_input_port() << std::endl; 
+            }
+            outfile << "\t" "\t" "end prepojenia" << std::endl;
+
+            outfile << "end schema" << std::endl;
         }
 
     }
