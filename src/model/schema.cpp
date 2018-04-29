@@ -207,5 +207,10 @@ namespace icp
             return false;
         }
 
+        void Schema::save(std::string file)
+        {
+            
+        }
+
     }
 }
