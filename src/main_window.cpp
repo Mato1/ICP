@@ -7,22 +7,6 @@ namespace icp {
 
     MainWindow::MainWindow()
     {
-        // QWidget *widget = new QWidget;
-        // setCentralWidget(widget);
-
-        // QWidget *topFiller = new QWidget;
-        // topFiller->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-
-        // QWidget *bottomFiller = new QWidget;
-        // bottomFiller->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-
-        // QVBoxLayout *layout = new QVBoxLayout;
-        // layout->setMargin(5);
-        // layout->addWidget(topFiller);
-        // // layout->addWidget(infoLabel);
-        // layout->addWidget(bottomFiller);
-        // widget->setLayout(layout);
-
         setWindowTitle(tr(DEFAULT_WINDOW_TITLE.c_str()));
         setMinimumSize(DEFAULT_MIN_WINDOW_WIDTH, DEFAULT_MIN_WINDOW_HEIGHT);
         resize(DEFAULT_PREFFERED_WINDOW_WIDTH, DEFAULT_PREFFERED_WINDOW_HEIGHT);
@@ -53,7 +37,7 @@ namespace icp {
     {
         schema_widget = new ui::SchemaWidget("Untitled Schema");
         setCentralWidget(schema_widget);
-        setWindowTitle(tr((DEFAULT_WINDOW_TITLE + " - " +schema_widget->get_nazov()).c_str()));
+        setWindowTitle(tr((DEFAULT_WINDOW_TITLE + " - " + schema_widget->get_schema()->get_nazov()).c_str()));
         schema_widget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         QPalette palette = schema_widget->palette();
         palette.setColor(QPalette::Background, QColor(40,44,52));

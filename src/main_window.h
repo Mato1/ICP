@@ -26,6 +26,7 @@ namespace icp {
             QAction * action_new_block;
             QAction * action_new_connection;
             ui::SchemaWidget * schema_widget;
+            
         private:
             void set_up_menu();
 

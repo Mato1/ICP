@@ -8,16 +8,17 @@ namespace icp
     namespace ui
     {
         SchemaWidget::SchemaWidget(std::string nazov)
-            : Schema(nazov)
         {
-            init();
-        }
-
-        void SchemaWidget::init()
-        {
+            schema = new model::Schema(nazov);
             this->setContextMenuPolicy(Qt::CustomContextMenu);
             connect(this, &SchemaWidget::customContextMenuRequested, this, &SchemaWidget::show_context_menu);
         }
+
+        SchemaWidget::~SchemaWidget()
+        {
+            delete schema;
+        }
+
 
         void SchemaWidget::show_context_menu(const QPoint &pos)
         {
@@ -30,7 +31,10 @@ namespace icp
 
         void SchemaWidget::new_block()
         {
-            std::cout << "New Block" << std::endl;
+            BlockWidget * bw = new BlockWidget("Untitled_Block");
+            schema->add_block(bw->get_block());
+            bw->setParent(this);
+            bw->show();
         }
 
         void SchemaWidget::new_connection()
