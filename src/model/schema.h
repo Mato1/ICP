@@ -79,7 +79,7 @@ namespace icp
                 Block * get_block(std::string nazov);
 
                 /**
-                 * @brief Odstrani block a uvolni pamat. V pripade ze blok
+                 * @brief Odstrani blok a uvolni pamat. V pripade ze blok
                  * s danym nazvom neexistuje nerobi nic.
                  * 
                  * @param nazov Nazov bloku.
@@ -94,7 +94,7 @@ namespace icp
                 void remove_block(Block * block);
 
                 /**
-                 * @brief Vytvori nove prepojenie medzi 2 blockmi.
+                 * @brief Vytvori nove prepojenie medzi 2 blokmi.
                  * V pripade ze sa zavola prepojenie na porty ktore uz 
                  * prepojenie maju vracia nullptr. V pripade ze chceme
                  * z nejakeho podivneho dovodu nahradit prepojenie na portoch
@@ -108,7 +108,7 @@ namespace icp
                  * @return Prepojenie* Vytvorene prepojenie.
                  */
                 Prepojenie * add_prepoj(Block * bout, Port * const pout, 
-                                    Block * bin, Port * const pin);
+                                        Block * bin, Port * const pin);
 
                 /**
                  * @brief Vymaze dane prepojenie a uvolni pamat.

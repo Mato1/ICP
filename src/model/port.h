@@ -77,7 +77,7 @@ namespace icp
                     this->type = type;
                 }
 
-                inline DataType get_type()
+                inline DataType get_data_type()
                 {
                     return this->type;
                 }

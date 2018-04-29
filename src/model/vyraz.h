@@ -85,6 +85,16 @@ namespace icp
                  * @return double Vypocitany vysledok.
                  */
                 double eval();
+
+                inline std::vector<Port *> get_output_ports() const 
+                {
+                    return this->output_ports;
+                }
+
+                inline std::vector<Port *> get_input_ports() const 
+                {
+                    return this->input_ports;
+                }
                 
                 /**
                  * @brief Nastavi nazov premennej do ktorej 

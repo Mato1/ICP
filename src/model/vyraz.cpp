@@ -90,9 +90,9 @@ namespace icp
            {
                for(auto port : input_ports)
                {
-                   if (port->get_type().has_name(it->first))
+                   if (port->get_data_type().has_name(it->first))
                    {
-                       it->second = port->get_type().get(it->first);
+                       it->second = port->get_data_type().get(it->first);
                        break;
                    }
                }

@@ -74,7 +74,7 @@ namespace icp
                  */
                 inline void transfer() const
                 {
-                    input_port->set_type(output_port->get_type());
+                    input_port->set_type(output_port->get_data_type());
                 }
                 
         };
