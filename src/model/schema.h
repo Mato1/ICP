@@ -59,7 +59,11 @@ namespace icp
 
             public:
 
+                void add_block(Block * block);
+
+
                 /**
+                 * @deprecated
                  * @brief Vytvori novy block so zadanym nazvom.
                  * V pripade ze sa uz block s danym nazvom v scheme 
                  * nachadza vracia nullptr.

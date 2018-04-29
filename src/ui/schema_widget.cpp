@@ -7,7 +7,8 @@ namespace icp
 {
     namespace ui
     {
-        SchemaWidget::SchemaWidget()
+        SchemaWidget::SchemaWidget(std::string nazov)
+            : Schema(nazov)
         {
             init();
         }
@@ -29,7 +30,12 @@ namespace icp
 
         void SchemaWidget::new_block()
         {
-            
+            std::cout << "New Block" << std::endl;
+        }
+
+        void SchemaWidget::new_connection()
+        {
+            std::cout << "New Connection" << std::endl;
         }
     }
 }

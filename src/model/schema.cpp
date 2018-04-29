@@ -29,6 +29,14 @@ namespace icp
             blocks.clear();
         }
 
+        void Schema::add_block(Block * block)
+        {
+            if (!block_exists(block->get_nazov()))
+            {
+                blocks.push_back(block);
+            }
+        }
+
         Block * Schema::add_block(std::string nazov)
         {
             Block * b = nullptr;
@@ -36,6 +44,7 @@ namespace icp
             if (!block_exists(nazov))
             {
                 b = new Block(nazov);
+                blocks.push_back(b);
             }
 
             return b;

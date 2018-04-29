@@ -20,8 +20,11 @@ namespace icp {
             const int DEFAULT_MIN_WINDOW_HEIGHT = 480;
 
         private:
+            QMenu * menu_insert;
             QMenu * menu_subor;
             QAction * action_new_schema;
+            QAction * action_new_block;
+            QAction * action_new_connection;
             ui::SchemaWidget * schema_widget;
         private:
             void set_up_menu();

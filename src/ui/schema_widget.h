@@ -8,18 +8,19 @@ namespace icp
 {
     namespace ui 
     {
-        class SchemaWidget : public QWidget {
+        class SchemaWidget : public QWidget, public model::Schema {
             
             Q_OBJECT
 
-            private slots:
+            public slots:
                 void show_context_menu(const QPoint &pos);
-                void new_block();                
+                void new_block();
+                void new_connection();                
             private:
                 void init();
 
             public:
-                SchemaWidget();
+                SchemaWidget(std::string nazov);
 
         };
     }

@@ -5,6 +5,7 @@ namespace icp
     namespace ui 
     {
         BlockWidget::BlockWidget()
+            
         {
             
         }

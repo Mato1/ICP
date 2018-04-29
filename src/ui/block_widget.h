@@ -2,12 +2,13 @@
 #define ICP_BLOCKBUILDER_SRC_UI_BLOCK_WIDGET_H
 
 #include <QWidget>
+#include "model/block.h"
 
 namespace icp
 {
     namespace ui
     {
-        class BlockWidget : QWidget 
+        class BlockWidget : public QWidget
         {
             public:
                 BlockWidget();
