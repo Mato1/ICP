@@ -82,6 +82,11 @@ namespace icp
                  */
                 Block * get_block(std::string nazov);
 
+                std::vector<Block*> get_blocks() const
+                {
+                    return blocks;
+                }
+
                 /**
                  * @brief Odstrani blok a uvolni pamat. V pripade ze blok
                  * s danym nazvom neexistuje nerobi nic.

@@ -6,6 +6,8 @@
 #include <QVBoxLayout>
 #include <QListView>
 #include <QMouseEvent>
+#include <QMenu>
+#include <QAction>
 #include "model/block.h"
 #include "ui/resizable_frame.h"
 
@@ -16,6 +18,11 @@ namespace icp
         class BlockWidget : public ResizableFrame
         {
             Q_OBJECT
+
+            public slots:
+                void show_context_menu(const QPoint &pos);
+                void rename_block();
+
             private:
                 const int MINIMUM_WIDTH  = 100;
                 const int MINIMUM_HEIGHT = 100;
@@ -33,7 +40,7 @@ namespace icp
 
             public:
                 BlockWidget(std::string nazov);
-
+        
                 inline model::Block * get_block() const
                 {
                     return block;

@@ -73,10 +73,10 @@ namespace icp
 
             switch (start_pos) {
                 case topleft:
-                    setGeometry(drag_start_geom.left() - (drag_start_pos.x() - event->x()),
-                                drag_start_geom.top() - (drag_start_pos.y() - event->y()),
+                    setGeometry(drag_start_geom.left()  - (drag_start_pos.x() - event->x()),
+                                drag_start_geom.top()   - (drag_start_pos.y() - event->y()),
                                 drag_start_geom.width() + (drag_start_pos.x() - event->x()),
-                                height() + (drag_start_pos.y() - event->y()));
+                                height()                + (drag_start_pos.y() - event->y()));
                     drag_start_geom = geometry();
                 break;
 
