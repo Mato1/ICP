@@ -2,6 +2,7 @@
 #include <QMenu>
 #include <QPen>
 #include <iostream>
+#include <QInputDialog>
 
 namespace icp
 {
@@ -64,11 +65,20 @@ namespace icp
 
         void SchemaWidget::save_schema()
         {
+            bool ok;
+           QString text = QInputDialog::getText(this, tr("Save"),
+                                         tr("Nazov suboru:"), QLineEdit::Normal,
+                                            tr("Untitled_file"), &ok);
             std::cout << "Save schema" << std::endl;
         }
 
         void SchemaWidget::load_schema()
         {
+            bool ok;
+           QString text = QInputDialog::getText(this, tr("Load"),
+                                         tr("Nazov suboru:"), QLineEdit::Normal,
+                                            tr("Untitled_file"), &ok);
+                                            
             std::cout << "Load schema" << std::endl;
         }
 
