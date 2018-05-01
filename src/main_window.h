@@ -25,11 +25,11 @@ namespace icp {
             QAction * action_new_schema;
             QAction * action_new_block;
             QAction * action_new_connection;
-            QAction * action_new_port;
-            QAction * action_new_expression;
             QAction * action_save_schema;
             QAction * action_load_schema;
-            QAction * action_close_schema; 
+            QAction * action_close_schema;
+            QAction * action_play_schema;
+            QAction * action_next_step; 
             ui::SchemaWidget * schema_widget;
             
         private:

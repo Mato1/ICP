@@ -2,6 +2,7 @@
 #include <QMenu>
 #include <QPen>
 #include <iostream>
+#include <QInputDialog>
 
 namespace icp
 {
@@ -31,13 +32,21 @@ namespace icp
             contextMenu.addAction(&action2);
             connect(&action2, &QAction::triggered, this, &SchemaWidget::new_connection);
 
-            QAction action3("New port", this);
+            QAction action3("New schema", this);
             contextMenu.addAction(&action3);
-            connect(&action3, &QAction::triggered, this, &SchemaWidget::new_port);
+            connect(&action3, &QAction::triggered, this, &SchemaWidget::new_schema);
 
-            QAction action4("New expression", this);
+            QAction action4("Save Schema", this);
             contextMenu.addAction(&action4);
-            connect(&action4, &QAction::triggered, this, &SchemaWidget::new_expression);
+            connect(&action4, &QAction::triggered, this, &SchemaWidget::save_schema);
+
+            QAction action5("Load Schema", this);
+            contextMenu.addAction(&action5);
+            connect(&action5, &QAction::triggered, this, &SchemaWidget::load_schema);
+
+            QAction action6("Close", this);
+            contextMenu.addAction(&action6);
+            connect(&action6, &QAction::triggered, this, &SchemaWidget::close_schema);
             contextMenu.exec(mapToGlobal(pos));
         }
 
@@ -54,29 +63,43 @@ namespace icp
             std::cout << "New Connection" << std::endl;
         }
 
-        void SchemaWidget::new_port()
-        {
-            std::cout << "New Port" << std::endl;
-        }
-
-        void SchemaWidget::new_expression()
-        {
-            std::cout << "New expression" << std::endl;
-        }
-
         void SchemaWidget::save_schema()
         {
+            bool ok;
+           QString text = QInputDialog::getText(this, tr("Save"),
+                                         tr("Nazov suboru:"), QLineEdit::Normal,
+                                            tr("Untitled_file"), &ok);
             std::cout << "Save schema" << std::endl;
         }
 
         void SchemaWidget::load_schema()
         {
+            bool ok;
+           QString text = QInputDialog::getText(this, tr("Load"),
+                                         tr("Nazov suboru:"), QLineEdit::Normal,
+                                            tr("Untitled_file"), &ok);
+                                            
             std::cout << "Load schema" << std::endl;
         }
 
         void SchemaWidget::close_schema()
         {
             std::cout << "Close schema" << std::endl;
+        }
+
+        void SchemaWidget::play_schema()
+        {
+            std::cout << "Start play  schema" << std::endl;
+        }
+
+        void SchemaWidget::next_step()
+        {
+            std::cout << "Next step" << std::endl;
+        }
+
+        void SchemaWidget::new_schema()
+        {
+            std::cout << "New schema" << std::endl;
         }
 
     }

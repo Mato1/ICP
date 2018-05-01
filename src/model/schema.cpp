@@ -217,11 +217,11 @@ namespace icp
 
             outfile << "\t" "blocks" << std::endl;
 
-
             for(Block * b : blocks)
             {
                outfile << "\t\t" "block "<< b->get_nazov() << std::endl;
                outfile << "\t\t\t" "inputs" << std::endl;
+               // tu sa este bude ukladat velkost bloku a jeho rozmiestnenie
                for (Port *p : b->get_input_ports())
                {
                     outfile << "\t\t\t\t" "port "<< p->get_nazov() << std::endl;
@@ -292,6 +292,20 @@ namespace icp
             outfile << "\t\t" "end prepojenia" << std::endl;
 
             outfile << "end schema" << std::endl;
+        }
+
+        void Schema::load(std::string file)
+        {
+            std::ifstream f(file);
+            std:: string str;
+            if (! f.is_open())
+            {
+                // error neslo otvorit subor
+            }
+            while (std::getline(f, str))
+            {
+
+            }
         }
 
     }
