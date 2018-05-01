@@ -44,13 +44,15 @@ namespace icp {
         action_new_connection->setStatusTip(tr("Create a new connection."));
         menu_insert->addAction(action_new_connection);
 
-        action_new_port = new QAction(tr("&New Port"), this);
-        action_new_port->setStatusTip(tr("Create a new port."));
-        menu_insert->addAction(action_new_port);
 
-        action_new_expression = new QAction(tr("&New expression"), this);
-        action_new_expression->setStatusTip(tr("Create a new expression."));
-        menu_insert->addAction(action_new_expression);
+        menu_insert = menuBar()->addMenu(tr("&Play"));
+        action_play_schema = new QAction(tr("&Start play"), this);
+        action_play_schema->setStatusTip(tr("Start play"));
+        menu_insert->addAction(action_play_schema);
+
+        action_next_step = new QAction(tr("&Next step"), this);
+        action_next_step->setStatusTip(tr("Do next step"));
+        menu_insert->addAction(action_next_step);
 
     }
 
@@ -71,7 +73,7 @@ namespace icp {
         connect(action_close_schema, &QAction::triggered, schema_widget, &ui::SchemaWidget::close_schema);
         connect(action_new_block, &QAction::triggered, schema_widget, &ui::SchemaWidget::new_block);
         connect(action_new_connection, &QAction::triggered, schema_widget, &ui::SchemaWidget::new_connection);
-        connect(action_new_port, &QAction::triggered, schema_widget, &ui::SchemaWidget::new_port);
-        connect(action_new_expression, &QAction::triggered, schema_widget, &ui::SchemaWidget::new_expression);
+        connect(action_play_schema, &QAction::triggered, schema_widget, &ui::SchemaWidget::play_schema);
+        connect(action_next_step, &QAction::triggered, schema_widget, &ui::SchemaWidget::next_step);
     }
 }

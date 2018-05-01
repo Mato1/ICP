@@ -22,6 +22,9 @@ namespace icp
             public slots:
                 void show_context_menu(const QPoint &pos);
                 void rename_block();
+                void add_expression();
+                void add_input_port();
+                void add_output_port();
 
             private:
                 const int MINIMUM_WIDTH  = 100;
@@ -45,6 +48,7 @@ namespace icp
                 {
                     return block;
                 }
+
         };
     }
 }

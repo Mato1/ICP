@@ -20,11 +20,12 @@ namespace icp
                 void show_context_menu(const QPoint &pos);
                 void new_block();
                 void new_connection(); 
-                void new_port();
-                void new_expression();
                 void save_schema(); 
                 void load_schema();
-                void close_schema();           
+                void close_schema();  
+                void play_schema();
+                void next_step();  
+                void new_schema();       
             private:    
                 void init();
 
