@@ -15,7 +15,7 @@ namespace icp {
     
     void MainWindow::set_up_menu()
     {          
-        menu_subor = menuBar()->addMenu(tr("&File"));
+        menu_subor = menuBar()->addMenu(tr("&Schema"));
         action_new_schema = new QAction(tr("&New"), this);
         action_new_schema->setShortcuts(QKeySequence::New);
         action_new_schema->setStatusTip(tr("Create a new schema"));
@@ -31,16 +31,15 @@ namespace icp {
         menu_subor->addAction(action_load_schema);
 
         action_close_schema = new QAction(tr("&Close"), this);
-        action_close_schema->setStatusTip(tr("CLose a schema"));
+        action_close_schema->setStatusTip(tr("Close a schema"));
         menu_subor->addAction(action_close_schema);
 
-
         menu_insert = menuBar()->addMenu(tr("&Insert"));
-        action_new_block = new QAction(tr("&New Block"), this);
+        action_new_block = new QAction(tr("&Block"), this);
         action_new_block->setStatusTip(tr("Create a new block"));
         menu_insert->addAction(action_new_block);
 
-        action_new_connection = new QAction(tr("&New Connection"), this);
+        action_new_connection = new QAction(tr("&Connection"), this);
         action_new_connection->setStatusTip(tr("Create a new connection."));
         menu_insert->addAction(action_new_connection);
 
@@ -58,7 +57,7 @@ namespace icp {
 
     void MainWindow::new_schema()
     {
-        schema_widget = new ui::SchemaWidget("Untitled Schema");
+        schema_widget = new ui::SchemaW("Untitled Schema");
         setCentralWidget(schema_widget);
         setWindowTitle(tr((DEFAULT_WINDOW_TITLE + " - " + schema_widget->get_schema()->get_nazov()).c_str()));
         schema_widget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -68,12 +67,12 @@ namespace icp {
         schema_widget->setPalette(palette);
         schema_widget->show();
         
-        connect(action_save_schema, &QAction::triggered, schema_widget, &ui::SchemaWidget::save_schema);
-        connect(action_load_schema, &QAction::triggered, schema_widget, &ui::SchemaWidget::load_schema);
-        connect(action_close_schema, &QAction::triggered, schema_widget, &ui::SchemaWidget::close_schema);
-        connect(action_new_block, &QAction::triggered, schema_widget, &ui::SchemaWidget::new_block);
-        connect(action_new_connection, &QAction::triggered, schema_widget, &ui::SchemaWidget::new_connection);
-        connect(action_play_schema, &QAction::triggered, schema_widget, &ui::SchemaWidget::play_schema);
-        connect(action_next_step, &QAction::triggered, schema_widget, &ui::SchemaWidget::next_step);
+        connect(action_save_schema, &QAction::triggered, schema_widget, &ui::SchemaW::save_schema);
+        connect(action_load_schema, &QAction::triggered, schema_widget, &ui::SchemaW::load_schema);
+        connect(action_close_schema, &QAction::triggered, schema_widget, &ui::SchemaW::close_schema);
+        connect(action_new_block, &QAction::triggered, schema_widget, &ui::SchemaW::new_block);
+        connect(action_new_connection, &QAction::triggered, schema_widget, &ui::SchemaW::new_connection);
+        connect(action_play_schema, &QAction::triggered, schema_widget, &ui::SchemaW::play_schema);
+        connect(action_next_step, &QAction::triggered, schema_widget, &ui::SchemaW::next_step);
     }
 }

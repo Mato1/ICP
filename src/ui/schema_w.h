@@ -1,20 +1,22 @@
-#ifndef ICP_BLOCKBUILDER_SRC_UI_SCHEMA_WIDGET_H
-#define ICP_BLOCKBUILDER_SRC_UI_SCHEMA_WIDGET_H
+#ifndef ICP_BLOCKBUILDER_SRC_UI_SCHEMAW_H
+#define ICP_BLOCKBUILDER_SRC_UI_SCHEMAW_H
 
 #include "model/schema.h"
-#include "ui/block_widget.h"
+#include "ui/block_w.h"
 #include <QWidget>
+#include <QPainter>
 
 namespace icp
 {
     namespace ui 
     {
-        class SchemaWidget : public QWidget {
+        class SchemaW : public QWidget {
             
             Q_OBJECT
 
             private:
                 model::Schema * schema = nullptr;
+                
 
             public slots:
                 void show_context_menu(const QPoint &pos);
@@ -25,22 +27,22 @@ namespace icp
                 void close_schema();  
                 void play_schema();
                 void next_step();  
-                void new_schema();       
+                void new_schema();    
+                   
             private:    
                 void init();
 
             public:
-                SchemaWidget(std::string nazov);
-                ~SchemaWidget();
+                SchemaW(std::string nazov);
+                ~SchemaW();
                 
                 inline model::Schema * get_schema() const
                 {
                     return schema;
                 }
-      
 
         };
     }
 }
 
-#endif //ICP_BLOCKBUILDER_SRC_UI_SCHEMA_WIDGET_H
+#endif //ICP_BLOCKBUILDER_SRC_UI_SCHEMAW_H

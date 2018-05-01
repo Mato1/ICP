@@ -7,11 +7,12 @@
 #include <QLabel>
 #include <QVBoxLayout>
 #include <QPalette>
-#include "ui/schema_widget.h"
+#include "ui/schema_w.h"
 
 
 namespace icp {
-    class MainWindow : public QMainWindow {
+    class MainWindow : public QMainWindow 
+    {
         private:
             const std::string DEFAULT_WINDOW_TITLE = "BlockBuilder";
             const int DEFAULT_PREFFERED_WINDOW_WIDTH  = 1280;
@@ -30,7 +31,7 @@ namespace icp {
             QAction * action_close_schema;
             QAction * action_play_schema;
             QAction * action_next_step; 
-            ui::SchemaWidget * schema_widget;
+            ui::SchemaW * schema_widget;
             
         private:
             void set_up_menu();

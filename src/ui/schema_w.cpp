@@ -1,4 +1,4 @@
-#include "schema_widget.h"
+#include "ui/schema_w.h"
 #include <QMenu>
 #include <QPen>
 #include <iostream>
@@ -8,73 +8,88 @@ namespace icp
 {
     namespace ui
     {
-        SchemaWidget::SchemaWidget(std::string nazov)
+        SchemaW::SchemaW(std::string nazov)
         {
             schema = new model::Schema(nazov);
             this->setContextMenuPolicy(Qt::CustomContextMenu);
-            connect(this, &SchemaWidget::customContextMenuRequested, this, &SchemaWidget::show_context_menu);
+            connect(this, &SchemaW::customContextMenuRequested, this, &SchemaW::show_context_menu);
         }
 
-        SchemaWidget::~SchemaWidget()
+        SchemaW::~SchemaW()
         {
             delete schema;
         }
 
-
-        void SchemaWidget::show_context_menu(const QPoint &pos)
+        void SchemaW::show_context_menu(const QPoint &pos)
         {
             QMenu contextMenu(tr("Context menu"), this);
-            QAction action1("New Block", this);
+            QAction action1("Insert Block", this);
             contextMenu.addAction(&action1);
-            connect(&action1, &QAction::triggered, this, &SchemaWidget::new_block);
+            connect(&action1, &QAction::triggered, this, &SchemaW::new_block);
 
-            QAction action2("New connection", this);
+            QAction action2("Insert Connection", this);
             contextMenu.addAction(&action2);
-            connect(&action2, &QAction::triggered, this, &SchemaWidget::new_connection);
+            connect(&action2, &QAction::triggered, this, &SchemaW::new_connection);
 
             QAction action3("New schema", this);
             contextMenu.addAction(&action3);
-            connect(&action3, &QAction::triggered, this, &SchemaWidget::new_schema);
+            connect(&action3, &QAction::triggered, this, &SchemaW::new_schema);
 
             QAction action4("Save Schema", this);
             contextMenu.addAction(&action4);
-            connect(&action4, &QAction::triggered, this, &SchemaWidget::save_schema);
+            connect(&action4, &QAction::triggered, this, &SchemaW::save_schema);
 
             QAction action5("Load Schema", this);
             contextMenu.addAction(&action5);
-            connect(&action5, &QAction::triggered, this, &SchemaWidget::load_schema);
+            connect(&action5, &QAction::triggered, this, &SchemaW::load_schema);
 
             QAction action6("Close", this);
             contextMenu.addAction(&action6);
-            connect(&action6, &QAction::triggered, this, &SchemaWidget::close_schema);
+            connect(&action6, &QAction::triggered, this, &SchemaW::close_schema);
             contextMenu.exec(mapToGlobal(pos));
         }
 
-        void SchemaWidget::new_block()
+        void SchemaW::new_block()
         {
-            BlockWidget * bw = new BlockWidget("Untitled_Block");
+            bool ok;
+            QString text = tr("Untitled");
+            
+            do {
+                text = QInputDialog::getText(this, tr("Novy blok"),
+                                             tr("Nazov:"), QLineEdit::Normal,
+                                             text, &ok);
+            
+            } while (schema->get_block(text.toStdString()) != nullptr && ok == true);
+
+            if (ok == false)
+            {
+                return;
+            }
+            
+            BlockW * bw = new BlockW(text.toStdString());
             schema->add_block(bw->get_block());
             bw->setParent(this);
             bw->show();
         }
+        
 
-        void SchemaWidget::new_connection()
+        void SchemaW::new_connection()
         {
             std::cout << "New Connection" << std::endl;
         }
 
-        void SchemaWidget::save_schema()
+        void SchemaW::save_schema()
         {
-            bool ok;
+           bool ok;
            QString text = QInputDialog::getText(this, tr("Save"),
                                          tr("Nazov suboru:"), QLineEdit::Normal,
                                             tr("Untitled_file"), &ok);
             std::cout << "Save schema" << std::endl;
         }
 
-        void SchemaWidget::load_schema()
+        void SchemaW::load_schema()
         {
-            bool ok;
+           bool ok;
            QString text = QInputDialog::getText(this, tr("Load"),
                                          tr("Nazov suboru:"), QLineEdit::Normal,
                                             tr("Untitled_file"), &ok);
@@ -82,22 +97,22 @@ namespace icp
             std::cout << "Load schema" << std::endl;
         }
 
-        void SchemaWidget::close_schema()
+        void SchemaW::close_schema()
         {
             std::cout << "Close schema" << std::endl;
         }
 
-        void SchemaWidget::play_schema()
+        void SchemaW::play_schema()
         {
             std::cout << "Start play  schema" << std::endl;
         }
 
-        void SchemaWidget::next_step()
+        void SchemaW::next_step()
         {
             std::cout << "Next step" << std::endl;
         }
 
-        void SchemaWidget::new_schema()
+        void SchemaW::new_schema()
         {
             std::cout << "New schema" << std::endl;
         }

@@ -82,7 +82,7 @@ namespace icp
                     return this->type;
                 }
                 
-                inline const std::string&  get_nazov()
+                inline std::string  get_nazov()
                 {
                     return this->nazov;
                 }

@@ -30,7 +30,7 @@ namespace icp
         {
             
             private:
-               const std::string nazov;
+               std::string nazov;
                std::vector<Vyraz *> vypocty;
                std::vector<Port *> input_ports;
                std::vector<Port *> output_ports;
@@ -225,8 +225,13 @@ namespace icp
                 {
                     return output_ports;
                 }
+
+                inline void set_nazov(std::string nazov)
+                {
+                    this->nazov = nazov;
+                }
               
-                inline const std::string& get_nazov()
+                inline std::string get_nazov()
                 {
                     return nazov;
                 }
