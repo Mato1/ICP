@@ -299,9 +299,11 @@ namespace icp
             int schema = 0;
             int blocks = 0;
             int block = 0;
-            int inputs, outputs = 0;
+            int inputs = 0;
+            int outputs = 0;
             int prepojenie = 0;
-            int port, type = 0;
+            int port = 0;
+            int type = 0;
             int ui  = 0;
             int length_str = 0;
             std::ifstream f(file);
@@ -312,6 +314,41 @@ namespace icp
             }
             while (std::getline(f, str))
             {
+                std::string end_str = str.substr(0,3);
+                if (end_str == "end")
+                {
+                    length_str = str.length() - 4;
+                    if(str.substr(4,length_str) == "type")
+                    {
+                        type = 0;
+                        break;
+                    }
+                    else if (str.substr(4,length_str) == "port")
+                    {
+                        port = 0;
+                        break;
+                    }
+                    else if (str.substr(4,length_str) == "inputs")
+                    {
+                        inputs = 0;
+                        break;
+                    }
+                    else if (str.substr(4,length_str) == "outputs")
+                    {
+                        outputs = 0;
+                        break;
+                    }
+                    else if (str.substr(4,length_str) == "block")
+                    {
+                        block = 0;
+                        break;
+                    }
+                    else if (str.substr(4,length_str) == "blocks")
+                    {
+                        blocks =0;
+                        break;
+                    }
+                }
                 if (schema == 0)
                 {
                     std::string schema_str = str.substr(0,6);
@@ -322,7 +359,7 @@ namespace icp
                     else
                     {
                         length_str = str.length() - 7;
-                        Schema::Schema(str.substr(7,length_str));
+                        Schema(str.substr(7,length_str));
                         // vytvorim a nastavim meno schema cez str.substr(7,length_str)
                     }
                     schema = 1;
@@ -332,7 +369,7 @@ namespace icp
                 {
                     if(str == "blocks")
                     {
-                        blocks == 1;
+                        blocks = 1;
                     }
                     else
                     {
@@ -379,11 +416,17 @@ namespace icp
                     }
                     else
                     {
+                        int cislo_portu = 1;
                         length_str = str.length() - 5;
+                        port_str = str.substr(5,length_str);
                         //vyrobim port a este ho nebudem pridavat bloku lebo nepoznam jeho type
                     }
                     port = 1;
                     break;
+                }
+                else if (port == 1 and type == 0)
+                {
+
                 }
             }
         }
