@@ -296,6 +296,14 @@ namespace icp
 
         void Schema::load(std::string file)
         {
+            int schema = 0;
+            int blocks = 0;
+            int block = 0;
+            int inputs, outputs = 0;
+            int prepojenie = 0;
+            int port, type = 0;
+            int ui  = 0;
+            int length_str = 0;
             std::ifstream f(file);
             std:: string str;
             if (! f.is_open())
@@ -304,7 +312,79 @@ namespace icp
             }
             while (std::getline(f, str))
             {
-
+                if (schema == 0)
+                {
+                    std::string schema_str = str.substr(0,6);
+                    if (schema_str != "schema")
+                    {
+                        //error lebo je to zle ulozene
+                    }
+                    else
+                    {
+                        length_str = str.length() - 7;
+                        Schema::Schema(str.substr(7,length_str));
+                        // vytvorim a nastavim meno schema cez str.substr(7,length_str)
+                    }
+                    schema = 1;
+                    break;
+                }
+                else if (blocks == 0)
+                {
+                    if(str == "blocks")
+                    {
+                        blocks == 1;
+                    }
+                    else
+                    {
+                        //mam tu error lebo som cakal blocks ale dostal som daco ine
+                    }
+                    break;
+                }
+                else if (block == 0)
+                {
+                    std::string block_str = str.substr(0,5);
+                    if (block_str != "block")
+                    {
+                        //error malo tam byt block
+                    }
+                    else
+                    {
+                        length_str = str.length() - 6;
+                        add_block(str.substr(6,length_str));
+                        // vytvorim a nastavim meno bloku  pomocou str.substr(6,length_str)
+                    }
+                    block = 1;
+                    break;
+                }
+                else if (ui == 0)
+                {
+                    // tu bude nacitanie velkosti a pozicie bloku
+                    ui = 1;
+                    break;
+                }
+                else if (inputs == 0)
+                {
+                    if (str == "inputs")
+                    {
+                        inputs = 1;
+                    }
+                    break;
+                }
+                else if (inputs == 1 and port == 0)
+                {
+                    std::string port_str = str.substr(0,4);
+                    if (port_str != "port")
+                    {
+                        // error malo tu byt port
+                    }
+                    else
+                    {
+                        length_str = str.length() - 5;
+                        //vyrobim port a este ho nebudem pridavat bloku lebo nepoznam jeho type
+                    }
+                    port = 1;
+                    break;
+                }
             }
         }
 
