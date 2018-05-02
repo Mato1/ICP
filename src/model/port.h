@@ -72,7 +72,21 @@ namespace icp
                     this->port_type = port_type;
                 }
 
-                inline void set_type(DataType type)
+                inline void set_data_type(std::string retazec)
+                {
+                    size_t pos = 0;
+                    std::string token;
+                    std::string delimiter = ",";
+                    while ((pos = retazec.find(delimiter)) != std::string::npos) {
+                        token = retazec.substr(0, pos);
+                        type.add(token);
+                        retazec.erase(0, pos + delimiter.length());
+                    }
+
+                    type.add(retazec);
+                }
+
+                inline void set_data_type(DataType type)
                 {
                     this->type = type;
                 }

@@ -5,6 +5,7 @@
 #include <QLabel>
 #include <QListView>
 #include <QVBoxLayout>
+#include <QColor>
 
 namespace icp 
 {
@@ -19,14 +20,10 @@ class BlockBody : public QFrame
         void show_context_menu(const QPoint &pos);
 
 
-    private:
-        const int MINIMUM_WIDTH  = 100;
-        const int MINIMUM_HEIGHT = 100;
+    private: 
         const int LINE_WIDTH     = 3;
-        std::string style_sheet  = "background-color:rgb(64, 92, 104); selection-background-color: rgb(22, 22, 22)";
 
     private:
-     
         QPoint drag_start_pos;
         QRect  drag_start_geom;
         QPoint offset;

@@ -11,6 +11,9 @@ namespace ui
 
 BlockW::BlockW(std::string nazov)
 {
+    setMinimumWidth(MINIMUM_WIDTH);
+    setMinimumHeight(MINIMUM_HEIGHT);
+    
     layout_base = new QVBoxLayout();
     block = new model::Block(nazov);
     block_body = new BlockBody(nazov);
@@ -25,8 +28,6 @@ BlockW::BlockW(std::string nazov)
     setLineWidth(1);
     setFrameShape(Shape::Box);
     
-  
-
     QSizePolicy input_ports_sp(QSizePolicy::Preferred, QSizePolicy::Preferred);
     input_ports_sp.setVerticalStretch(1);
     w_input_ports->setSizePolicy(input_ports_sp);
@@ -81,15 +82,44 @@ void BlockW::add_expression()
 
 void BlockW::add_input_port()
 {
-    std::cout << "Add input port to block" << std::endl;
+
+    QString text = "";
+    bool ok;
+    text = QInputDialog::getText(this,tr("Datovy Typ:"),
+                                 tr("Premenne:"), QLineEdit::Normal,
+                                 text, &ok);
+
+    if (ok == false)
+    {
+        return;
+    }
+
     PortW * port_w = new PortW(block->get_nazov(), block->get_input_ports().size(), model::PortType::input);
     w_input_ports->add_port(port_w);
     this->block->add_port(port_w->get_port());
+    port_w->get_port()->set_data_type(text.toStdString());
+    std::cout << port_w->get_port()->get_data_type().to_string() << std::endl;
+
 }
 
 void BlockW::add_output_port()
 {
-    std::cout << "Add output port to block" << std::endl;
+    QString text = "";
+    bool ok;
+    text = QInputDialog::getText(this,tr("Datovy Typ:"),
+                                 tr("Premenne:"), QLineEdit::Normal,
+                                 text, &ok);
+
+    if (ok == false)
+    {
+        return;
+    }
+
+    PortW * port_w = new PortW(block->get_nazov(), block->get_output_ports().size(), model::PortType::output);
+    w_output_ports->add_port(port_w);
+    this->block->add_port(port_w->get_port());
+    port_w->get_port()->set_data_type(text.toStdString());
+    std::cout << port_w->get_port()->get_data_type().to_string() << std::endl;
 }
 
 }

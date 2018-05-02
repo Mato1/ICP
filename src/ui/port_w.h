@@ -15,10 +15,6 @@ class PortW : public QWidget
     public slots:
         // void show_context_menu(const QPoint &pos);
 
-
-    private:
-        std::string style_sheet  = "background-color:rgb(64, 140, 20);";
-
     private:
         model::Port * port;
 

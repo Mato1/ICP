@@ -74,13 +74,13 @@ namespace icp
             if (port_type == PortType::input)
             {
                 port = new Port(nazov, input_ports.size(), port_type);
-                port->set_type(type);
+                port->set_data_type(type);
                 input_ports.push_back(port);       
             }
             else if (port_type == PortType::output)
             {
                 port = new Port(nazov, output_ports.size(), port_type);
-                port->set_type(type);
+                port->set_data_type(type);
                 input_ports.push_back(port);       
             }
             return port;

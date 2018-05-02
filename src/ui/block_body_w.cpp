@@ -2,7 +2,7 @@
 
 #include <QMenu>
 #include "ui/block_w.h"
-
+#include <QPalette>
 
 namespace icp 
 {
@@ -11,17 +11,21 @@ namespace ui
 
 BlockBody::BlockBody(std::string nazov)
 {
-    setStyleSheet(style_sheet.c_str());
     setLayout(&layout_block);
     setLineWidth(LINE_WIDTH);
     setFrameShape(Shape::Box);
-    label_nazov.setText(tr(nazov.c_str()));        
-    setMinimumWidth(MINIMUM_WIDTH);
-    setMinimumHeight(MINIMUM_HEIGHT);
+    label_nazov.setText(tr(nazov.c_str()));
     layout_block.addWidget(&label_nazov);
     label_nazov.setAlignment(Qt::AlignCenter);
     this->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(this, &BlockBody::customContextMenuRequested, this, &BlockBody::show_context_menu);
+    
+    QPalette pal = palette();
+    pal.setColor(QPalette::Background, QColor(64,92,104));
+    pal.setColor(QPalette::Foreground, Qt::white);
+    setAutoFillBackground(true);
+    setPalette(pal);
+
 }
 
 void BlockBody::show_context_menu(const QPoint &pos)

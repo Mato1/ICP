@@ -26,11 +26,13 @@ class BlockW : public ResizableFrame
         void add_output_port();
 
     private:
+        const int MINIMUM_WIDTH  = 100;
+        const int MINIMUM_HEIGHT = 100;
         model::Block * block       = nullptr;
         QVBoxLayout * layout_base  = nullptr;
-        PortsW * w_input_ports       = nullptr;
+        PortsW * w_input_ports     = nullptr;
         BlockBody  * block_body    = nullptr;
-        PortsW * w_output_ports      = nullptr;
+        PortsW * w_output_ports    = nullptr;
 
     public:
         BlockW(std::string nazov);
@@ -39,7 +41,6 @@ class BlockW : public ResizableFrame
         {
             return block;
         }
-
         
 };
 

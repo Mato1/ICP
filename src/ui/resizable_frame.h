@@ -22,7 +22,7 @@ namespace icp
             protected:
                 void mousePressEvent(QMouseEvent * event) override;
                 void mouseMoveEvent(QMouseEvent * event) override;
-
+            
             private:
                 QPoint drag_start_pos;
                 QRect drag_start_geom;

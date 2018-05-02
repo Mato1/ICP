@@ -46,14 +46,37 @@ namespace icp
                 return false;
             }
 
+            void add(std::string nazov)
+            {
+                if (!has_name(nazov))
+                {
+                    data.insert(std::pair<std::string, double *>(nazov, nullptr));
+                }
+            }
+
             void add(std::string nazov, double hodnota)
             {
-                double * d = new double(hodnota);
-                data.insert(std::pair<std::string, double *>(nazov, d));
+                if (!has_name(nazov))
+                {
+                    double * d = new double(hodnota);
+                    data.insert(std::pair<std::string, double *>(nazov, d));
+                }
+            }
+
+            void set(std::string nazov, double hodnota)
+            {
+                if (has_name(nazov))
+                {
+                    double * d = new double(hodnota);
+                    data[nazov] = d;
+                }
             }
 
             double * get(std::string nazov)
             {
+                if (!has_name(nazov)){
+                    return nullptr;
+                }
                 return data[nazov];
             }
 
@@ -87,6 +110,25 @@ namespace icp
                     delete it->second;
                 }
                 data.clear();
+            }
+
+            std::string to_string()
+            {
+                std::string s = "";
+
+                for (auto it = data.begin(); it != data.end(); it++)
+                {
+                    if (it->second == nullptr)
+                    {
+                        s += it->first + "=" + "null\n";
+                    } 
+                    else
+                    {
+                        s += it->first + "=" + std::to_string(*it->second) + "\n";
+                    }
+                }
+
+                return s;
             }
 
 
