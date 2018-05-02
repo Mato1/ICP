@@ -156,6 +156,11 @@ namespace icp
                 {
                     return nazov;
                 }   
+
+                inline const std::vector<Block*> get_all_ports()
+                {
+                    return blocks;
+                }
                           
             private:
                 /**

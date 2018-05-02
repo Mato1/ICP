@@ -78,7 +78,30 @@ namespace icp
 
         void SchemaW::new_connection()
         {
-            std::cout << "New Connection" << std::endl;
+            bool ok;
+            QStringList ports_output;
+            QStringList ports_input;
+
+            for (unsigned i=0; i < get_all_ports().size(); i++) 
+            {
+                for (unsigned j=0; j < get_all_ports()[i]->get_output_ports().size(); j++) 
+                {
+                    ports_output << tr (get_all_ports()[i]->get_output_ports()[j]->get_nazov().c_str());
+                }
+                for (unsigned j=0; j < get_all_ports()[i]->get_input_ports().size(); j++) 
+                {
+                    ports_input << tr (get_all_ports()[i]->get_input_ports()[j]->get_nazov().c_str());
+                }
+            }
+
+            QString port_output = QInputDialog::getItem(this, tr("Output port"),
+                                         tr("Name port"), ports_output, 0, false, &ok);
+
+            QString port_input = QInputDialog::getItem(this, tr("Input port"),
+                                         tr("Name port"), ports_input, 0, false, &ok);
+            
+
+            // std::cout << "New Connection" << std::endl;
         }
 
         void SchemaW::save_schema()
