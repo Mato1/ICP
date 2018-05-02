@@ -1,8 +1,10 @@
 #include "ui/schema_w.h"
+#include "model/schema.h"
 #include <QMenu>
 #include <QPen>
 #include <iostream>
 #include <QInputDialog>
+#include <QFileDialog>
 
 namespace icp
 {
@@ -80,11 +82,12 @@ namespace icp
 
         void SchemaW::save_schema()
         {
-           bool ok;
-           QString text = QInputDialog::getText(this, tr("Save"),
-                                         tr("Nazov suboru:"), QLineEdit::Normal,
-                                            tr("Untitled_file"), &ok);
-            std::cout << "Save schema" << std::endl;
+            QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
+                           "/home/untitled.txt",
+                           tr("Untitled (*.txt)"));
+            schema->save(fileName.toStdString());
+            // std::cout << "Save schema" << std::endl;
+            // std::cout << fileName.toStdString()<< std::endl;
         }
 
         void SchemaW::load_schema()

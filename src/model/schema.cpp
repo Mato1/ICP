@@ -237,6 +237,7 @@ namespace icp
                     outfile << "\t\t\t\t" "end port" << std::endl;
                }
                outfile << "\t\t\t" "end inputs" << std::endl;
+               outfile << "\t\t\t" "outputs" << std::endl;
             
                 for (Port *p : b->get_output_ports())
                 {
@@ -246,15 +247,15 @@ namespace icp
 
                     for (auto it = hodnoty.begin(); it != hodnoty.end(); ++it)
                     {
-                        std::cout << "\t\t\t\t\t\t" << it->first << " " << it->second << '\n';
+                        std::cout << "\t\t\t\t\t\t" << it->first << std::endl;
                     }
 
                     outfile << "\t\t\t\t\t" "end type" << std::endl;
                     outfile << "\t\t\t\t" "end port" << std::endl;
                 }
-                outfile << "\t" "\t" "\t" "end outputs" << std::endl;
+                outfile << "\t\t\t" "end outputs" << std::endl;
                 
-                outfile << "\t\t\t\t" "vypocty" << std::endl;
+                outfile << "\t\t\t" "vypocty" << std::endl;
                 for (auto v: b->get_vypocty())
                 {
                     outfile << "\t\t\t\t\t" << v->get_infix() << std::endl;
@@ -279,10 +280,10 @@ namespace icp
                     outfile << "\t\t\t\t\t" "end " << v->get_infix() << std::endl;
                 }
 
-                outfile << "\t\t\t\t" "end vypocty" << std::endl;
-                outfile << "\t" "\t" "end block "<< b->get_nazov() << std::endl;
+                outfile << "\t\t\t" "end vypocty" << std::endl;
+                outfile << "\t\t" "end block "<< b->get_nazov() << std::endl;
             }
-            outfile << "\t\t" "end blocks " << std::endl << std::endl;
+            outfile << "\t" "end blocks " << std::endl << std::endl;
 
             outfile << "\t\t" "prepojenia" << std::endl;
             for(Prepojenie * prepoj : prepojenia)
@@ -340,6 +341,16 @@ namespace icp
                         {
                             // je to outputs port takze ho pridam do outputs port
                         }
+                        break;
+                    }
+                    else if (str.substr(4,length_str) == "inputs")
+                    {
+                        inputs = 2;
+                        break;
+                    }
+                    else if (str.substr(4,length_str) == "outputs")
+                    {
+                        outputs = 2;
                         break;
                     }
                     else if (str.substr(4,length_str) == "port")
@@ -441,7 +452,7 @@ namespace icp
                     }
                     break;
                 }
-                else if (inputs == 1 and port == 0)
+                else if (inputs != 2 and port == 0)
                 {
                     port_str = str.substr(0,4);
                     if (port_str != "port")
@@ -487,7 +498,7 @@ namespace icp
                     }
                     break;
                 }
-                else if (outputs == 1 and port == 0)
+                else if (outputs != 2 and port == 0)
                 {
                     port_str = str.substr(0,4);
                     if (port_str != "port")
