@@ -23,12 +23,12 @@ namespace icp
 
         Schema::~Schema()
         {
-            for(auto it = blocks.begin(); it != blocks.end(); ++it)
-            {
-                delete (*it);
-            }
+            // for(auto it = blocks.begin(); it != blocks.end(); ++it)
+            // {
+            //     delete (*it);
+            // }
 
-            blocks.clear();
+            // blocks.clear();
         }
 
         void Schema::add_block(Block * block)

@@ -10,12 +10,13 @@ namespace ui
 {
 
 BlockW::BlockW(std::string nazov)
+    : model::Block(nazov)
 {
     setMinimumWidth(MINIMUM_WIDTH);
     setMinimumHeight(MINIMUM_HEIGHT);
     
     layout_base = new QVBoxLayout();
-    block = new model::Block(nazov);
+    // block = new model::Block(nazov);
     block_body = new BlockBody(nazov);
     w_input_ports = new PortsW();
     w_output_ports = new PortsW();
@@ -50,7 +51,7 @@ void BlockW::rename_block()
 {
     SchemaW * schema = (SchemaW*) parent();
     bool ok;
-    QString text = tr(block->get_nazov().c_str());
+    QString text = tr(get_nazov().c_str());
 
     do 
     {
@@ -58,20 +59,20 @@ void BlockW::rename_block()
                                      tr("Novy nazov:"), QLineEdit::Normal,
                                      text, &ok);
                 
-        if (ok == true && text.toStdString().compare(block->get_nazov()) == 0)
+        if (ok == true && text.toStdString().compare(get_nazov()) == 0)
         {
             return;
         }
 
-    } while (schema->get_schema()->get_block(text.toStdString()) != nullptr && ok == true);
+    } while (schema->get_block(text.toStdString()) != nullptr && ok == true);
 
     if (ok == false)
     {
         return;
     }
 
-    block->set_nazov(text.toStdString());
-    block_body->set_nazov(block->get_nazov());
+    set_nazov(text.toStdString());
+    set_nazov(get_nazov());
            
 }
 
@@ -94,11 +95,11 @@ void BlockW::add_input_port()
         return;
     }
 
-    PortW * port_w = new PortW(block->get_nazov(), block->get_input_ports().size(), model::PortType::input);
+    PortW * port_w = new PortW(get_nazov(), get_input_ports().size(), model::PortType::input);
     w_input_ports->add_port(port_w);
-    this->block->add_port(port_w->get_port());
-    port_w->get_port()->set_data_type(text.toStdString());
-    std::cout << port_w->get_port()->get_data_type().to_string() << std::endl;
+    this->add_port(port_w);
+    port_w->set_data_type(text.toStdString());
+    std::cout << port_w->get_data_type().to_string() << std::endl;
 
 }
 
@@ -115,11 +116,11 @@ void BlockW::add_output_port()
         return;
     }
 
-    PortW * port_w = new PortW(block->get_nazov(), block->get_output_ports().size(), model::PortType::output);
+    PortW * port_w = new PortW(get_nazov(), get_output_ports().size(), model::PortType::output);
     w_output_ports->add_port(port_w);
-    this->block->add_port(port_w->get_port());
-    port_w->get_port()->set_data_type(text.toStdString());
-    std::cout << port_w->get_port()->get_data_type().to_string() << std::endl;
+    add_port(port_w);
+    port_w->set_data_type(text.toStdString());
+    std::cout << port_w->get_data_type().to_string() << std::endl;
 }
 
 }

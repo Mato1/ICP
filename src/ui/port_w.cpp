@@ -7,8 +7,9 @@ namespace ui
 {
 
     PortW::PortW(std::string nazov_bloku, int cislo, model::PortType type)
+        : model::Port(nazov_bloku, cislo, type)
     {
-        port = new model::Port(nazov_bloku, cislo, type);
+        // port = new model::Port(nazov_bloku, cislo, type);
         QPalette pal = palette();
 
         // set black background

@@ -8,7 +8,7 @@ namespace icp
 {
 namespace ui
 {
-class PortW : public QWidget
+class PortW : public QWidget, public model::Port
 {
     Q_OBJECT
 
@@ -16,15 +16,15 @@ class PortW : public QWidget
         // void show_context_menu(const QPoint &pos);
 
     private:
-        model::Port * port;
+        // model::Port * port;
 
     public:
         PortW(std::string nazov_bloku, int cislo, model::PortType type);
         
-        inline model::Port * get_port()
-        {
-            return port;
-        }
+        // inline model::Port * get_port()
+        // {
+            // return port;
+        // }
 };
  
 }

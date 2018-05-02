@@ -11,15 +11,16 @@ namespace icp
     namespace ui
     {
         SchemaW::SchemaW(std::string nazov)
+            : model::Schema(nazov)
         {
-            schema = new model::Schema(nazov);
+            // schema = new model::Schema(nazov);
             this->setContextMenuPolicy(Qt::CustomContextMenu);
             connect(this, &SchemaW::customContextMenuRequested, this, &SchemaW::show_context_menu);
         }
 
         SchemaW::~SchemaW()
         {
-            delete schema;
+            // delete schema;
         }
 
         void SchemaW::show_context_menu(const QPoint &pos)
@@ -61,7 +62,7 @@ namespace icp
                                              tr("Nazov:"), QLineEdit::Normal,
                                              text, &ok);
             
-            } while (schema->get_block(text.toStdString()) != nullptr && ok == true);
+            } while (get_block(text.toStdString()) != nullptr && ok == true);
 
             if (ok == false)
             {
@@ -69,7 +70,7 @@ namespace icp
             }
             
             BlockW * bw = new BlockW(text.toStdString());
-            schema->add_block(bw->get_block());
+            add_block(bw);
             bw->setParent(this);
             bw->show();
         }
@@ -83,9 +84,9 @@ namespace icp
         void SchemaW::save_schema()
         {
             QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
-                           "/home/untitled.txt",
-                           tr("Untitled (*.txt)"));
-            schema->save(fileName.toStdString());
+                                                            "/home/untitled.txt",
+                                                            tr("Untitled (*.txt)"));
+            save(fileName.toStdString());
             // std::cout << "Save schema" << std::endl;
             // std::cout << fileName.toStdString()<< std::endl;
         }

@@ -10,12 +10,12 @@ namespace icp
 {
     namespace ui 
     {
-        class SchemaW : public QWidget {
+        class SchemaW : public QWidget, public model::Schema {
             
             Q_OBJECT
 
             private:
-                model::Schema * schema = nullptr;
+                // model::Schema * schema = nullptr;
                 
 
             public slots:
@@ -35,11 +35,6 @@ namespace icp
             public:
                 SchemaW(std::string nazov);
                 ~SchemaW();
-                
-                inline model::Schema * get_schema() const
-                {
-                    return schema;
-                }
 
         };
     }

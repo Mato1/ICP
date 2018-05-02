@@ -15,7 +15,7 @@ namespace icp
 namespace ui
 {
 
-class BlockW : public ResizableFrame
+class BlockW : public ResizableFrame, public model::Block
 {
     Q_OBJECT
 
@@ -28,7 +28,7 @@ class BlockW : public ResizableFrame
     private:
         const int MINIMUM_WIDTH  = 100;
         const int MINIMUM_HEIGHT = 100;
-        model::Block * block       = nullptr;
+        // model::Block * block       = nullptr;
         QVBoxLayout * layout_base  = nullptr;
         PortsW * w_input_ports     = nullptr;
         BlockBody  * block_body    = nullptr;
@@ -37,10 +37,10 @@ class BlockW : public ResizableFrame
     public:
         BlockW(std::string nazov);
 
-        inline model::Block* get_block() const
-        {
-            return block;
-        }
+        // inline model::Block* get_block() const
+        // {
+        //     return block;
+        // }
         
 };
 

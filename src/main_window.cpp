@@ -59,7 +59,7 @@ namespace icp {
     {
         schema_widget = new ui::SchemaW("Untitled Schema");
         setCentralWidget(schema_widget);
-        setWindowTitle(tr((DEFAULT_WINDOW_TITLE + " - " + schema_widget->get_schema()->get_nazov()).c_str()));
+        setWindowTitle(tr((DEFAULT_WINDOW_TITLE + " - " + schema_widget->get_nazov()).c_str()));
         schema_widget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         QPalette palette = schema_widget->palette();
         palette.setColor(QPalette::Background, QColor(40,44,52));

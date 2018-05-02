@@ -12,26 +12,26 @@ namespace icp
 
         Block::~Block()
         {
-            for(std::vector<Vyraz*>::iterator it = vypocty.begin(); it != vypocty.end(); ++it)
-            {
-                delete (*it);
-            }
+            // for(std::vector<Vyraz*>::iterator it = vypocty.begin(); it != vypocty.end(); ++it)
+            // {
+            //     delete (*it);
+            // }
 
-            vypocty.clear();
+            // vypocty.clear();
 
-            for(std::vector<Port*>::iterator it = input_ports.begin(); it != input_ports.end(); ++it)
-            {
-                delete (*it);
-            }
+            // for(std::vector<Port*>::iterator it = input_ports.begin(); it != input_ports.end(); ++it)
+            // {
+            //     delete (*it);
+            // }
 
-            input_ports.clear();
+            // input_ports.clear();
             
-            for(std::vector<Port*>::iterator it = output_ports.begin(); it != output_ports.end(); ++it)
-            {
-                delete (*it);
-            }
+            // for(std::vector<Port*>::iterator it = output_ports.begin(); it != output_ports.end(); ++it)
+            // {
+            //     delete (*it);
+            // }
 
-            output_ports.clear();
+            // output_ports.clear();
             
         }
 
