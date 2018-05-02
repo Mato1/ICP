@@ -230,7 +230,7 @@ namespace icp
 
                     for (auto it = hodnoty.begin(); it != hodnoty.end(); ++it)
                     {
-                        std::cout << "\t\t\t\t\t\t" << it->first << " " << it->second << '\n';
+                        outfile << "\t\t\t\t\t\t" << it->first << std::endl;
                     }
 
                     outfile << "\t\t\t\t\t" "end type" << std::endl;
@@ -247,7 +247,7 @@ namespace icp
 
                     for (auto it = hodnoty.begin(); it != hodnoty.end(); ++it)
                     {
-                        std::cout << "\t\t\t\t\t\t" << it->first << std::endl;
+                        outfile << "\t\t\t\t\t\t" << it->first << std::endl;
                     }
 
                     outfile << "\t\t\t\t\t" "end type" << std::endl;

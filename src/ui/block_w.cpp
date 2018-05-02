@@ -78,7 +78,35 @@ void BlockW::rename_block()
 
 void BlockW::add_expression()
 {
-    std::cout << "Add expression to block" << std::endl;
+    // std::cout << "Add expression to block" << std::endl;
+    QString text = "";
+    QString text2 = "";
+    bool ok;
+    QStringList items;
+    for (unsigned i=0; i < get_input_ports().size(); i++) 
+    {
+        items << tr (get_input_ports()[i]->get_nazov().c_str());
+    }
+
+    QString item = QInputDialog::getItem(this, tr("Input port"),
+                                         tr("Name port"), items, 0, false, &ok);
+
+    text = QInputDialog::getText(this,tr("Vyraz:"),
+                                 tr("Vzorec:"), QLineEdit::Normal,
+                                 text, &ok);
+    text2 = QInputDialog::getText(this,tr("Vyraz:"),
+                                 tr("Premenna:"), QLineEdit::Normal,
+                                 text2, &ok);
+
+    if (ok == false)
+    {
+        return;
+    }
+
+    // VyrazW * vyraz_w = new VyrazW(text.toStdString());
+    // this->block->add_vypocet(vyraz_w->get_infix_w());
+
+
 }
 
 void BlockW::add_input_port()
