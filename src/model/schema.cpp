@@ -259,19 +259,19 @@ namespace icp
                 {
                     outfile << "\t\t\t\t\t" << v->get_infix() << std::endl;
 
-                    outfile << "\t\t\t\t\t\t" "inputs" << std::endl;
+                    outfile << "\t\t\t\t\t\t" "inputs_vyp" << std::endl;
                     for (Port *vp : v->get_input_ports())
                     {
                         outfile << "\t\t\t\t\t\t\t" << vp->get_nazov() << std::endl;
                     }
-                    outfile << "\t\t\t\t\t\t" "end inputs" << std::endl;
+                    outfile << "\t\t\t\t\t\t" "end inputs_vyp" << std::endl;
 
-                    outfile << "\t\t\t\t\t\t" "outputs" << std::endl;
+                    outfile << "\t\t\t\t\t\t" "outputs_vyp" << std::endl;
                     for (Port *vp : v->get_output_ports())
                     {
                         outfile << "\t\t\t\t\t\t\t" << vp->get_nazov() << std::endl;
                     }
-                    outfile << "\t\t\t\t\t\t" "end inputs" << std::endl;
+                    outfile << "\t\t\t\t\t\t" "end outputs_vyp" << std::endl;
 
                     outfile << "\t\t\t\t\t\t" "premenna " << v->get_premenna() << std::endl;
                     outfile << "\t\t\t\t\t\t" "end premenna " << v->get_premenna() << std::endl;
@@ -303,11 +303,20 @@ namespace icp
             int outputs = 0;
             int prepojenie = 0;
             int port = 0;
+            int vypocty = 0;
+            int infix = 0;
+            int inputs_vyp = 0;
+            int outputs_vyp = 0;
             int type = 0;
             int ui  = 0;
+            int premenna = 0;
             int length_str = 0;
+            int input_cislo_portu = 1;
+            int output_cislo_portu = 1;
             std::ifstream f(file);
             std:: string str;
+            std::string port_str;
+            DataType data_type;
             if (! f.is_open())
             {
                 // error neslo otvorit subor
@@ -321,6 +330,16 @@ namespace icp
                     if(str.substr(4,length_str) == "type")
                     {
                         type = 0;
+                        data_type.clear();
+                        if (inputs == 1)
+                        {
+
+                            // tu pridam blok do inputs port aj s jeho typom
+                        }
+                        else
+                        {
+                            // je to outputs port takze ho pridam do outputs port
+                        }
                         break;
                     }
                     else if (str.substr(4,length_str) == "port")
@@ -328,24 +347,38 @@ namespace icp
                         port = 0;
                         break;
                     }
-                    else if (str.substr(4,length_str) == "inputs")
+                    else if (str.substr(4,length_str) == "inputs_vyp")
                     {
-                        inputs = 0;
+                        inputs_vyp = 2;
                         break;
                     }
-                    else if (str.substr(4,length_str) == "outputs")
+                    else if (str.substr(4,length_str) == "outputs_vyp")
                     {
-                        outputs = 0;
+                        outputs_vyp = 2;
+                        break;
+                    }
+                    else if (str.substr(4,length_str) == "premenna")
+                    {
+                        premenna = 0;
+                        break;
+                    }
+                    else if (str.substr(4,length_str) == "prepojenia")
+                    {
+                        prepojenie = 0;
                         break;
                     }
                     else if (str.substr(4,length_str) == "block")
                     {
                         block = 0;
+                        inputs = 0;
+                        outputs = 0;
+                        inputs_vyp = 0;
+                        outputs_vyp = 0;
                         break;
                     }
                     else if (str.substr(4,length_str) == "blocks")
                     {
-                        blocks =0;
+                        blocks =2;
                         break;
                     }
                 }
@@ -387,7 +420,8 @@ namespace icp
                     else
                     {
                         length_str = str.length() - 6;
-                        add_block(str.substr(6,length_str));
+                        Block * b = new Block(str.substr(6, length_str));
+                        add_block(b);
                         // vytvorim a nastavim meno bloku  pomocou str.substr(6,length_str)
                     }
                     block = 1;
@@ -409,14 +443,14 @@ namespace icp
                 }
                 else if (inputs == 1 and port == 0)
                 {
-                    std::string port_str = str.substr(0,4);
+                    port_str = str.substr(0,4);
                     if (port_str != "port")
                     {
                         // error malo tu byt port
                     }
                     else
                     {
-                        int cislo_portu = 1;
+                        input_cislo_portu +=1;
                         length_str = str.length() - 5;
                         port_str = str.substr(5,length_str);
                         //vyrobim port a este ho nebudem pridavat bloku lebo nepoznam jeho type
@@ -424,12 +458,163 @@ namespace icp
                     port = 1;
                     break;
                 }
-                else if (port == 1 and type == 0)
+                else if (inputs == 1 and port == 1 and type == 0)
                 {
-
+                    if (str != "type")
+                    {
+                        // mam tu erro
+                    }
+                    else
+                    {
+                        type = 1;
+                        // vytvorim si tu mapu na ulozenie potom typov
+                        break;
+                    }
+                }
+                else if(type == 1)
+                {
+                    // budem tu pridavat do mapy typi ktore budem ziskavat
+                    // tu neviem ako rozdelim to ze jedno je hodnota a jedno nazov a neviem akej to je dlzky
+                    // Port * Block::add_port(port_str, "INPUT");
+                    // musim pridaj port do bloku 
+                    break;
+                }
+                else if (outputs == 0)
+                {
+                    if (str == "inputs")
+                    {
+                        outputs = 1;
+                    }
+                    break;
+                }
+                else if (outputs == 1 and port == 0)
+                {
+                    port_str = str.substr(0,4);
+                    if (port_str != "port")
+                    {
+                        // error malo tu byt port
+                    }
+                    else
+                    {
+                        output_cislo_portu +=1;
+                        length_str = str.length() - 5;
+                        port_str = str.substr(5,length_str);
+                        //vyrobim port a este ho nebudem pridavat bloku lebo nepoznam jeho type
+                    }
+                    port = 1;
+                    break;
+                }
+                else if (outputs == 1 and port == 1 and type == 0)
+                {
+                    if (str != "type")
+                    {
+                        // mam tu erro
+                    }
+                    else
+                    {
+                        type = 1;
+                        // vytvorim si tu mapu na ulozenie potom typov
+                        break;
+                    }
+                }
+                else if(type == 1)
+                {
+                    // budem tu pridavat do mapy typi ktore budem ziskavat
+                    // tu neviem ako rozdelim to ze jedno je hodnota a jedno nazov a neviem akej to je dlzky
+                    // Port * Block::add_port(port_str, "INPUT");
+                    // musim pridaj port do bloku 
+                    break;
+                }
+                else if (vypocty == 0)
+                {
+                    if (str == "vypocty")
+                    {
+                        vypocty = 1;
+                    }
+                    else
+                    {
+                        // error
+                    }
+                    break;
+                }
+                else if (vypocty == 1 and infix == 0)
+                {
+                    // nastavim vyrazu infix
+                    infix = 1;
+                    break;
+                }
+                else if (infix == 1 and inputs_vyp == 0)
+                {
+                    if(str == "inputs_vyp")
+                    {
+                        inputs_vyp = 1;
+                    }
+                    else 
+                    {
+                        // dalsia chyba
+                    }
+                    break;
+                }
+                else if (inputs_vyp == 1)
+                {
+                    // budem tu nacitavav nazov vstupnych portov pre vypocet
+                    break;
+                }
+                else if (infix == 1 and inputs_vyp == 2 and outputs_vyp == 0)
+                {
+                    if(str == "outputs_vyp")
+                    {
+                        outputs_vyp = 1;
+                    }
+                    else 
+                    {
+                        // dalsia chyba
+                    }
+                    break;
+                }
+                else if (infix == 1 and outputs_vyp == 1)
+                {
+                    // budem tu nacitavav nazov vstupnych portov pre vypocet
+                    break;
+                }
+                else if (infix == 1 and premenna == 0)
+                {
+                    std::string premenna_str = str.substr(0,8);
+                    if (premenna_str != "premenna")
+                    {
+                        // error mala tu byt premenna
+                    }
+                    else
+                    {
+                        length_str = str.length() - 9;
+                        premenna_str = str.substr(9,length_str);
+                        // dostal som nazov premennej kde sa ma ulozit vysledok
+                    }
+                    premenna = 1;
+                    break;
+                }
+                else if (blocks == 2 and prepojenie == 0)
+                {
+                    if (str != "prepojenia")
+                    {
+                        // error malo tam byt prepojenie
+                    }
+                    else
+                    {
+                        prepojenie = 1;
+                    }
+                    break;
+                }
+                else if (prepojenie == 1)
+                {
+                    // nacitam informacie pre prepojenie
+                    break;
+                }
+                else
+                {
+                    // chyba nieco ine tam bolor
                 }
             }
         }
-
     }
 }

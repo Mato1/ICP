@@ -16,10 +16,7 @@ namespace icp
 
             ~DataType()
             {
-                for (auto it = data.begin(); it != data.end(); it++)
-                {
-                    delete it->second;
-                }
+                clear();
             }
 
             /**
@@ -81,6 +78,15 @@ namespace icp
                 }
 
                 return true;
+            }
+
+            void clear()
+            {
+                for (auto it = data.begin(); it != data.end(); it++)
+                {
+                    delete it->second;
+                }
+                data.clear();
             }
 
 

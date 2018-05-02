@@ -14,13 +14,13 @@ BlockW::BlockW(std::string nazov)
     layout_base = new QVBoxLayout();
     block = new model::Block(nazov);
     block_body = new BlockBody(nazov);
-    input_ports = new PortsW();
-    output_ports = new PortsW();
+    w_input_ports = new PortsW();
+    w_output_ports = new PortsW();
 
     setLayout(layout_base);
-    layout_base->addWidget(input_ports);
+    layout_base->addWidget(w_input_ports);
     layout_base->addWidget(block_body);
-    layout_base->addWidget(output_ports);
+    layout_base->addWidget(w_output_ports);
     
     setLineWidth(1);
     setFrameShape(Shape::Box);
@@ -29,7 +29,7 @@ BlockW::BlockW(std::string nazov)
 
     QSizePolicy input_ports_sp(QSizePolicy::Preferred, QSizePolicy::Preferred);
     input_ports_sp.setVerticalStretch(1);
-    input_ports->setSizePolicy(input_ports_sp);
+    w_input_ports->setSizePolicy(input_ports_sp);
 
     QSizePolicy body_block_sp(QSizePolicy::Preferred, QSizePolicy::Preferred);
     body_block_sp.setVerticalStretch(5);
@@ -37,11 +37,11 @@ BlockW::BlockW(std::string nazov)
 
     QSizePolicy output_ports_sp(QSizePolicy::Preferred, QSizePolicy::Preferred);
     output_ports_sp.setVerticalStretch(1);
-    output_ports->setSizePolicy(output_ports_sp);
+    w_output_ports->setSizePolicy(output_ports_sp);
     
     block_body->setParent(this);
-    input_ports->setParent(this);
-    output_ports->setParent(this);
+    w_input_ports->setParent(this);
+    w_output_ports->setParent(this);
 
 }
 
@@ -64,8 +64,13 @@ void BlockW::rename_block()
 
     } while (schema->get_schema()->get_block(text.toStdString()) != nullptr && ok == true);
 
-        block->set_nazov(text.toStdString());
-        block_body->set_nazov(block->get_nazov());
+    if (ok == false)
+    {
+        return;
+    }
+
+    block->set_nazov(text.toStdString());
+    block_body->set_nazov(block->get_nazov());
            
 }
 
@@ -77,6 +82,9 @@ void BlockW::add_expression()
 void BlockW::add_input_port()
 {
     std::cout << "Add input port to block" << std::endl;
+    PortW * port_w = new PortW(block->get_nazov(), block->get_input_ports().size(), model::PortType::input);
+    w_input_ports->add_port(port_w);
+    this->block->add_port(port_w->get_port());
 }
 
 void BlockW::add_output_port()

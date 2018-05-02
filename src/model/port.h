@@ -96,7 +96,7 @@ namespace icp
                 {
                     return this->active;
                 }
-
+                
     
         };
     }

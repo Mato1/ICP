@@ -35,6 +35,29 @@ namespace icp
             
         }
 
+        void Block::add_vypocet(Vyraz * v)
+        {
+            if (v != nullptr)
+            {
+                vypocty.push_back(v);
+            }
+        }
+
+        void Block::add_port(Port * p)
+        {
+            if (p != nullptr)
+            {
+                if (p->get_port_type() == PortType::input)
+                {
+                    input_ports.push_back(p);
+                } 
+                else if (p->get_port_type() == PortType::output)
+                {
+                    output_ports.push_back(p);
+                } 
+            }
+        }
+
         Vyraz * Block::add_vypocet(std::string vyraz, std::string premenna)
         {
             Vyraz * vypocet = new Vyraz(vyraz);

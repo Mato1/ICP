@@ -28,9 +28,9 @@ class BlockW : public ResizableFrame
     private:
         model::Block * block       = nullptr;
         QVBoxLayout * layout_base  = nullptr;
-        PortsW * input_ports       = nullptr;
+        PortsW * w_input_ports       = nullptr;
         BlockBody  * block_body    = nullptr;
-        PortsW * output_ports      = nullptr;
+        PortsW * w_output_ports      = nullptr;
 
     public:
         BlockW(std::string nazov);
@@ -40,6 +40,7 @@ class BlockW : public ResizableFrame
             return block;
         }
 
+        
 };
 
 }

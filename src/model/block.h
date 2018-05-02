@@ -58,6 +58,23 @@ namespace icp
                  * @param premenna Do akej premennej sa ma ulozit vysledna hodnota.
                  * @return Vyraz* Ukazatel na instanciu triedy vypocet.
                  */
+                void add_vypocet(Vyraz * vyraz);
+
+                /**
+                 * @brief Prida vstupny port blocku.
+                 * 
+                 * @param type Typ ktory bude prijmat dany port.
+                 * @return Port* Ukazatel na objekt Port.
+                 */
+                void add_port(Port * port);
+
+                /**
+                 * @brief Prida novy vypocet na zaklade vyrazu.
+                 * 
+                 * @param vyraz Vyraz v infix zapise. napr. (a+b+c+d)
+                 * @param premenna Do akej premennej sa ma ulozit vysledna hodnota.
+                 * @return Vyraz* Ukazatel na instanciu triedy vypocet.
+                 */
                 Vyraz * add_vypocet(std::string vyraz, std::string premenna);
 
                 /**
