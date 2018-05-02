@@ -82,14 +82,24 @@ void BlockW::add_expression()
     QString text = "";
     QString text2 = "";
     bool ok;
-    QStringList items;
+    QStringList items_input;
+    QStringList items_output;
+
     for (unsigned i=0; i < get_input_ports().size(); i++) 
     {
-        items << tr (get_input_ports()[i]->get_nazov().c_str());
+        items_input << tr (get_input_ports()[i]->get_nazov().c_str());
     }
 
-    QString item = QInputDialog::getItem(this, tr("Input port"),
-                                         tr("Name port"), items, 0, false, &ok);
+    for (unsigned i=0; i < get_output_ports().size(); i++) 
+    {
+        items_output << tr (get_output_ports()[i]->get_nazov().c_str());
+    }
+
+    QString item_input = QInputDialog::getItem(this, tr("Input port"),
+                                         tr("Name port"), items_input, 0, false, &ok);
+
+    QString item_output = QInputDialog::getItem(this, tr("Output port"),
+                                         tr("Name port"), items_output, 0, false, &ok);
 
     text = QInputDialog::getText(this,tr("Vyraz:"),
                                  tr("Vzorec:"), QLineEdit::Normal,
@@ -105,6 +115,25 @@ void BlockW::add_expression()
 
     VyrazW * vyraz_w = new VyrazW(text.toStdString(), text2.toStdString());
     this->add_vypocet(vyraz_w);
+
+    for (unsigned i=0; i < get_input_ports().size(); i++) 
+    {
+        if (item_input.toStdString() == get_input_ports()[i]->get_nazov().c_str())
+        {
+            vyraz_w->assign_input_port(get_input_ports()[i]);
+            std::cout << vyraz_w->get_input_ports()[0]->get_nazov() << std::endl;
+        }
+    }
+
+    for (unsigned i=0; i < get_output_ports().size(); i++) 
+    {
+        if (item_output.toStdString() == get_output_ports()[i]->get_nazov().c_str())
+        {
+            vyraz_w->assign_output_port(get_output_ports()[i]);
+            std::cout << vyraz_w->get_output_ports()[0]->get_nazov() << std::endl;
+        }
+    }
+
 
 
 }
