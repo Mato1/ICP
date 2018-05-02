@@ -8,7 +8,7 @@ namespace icp
 {
 namespace ui 
 {
-    class VyrazW : public QLabel
+    class VyrazW : public QLabel, public model::Vyraz
     {
         Q_OBJECT
 
@@ -16,15 +16,10 @@ namespace ui
 
 
     private:
-        model:: Vyraz * vyraz;
+        // model:: Vyraz * vyraz;
 
     public:
-        VyrazW(std::string expression);
-
-        inline model::Vyraz * get_infix_w()
-        {
-            return vyraz;
-        }
+        VyrazW(std::string expression, std::string premenna);
 
     };
 }

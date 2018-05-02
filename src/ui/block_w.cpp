@@ -103,8 +103,8 @@ void BlockW::add_expression()
         return;
     }
 
-    // VyrazW * vyraz_w = new VyrazW(text.toStdString());
-    // this->block->add_vypocet(vyraz_w->get_infix_w());
+    VyrazW * vyraz_w = new VyrazW(text.toStdString(), text2.toStdString());
+    this->add_vypocet(vyraz_w);
 
 
 }

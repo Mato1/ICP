@@ -1,17 +1,17 @@
 #include "ui/vyraz_w.h"
-#include <Qpalette>
+#include <QPalette>
 #include <QColor>
 
 namespace icp
 {
 namespace ui
 {
-    VyrazW::VyrazW(std::string expression)
+    VyrazW::VyrazW(std::string expression, std::string premenna)
+        :model::Vyraz(expression, premenna)
     {
-        vyraz = new model::Vyraz(expression);
         QPalette pal = palette();
         setMinimumHeight(10);
-        pal.setColor(QPalette::Background, QColor(50, 100, 50));
+        pal.setColor(QPalette::Background, QColor(200, 200, 200));
         setAutoFillBackground(true);
         setPalette(pal);
      

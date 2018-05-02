@@ -5,6 +5,7 @@
 #include "ui/block_body_w.h"
 #include "ui/ports_w.h"
 #include "ui/port_w.h"
+#include "ui/vyraz_w.h"
 #include "model/block.h"
 #include <string>
 #include <QVBoxLayout>
@@ -33,7 +34,6 @@ class BlockW : public ResizableFrame, public model::Block
         PortsW * w_input_ports     = nullptr;
         BlockBody  * block_body    = nullptr;
         PortsW * w_output_ports    = nullptr;
-
     public:
         BlockW(std::string nazov);
 
