@@ -99,9 +99,8 @@ namespace icp
 
             QString port_input = QInputDialog::getItem(this, tr("Input port"),
                                          tr("Name port"), ports_input, 0, false, &ok);
-            
 
-            // std::cout << "New Connection" << std::endl;
+
         }
 
         void SchemaW::save_schema()
@@ -118,10 +117,10 @@ namespace icp
         {
            bool ok;
            QString text = QInputDialog::getText(this, tr("Load"),
-                                         tr("Nazov suboru:"), QLineEdit::Normal,
-                                            tr("Untitled_file"), &ok);
+                                                tr("Nazov suboru:"), QLineEdit::Normal,
+                                                tr("Untitled_file"), &ok);
                                             
-            std::cout << "Load schema" << std::endl;
+           std::cout << "Load schema" << std::endl;
         }
 
         void SchemaW::close_schema()
