@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include "model/port.h"
+#include <QMouseEvent>
 
 namespace icp 
 {
@@ -20,7 +21,7 @@ class PortW : public QWidget, public model::Port
 
     public:
         PortW(std::string nazov_bloku, int cislo, model::PortType type);
-        
+        void mouseMoveEvent(QMouseEvent * event);
         // inline model::Port * get_port()
         // {
             // return port;

@@ -1,6 +1,8 @@
 #include "ui/port_w.h"
 #include <QPalette>
 #include <QColor>
+#include <QToolTip>
+
 namespace icp 
 {
 namespace ui
@@ -22,12 +24,19 @@ namespace ui
         {
             pal.setColor(QPalette::Background, QColor(200, 50, 50));
         }
-
+        setMouseTracking(true);
         setAutoFillBackground(true);
         setPalette(pal);
      
         show();
     }
 
+    void PortW::mouseMoveEvent(QMouseEvent * event)
+    {
+        if (this->rect().contains(event->pos()))
+        {
+            QToolTip::showText(QPoint(), "Tool Tip");
+        }
+    }
 }
 }

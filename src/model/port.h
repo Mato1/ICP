@@ -40,6 +40,7 @@ namespace icp
                 DataType type;
                 bool active = false;
                 PortType port_type; 
+                std::string nazov_bloku;
 
             public:
                 /**
@@ -50,15 +51,15 @@ namespace icp
                  * @param port_type Typ portu napriklad INPUT(vstupny).
                  */
                 Port(std::string nazov_bloku, int cislo, PortType port_type)
-                    : port_type(port_type)
+                    : port_type(port_type), nazov_bloku(nazov_bloku)
                 {
                     if (port_type == PortType::input)
                     {
-                        nazov = INPUT_PORT_PREFIX + "_" + nazov_bloku + "_" + std::to_string(cislo);
+                        nazov = nazov_bloku + "_" + INPUT_PORT_PREFIX + std::to_string(cislo);
                     } 
                     else if (port_type == PortType::output)
                     {
-                        nazov = OUTPUT_PORT_PREFIX + "_" + nazov_bloku + "_" + std::to_string(cislo);
+                        nazov = nazov_bloku + "_" + OUTPUT_PORT_PREFIX + "_" + std::to_string(cislo);
                     }
                 }
 
@@ -109,6 +110,11 @@ namespace icp
                 inline const bool& is_active() const 
                 {
                     return this->active;
+                }
+
+                inline std::string get_nazov_bloku() const 
+                {
+                    return this->nazov_bloku;
                 }
                 
     
