@@ -27,7 +27,7 @@ namespace icp
                 void close_schema();  
                 void play_schema();
                 void next_step();  
-                void new_schema();    
+                // void new_schema();    
                    
             private:    
                 void init();

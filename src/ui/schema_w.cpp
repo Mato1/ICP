@@ -6,6 +6,7 @@
 #include <QInputDialog>
 #include <QFileDialog>
 
+
 namespace icp
 {
     namespace ui
@@ -34,9 +35,9 @@ namespace icp
             contextMenu.addAction(&action2);
             connect(&action2, &QAction::triggered, this, &SchemaW::new_connection);
 
-            QAction action3("New schema", this);
-            contextMenu.addAction(&action3);
-            connect(&action3, &QAction::triggered, this, &SchemaW::new_schema);
+            // QAction action3("New schema", this);
+            // contextMenu.addAction(&action3);
+            // connect(&action3, &QAction::triggered, this, &SchemaW::new_schema);
 
             QAction action4("Save Schema", this);
             contextMenu.addAction(&action4);
@@ -94,11 +95,20 @@ namespace icp
                 }
             }
 
-            QString port_output = QInputDialog::getItem(this, tr("Output port"),
-                                         tr("Name port"), ports_output, 0, false, &ok);
+        QString port_output = QInputDialog::getItem(this, tr("Output port"),
+                                        tr("Name port"), ports_output, 0, false, &ok);
 
-            QString port_input = QInputDialog::getItem(this, tr("Input port"),
-                                         tr("Name port"), ports_input, 0, false, &ok);
+        QString port_input = QInputDialog::getItem(this, tr("Input port"),
+                                        tr("Name port"), ports_input, 0, false, &ok);
+
+        if (ok == false)
+        {
+            return;
+        }
+        // if (port_exists(std::string nazov);
+        // block_exists(std::string nazov)
+        // ConnectionW * connection_w = new ConnectionW()
+
             
 
             // std::cout << "New Connection" << std::endl;
@@ -116,16 +126,19 @@ namespace icp
 
         void SchemaW::load_schema()
         {
-           bool ok;
-           QString text = QInputDialog::getText(this, tr("Load"),
-                                         tr("Nazov suboru:"), QLineEdit::Normal,
-                                            tr("Untitled_file"), &ok);
+        //    bool ok;
+           QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
+                                                "/home",
+                                                tr("Images (*.txt)"));
+            load(fileName.toStdString());
+            std::cout << fileName.toStdString()<<std::endl;
                                             
             std::cout << "Load schema" << std::endl;
         }
 
         void SchemaW::close_schema()
         {
+            QWidget::close();
             std::cout << "Close schema" << std::endl;
         }
 
@@ -139,10 +152,10 @@ namespace icp
             std::cout << "Next step" << std::endl;
         }
 
-        void SchemaW::new_schema()
-        {
-            std::cout << "New schema" << std::endl;
-        }
+        // void SchemaW::new_schema()
+        // {
+        //     std::cout << "New schema" << std::endl;
+        // }
 
     }
 }

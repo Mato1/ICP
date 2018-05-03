@@ -297,6 +297,7 @@ namespace icp
 
         void Schema::load(std::string file)
         {
+            std::cout << "som vo funkcii load " << std::endl;
             int schema = 0;
             int blocks = 0;
             int block = 0;
