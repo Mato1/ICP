@@ -82,16 +82,20 @@ namespace icp
             bool ok;
             QStringList ports_output;
             QStringList ports_input;
+            PortW * p_out = (PortW*) parent();
+            PortW * p_in = (PortW*) parent();
+            BlockW * b_out = (BlockW*) parent();
+            BlockW * b_in = (BlockW*) parent();
 
-            for (unsigned i=0; i < get_all_ports().size(); i++) 
+            for (unsigned i=0; i < get_all_blocks().size(); i++) 
             {
-                for (unsigned j=0; j < get_all_ports()[i]->get_output_ports().size(); j++) 
+                for (unsigned j=0; j < get_all_blocks()[i]->get_output_ports().size(); j++) 
                 {
-                    ports_output << tr (get_all_ports()[i]->get_output_ports()[j]->get_nazov().c_str());
+                    ports_output << tr (get_all_blocks()[i]->get_output_ports()[j]->get_nazov().c_str());
                 }
-                for (unsigned j=0; j < get_all_ports()[i]->get_input_ports().size(); j++) 
+                for (unsigned j=0; j < get_all_blocks()[i]->get_input_ports().size(); j++) 
                 {
-                    ports_input << tr (get_all_ports()[i]->get_input_ports()[j]->get_nazov().c_str());
+                    ports_input << tr (get_all_blocks()[i]->get_input_ports()[j]->get_nazov().c_str());
                 }
             }
 
@@ -105,12 +109,34 @@ namespace icp
         {
             return;
         }
+
+        for (unsigned i=0; i < get_all_blocks().size(); i++) 
+            {
+                for (unsigned j=0; j < get_all_blocks()[i]->get_output_ports().size(); j++) 
+                {
+                    if (port_output.toStdString() == get_all_blocks()[i]->get_output_ports()[j]->get_nazov().c_str())
+                    {
+                        p_out->get_all_blocks()[i]->get_output_ports()[j];
+                        b_out->get_block(p_out->get_nazov_bloku());
+                    }
+                }
+                for (unsigned j=0; j < get_all_blocks()[i]->get_input_ports().size(); j++) 
+                {
+                    if(port_input.toStdString() == get_all_blocks()[i]->get_input_ports()[j]->get_nazov().c_str())
+                    {
+                        p_in->get_all_blocks()[i]->get_input_ports()[j];
+                        b_in->get_block(p_in->get_nazov_bloku());
+                    }
+                }
+            }
+
+        // BlockW * b_out = get_block(p_out->get_nazov_bloku());
         // if (port_exists(std::string nazov);
         // block_exists(std::string nazov)
         // ConnectionW * connection_w = new ConnectionW()
 
-        port_input = QInputDialog::getItem(this, tr("Input port"),
-                                         tr("Name port"), ports_input, 0, false, &ok);
+        // port_input = QInputDialog::getItem(this, tr("Input port"),
+        //                                  tr("Name port"), ports_input, 0, false, &ok);
 
 
         }
