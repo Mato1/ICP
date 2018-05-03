@@ -14,10 +14,6 @@ namespace ui
 
         public slots:
 
-
-    private:
-        // model:: Vyraz * vyraz;
-
     public:
         VyrazW(std::string expression, std::string premenna);
 

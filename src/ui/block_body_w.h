@@ -29,7 +29,6 @@ class BlockBody : public QFrame
         QPoint offset;
         QLabel label_nazov;
         QVBoxLayout layout_block;
-        QListView list_view;
 
     public:
         BlockBody(std::string nazov);
@@ -37,6 +36,12 @@ class BlockBody : public QFrame
         inline void set_nazov(std::string nazov)
         {
             this->label_nazov.setText(nazov.c_str());
+        }
+
+
+        inline void add_expression(QLabel * label)
+        {
+            layout_block.addWidget(label);
         }
 };
 

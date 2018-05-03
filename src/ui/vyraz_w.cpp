@@ -14,7 +14,7 @@ namespace ui
         pal.setColor(QPalette::Background, QColor(200, 200, 200));
         setAutoFillBackground(true);
         setPalette(pal);
-     
+        setText(tr((expression+"="+premenna).c_str()));
         show();
     }
 }

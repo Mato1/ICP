@@ -133,6 +133,8 @@ void BlockW::add_expression()
             std::cout << vyraz_w->get_output_ports()[0]->get_nazov() << std::endl;
         }
     }
+
+    block_body->add_expression(vyraz_w);
 }
 
 void BlockW::add_input_port()

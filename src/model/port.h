@@ -59,7 +59,7 @@ namespace icp
                     } 
                     else if (port_type == PortType::output)
                     {
-                        nazov = nazov_bloku + "_" + OUTPUT_PORT_PREFIX + "_" + std::to_string(cislo);
+                        nazov = nazov_bloku + "_" + OUTPUT_PORT_PREFIX + std::to_string(cislo);
                     }
                 }
 
