@@ -109,7 +109,7 @@ namespace icp
         // block_exists(std::string nazov)
         // ConnectionW * connection_w = new ConnectionW()
 
-            QString port_input = QInputDialog::getItem(this, tr("Input port"),
+        port_input = QInputDialog::getItem(this, tr("Input port"),
                                          tr("Name port"), ports_input, 0, false, &ok);
 
 

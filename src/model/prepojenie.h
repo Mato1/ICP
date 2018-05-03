@@ -10,6 +10,7 @@
 #define ICP_BLOCKBUILDER_SRC_MODEL_PREPOJ_H
 
 #include "model/port.h"
+#include "model/block.h"
 
 namespace icp 
 {
