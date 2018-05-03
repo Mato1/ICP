@@ -157,7 +157,7 @@ namespace icp
                     return nazov;
                 }   
 
-                inline const std::vector<Block*> get_all_ports()
+                inline const std::vector<Block*> get_all_blocks()
                 {
                     return blocks;
                 }
