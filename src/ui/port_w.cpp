@@ -24,6 +24,7 @@ namespace ui
         {
             pal.setColor(QPalette::Background, QColor(200, 50, 50));
         }
+        
         setMouseTracking(true);
         setAutoFillBackground(true);
         setPalette(pal);
