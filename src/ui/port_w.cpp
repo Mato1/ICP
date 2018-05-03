@@ -35,7 +35,7 @@ namespace ui
     {
         if (this->rect().contains(event->pos()))
         {
-            QToolTip::showText(QPoint(), "Tool Tip");
+            QToolTip::showText(event->globalPos(), get_data_type().to_string().c_str());
         }
     }
 }

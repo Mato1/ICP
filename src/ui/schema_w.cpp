@@ -6,6 +6,7 @@
 #include <QInputDialog>
 #include <QFileDialog>
 
+
 namespace icp
 {
     namespace ui
@@ -34,9 +35,9 @@ namespace icp
             contextMenu.addAction(&action2);
             connect(&action2, &QAction::triggered, this, &SchemaW::new_connection);
 
-            QAction action3("New schema", this);
-            contextMenu.addAction(&action3);
-            connect(&action3, &QAction::triggered, this, &SchemaW::new_schema);
+            // QAction action3("New schema", this);
+            // contextMenu.addAction(&action3);
+            // connect(&action3, &QAction::triggered, this, &SchemaW::new_schema);
 
             QAction action4("Save Schema", this);
             contextMenu.addAction(&action4);
@@ -94,8 +95,19 @@ namespace icp
                 }
             }
 
-            QString port_output = QInputDialog::getItem(this, tr("Output port"),
-                                         tr("Name port"), ports_output, 0, false, &ok);
+        QString port_output = QInputDialog::getItem(this, tr("Output port"),
+                                        tr("Name port"), ports_output, 0, false, &ok);
+
+        QString port_input = QInputDialog::getItem(this, tr("Input port"),
+                                        tr("Name port"), ports_input, 0, false, &ok);
+
+        if (ok == false)
+        {
+            return;
+        }
+        // if (port_exists(std::string nazov);
+        // block_exists(std::string nazov)
+        // ConnectionW * connection_w = new ConnectionW()
 
             QString port_input = QInputDialog::getItem(this, tr("Input port"),
                                          tr("Name port"), ports_input, 0, false, &ok);
@@ -125,6 +137,7 @@ namespace icp
 
         void SchemaW::close_schema()
         {
+            QWidget::close();
             std::cout << "Close schema" << std::endl;
         }
 
@@ -138,10 +151,10 @@ namespace icp
             std::cout << "Next step" << std::endl;
         }
 
-        void SchemaW::new_schema()
-        {
-            std::cout << "New schema" << std::endl;
-        }
+        // void SchemaW::new_schema()
+        // {
+        //     std::cout << "New schema" << std::endl;
+        // }
 
     }
 }

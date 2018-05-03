@@ -120,13 +120,17 @@ namespace icp
                 {
                     if (it->second == nullptr)
                     {
-                        s += it->first + "=" + "null\n";
+                        s += it->first + "=" + "null";
                     } 
                     else
                     {
-                        s += it->first + "=" + std::to_string(*it->second) + "\n";
+                        s += it->first + "=" + std::to_string(*it->second);
                     }
+
+                    s += "\n";
                 }
+                
+                s = s.substr(0, s.length() - 1);
 
                 return s;
             }

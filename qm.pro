@@ -17,6 +17,7 @@ HEADERS +=  main_window.h           \
             ui/resizable_frame.h    \
             ui/schema_w.h           \
             ui/vyraz_w.h            \
+            ui/connection_w.h       \
  
 SOURCES += main_window.cpp          \
            main.cpp                 \
@@ -29,3 +30,4 @@ SOURCES += main_window.cpp          \
            ui/resizable_frame.cpp   \
            ui/schema_w.cpp            \
            ui/vyraz_w.cpp              \
+           ui/connection_w.cpp          \

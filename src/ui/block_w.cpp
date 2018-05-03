@@ -155,8 +155,6 @@ void BlockW::add_input_port()
     w_input_ports->add_port(port_w);
     this->add_port(port_w);
     port_w->set_data_type(text.toStdString());
-    std::cout << port_w->get_data_type().to_string() << std::endl;
-
 }
 
 void BlockW::add_output_port()
@@ -176,7 +174,6 @@ void BlockW::add_output_port()
     w_output_ports->add_port(port_w);
     add_port(port_w);
     port_w->set_data_type(text.toStdString());
-    std::cout << port_w->get_data_type().to_string() << std::endl;
 }
 
 }
