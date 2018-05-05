@@ -12,6 +12,7 @@
 #include "ui/port_w.h"
 #include "ui/connection_w.h"
 
+
 namespace icp
 {
 namespace ui
@@ -30,7 +31,11 @@ SchemaW::SchemaW(std::string nazov)
     connect(this, &SchemaW::customContextMenuRequested, this, &SchemaW::show_context_menu);
     connect(action_insert_block, &QAction::triggered,   this, &SchemaW::new_block);
     connect(action_insert_con,   &QAction::triggered,   this, &SchemaW::new_connection);
+
+ 
+
 }
+
 
 void SchemaW::show_context_menu(const QPoint &pos)
 {
@@ -87,8 +92,8 @@ void SchemaW::new_connection()
        {
            ConnectionW * connectionW = new ConnectionW(out_block, out_port, in_block, in_port);
            add_prepoj(connectionW);
-           connectionW->setParent(this);
-           connectionW->show();
+        //    connectionW->setParent(this);
+        //    connectionW->show();
        }
 
    }
@@ -140,7 +145,6 @@ void SchemaW::paintEvent(QPaintEvent * event)
     pen.setWidth(1);
     pen.setBrush(Qt::gray);
 
-
     painter.setPen(pen);
 
     for (int x = 0; x < this->width(); x += MainWindow::GRID_SQUARE_SIZE)
@@ -152,6 +156,38 @@ void SchemaW::paintEvent(QPaintEvent * event)
     {
         painter.drawLine(0, y, width(), y);
     }
+
+    for(auto p : prepojenia)
+    {
+        QPainter painter(this);
+        QPen pen;
+
+        pen.setStyle(Qt::SolidLine);
+        pen.setWidth(4);
+        pen.setBrush(QColor(255, 175, 0));
+        painter.setPen(pen);
+
+        PortW * out_p = static_cast<PortW*>(p->get_output_port());
+        PortW * in_p = static_cast<PortW*>(p->get_input_port());
+
+        QRect out_geom = out_p->geometry();
+        QRect in_geom = in_p->geometry();
+    
+        QPoint b_point = out_geom.topRight();
+        QPoint e_point = in_geom.topLeft();
+        b_point.setY(b_point.y() + 2);
+        e_point.setY(e_point.y() + 2);
+        
+
+        QPoint middle_point = ((b_point + e_point) / 2);
+        middle_point.setX(middle_point.x() + 20);
+
+        painter.drawLine(b_point.x(), b_point.y(), middle_point.x(), b_point.y());
+        painter.drawLine(middle_point.x(), b_point.y(), middle_point.x(), e_point.y());
+        painter.drawLine(middle_point.x(), e_point.y(), e_point.x(), e_point.y());
+    }
+
+   
 }
 }
 }

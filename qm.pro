@@ -19,6 +19,7 @@ HEADERS +=  main_window.h              \
             ui/valid_dialog.h          \
             ui/add_vyraz_dialog.h      \
             ui/add_connection_dialog.h \
+
             
 
 SOURCES += main_window.cpp          \

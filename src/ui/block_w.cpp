@@ -7,6 +7,7 @@
 #include "main_window.h"
 #include "ui/valid_dialog.h"
 #include "ui/add_vyraz_dialog.h"
+#include "ui/schema_w.h"
 namespace icp
 {
 namespace ui
@@ -250,6 +251,7 @@ void BlockW::add_output_port()
 
 void BlockW::mouseMoveEvent(QMouseEvent * e)
 {
+  
     ResizableFrame::mouseMoveEvent(e);
 
 
@@ -266,7 +268,9 @@ void BlockW::mouseMoveEvent(QMouseEvent * e)
                                      geometry().top() + (MainWindow::GRID_SQUARE_SIZE * (i+1)), output_ports[i]->width(),
                                      output_ports[i]->height());
     }
-
+    
+    SchemaW * p = static_cast<SchemaW*>(parent());
+    p->update();
 }
 
 void BlockW::mouseReleaseEvent(QMouseEvent * e)
@@ -364,6 +368,9 @@ void BlockW::mouseReleaseEvent(QMouseEvent * e)
                                      geometry().top() + (MainWindow::GRID_SQUARE_SIZE * (i+1)), output_ports[i]->width(),
                                      output_ports[i]->height());
     }
+
+    SchemaW * p = static_cast<SchemaW*>(parent());
+    p->update();
 }
 
 void BlockW::paintEvent(QPaintEvent * event)

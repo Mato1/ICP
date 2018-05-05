@@ -23,7 +23,7 @@ public:
     ConnectionW(BlockW * const output_block, PortW * const output_port,
                 BlockW * const input_block, PortW * const input_port);
 
-    void paintEvent(QPaintEvent * event);
+    void paintEvent(QPaintEvent * event) override;
 
 
 

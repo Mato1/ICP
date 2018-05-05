@@ -6,6 +6,7 @@
 #include <QPainter>
 #include <QMenu>
 
+
 namespace icp
 {
 namespace ui
@@ -20,6 +21,7 @@ private:
     QMenu  *  context_menu        = nullptr;
     QAction * action_insert_block = nullptr;
     QAction * action_insert_con   = nullptr;
+ 
 
 public slots:
     void show_context_menu(const QPoint &pos);
@@ -36,6 +38,7 @@ private:
 
 public:
     SchemaW(std::string nazov);
+
 
     void paintEvent(QPaintEvent * event) override;
 
