@@ -4,20 +4,20 @@
 #include <QLabel>
 #include "model/vyraz.h"
 
-namespace icp 
+namespace icp
 {
-namespace ui 
+namespace ui
 {
-    class VyrazW : public QLabel, public model::Vyraz
-    {
-        Q_OBJECT
+class VyrazW : public QLabel, public model::Vyraz
+{
+    Q_OBJECT
 
-        public slots:
+public slots:
 
-    public:
-        VyrazW(std::string expression, std::string premenna);
+public:
+    VyrazW(std::string expression, std::string premenna);
 
-    };
+};
 }
 }
 #endif

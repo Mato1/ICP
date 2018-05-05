@@ -6,16 +6,19 @@ namespace icp
 {
 namespace ui
 {
-    VyrazW::VyrazW(std::string expression, std::string premenna)
-        :model::Vyraz(expression, premenna)
-    {
-        QPalette pal = palette();
-        setMinimumHeight(10);
-        pal.setColor(QPalette::Background, QColor(200, 200, 200));
-        setAutoFillBackground(true);
-        setPalette(pal);
-        setText(tr((expression+"="+premenna).c_str()));
-        show();
-    }
+VyrazW::VyrazW(std::string expression, std::string premenna)
+    :model::Vyraz(expression, premenna)
+{
+    setAutoFillBackground(true);
+    setAlignment(Qt::AlignHCenter);
+    setText(tr((expression+"="+premenna).c_str()));
+    QFont f = font();
+    f.setPixelSize(22);
+    setFont(f);
+    QPalette p = palette();
+    p.setColor(QPalette::Background, QColor(15, 70, 90));
+    setPalette(p);
+    show();
+}
 }
 }

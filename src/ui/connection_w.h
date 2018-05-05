@@ -6,23 +6,24 @@
 #include "ui/block_w.h"
 #include "ui/port_w.h"
 
-namespace icp 
+namespace icp
 {
-namespace ui 
+namespace ui
 {
-    class ConnectionW : public QWidget, public model::Prepojenie
-    {
-        Q_OBJECT
+class ConnectionW : public QWidget, public model::Prepojenie
+{
+    Q_OBJECT
 
-        public slots:
+public slots:
 
-        private:
+private:
 
-        public:
-            ConnectionW(BlockW * const output_block, PortW * const output_port, BlockW * const input_block, PortW * const input_port);
+public:
+    ConnectionW(BlockW * const output_block, PortW * const output_port,
+                BlockW * const input_block, PortW * const input_port);
 
-    
-    };
+
+};
 }
 }
 #endif

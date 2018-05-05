@@ -1,15 +1,16 @@
 #ifndef ICP_BLOCKBUILDER_SRC_UI_BLOCK_H
 #define ICP_BLOCKBUILDER_SRC_UI_BLOCK_H
 
+#include "main_window.h"
 #include "ui/resizable_frame.h"
-#include "ui/block_body_w.h"
-#include "ui/ports_w.h"
 #include "ui/port_w.h"
 #include "ui/vyraz_w.h"
 #include "model/block.h"
 #include <string>
-#include <QVBoxLayout>
+#include <QHBoxLayout>
 #include <QWidget>
+#include <QMouseEvent>
+#include <vector>
 
 namespace icp
 {
@@ -20,28 +21,46 @@ class BlockW : public ResizableFrame, public model::Block
 {
     Q_OBJECT
 
-    public slots:
-        void rename_block();
-        void add_expression();
-        void add_input_port();
-        void add_output_port();
+public slots:
+    void show_context_menu(const QPoint &pos);
+    void eval_block();
+    void rename_block();
+    void add_expression();
+    void add_input_port();
+    void add_output_port();
+    void delete_block();
 
-    private:
-        const int MINIMUM_WIDTH  = 100;
-        const int MINIMUM_HEIGHT = 100;
-        // model::Block * block       = nullptr;
-        QVBoxLayout * layout_base  = nullptr;
-        PortsW * w_input_ports     = nullptr;
-        BlockBody  * block_body    = nullptr;
-        PortsW * w_output_ports    = nullptr;
-    public:
-        BlockW(std::string nazov);
+private:
+    void add_port(model::PortType type);
+    int MINIMUM_WIDTH  = icp::MainWindow::GRID_SQUARE_SIZE * 1;
+    int MINIMUM_HEIGHT = icp::MainWindow::GRID_SQUARE_SIZE * 1;
+    int BASE_WIDTH     = icp::MainWindow::GRID_SQUARE_SIZE * 2;
+    int BASE_HEIGHT    = icp::MainWindow::GRID_SQUARE_SIZE * 2;
+    const int LINE_WIDTH = 3;
 
-        // inline model::Block* get_block() const
-        // {
-        //     return block;
-        // }
-        
+    QLabel label_nazov;
+    QVBoxLayout layout_block;
+
+    std::vector<PortW *> input_ports;
+    std::vector<PortW *> output_ports;
+
+
+
+public:
+    BlockW(std::string nazov);
+    ~BlockW();
+
+    void mouseReleaseEvent(QMouseEvent * e) override;
+    void mouseMoveEvent(QMouseEvent * event) override;
+
+    inline void set_nazov(std::string nazov)
+    {
+        Block::set_nazov(nazov);
+        this->label_nazov.setText(nazov.c_str());
+    }
+
+    void paintEvent(QPaintEvent * event) override;
+
 };
 
 }

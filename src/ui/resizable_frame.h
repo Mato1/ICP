@@ -7,28 +7,29 @@
 
 namespace icp
 {
-    namespace ui
-    {
-        class ResizableFrame : public QFrame
-        {
-            Q_OBJECT
+namespace ui
+{
+class ResizableFrame : public QFrame
+{
+    Q_OBJECT
 
-            public:
-                explicit ResizableFrame(QWidget *parent = 0);
-                ~ResizableFrame();
+public:
+    explicit ResizableFrame(QWidget * parent = 0);
+    ~ResizableFrame();
 
-                enum StartPosition {topleft, left, bottomleft, bottom, bottomright, right, topright, top, move_mouse};
+    enum StartPosition {topleft, left, bottomleft, bottom, bottomright, right, topright, top, move_mouse};
 
-            protected:
-                void mousePressEvent(QMouseEvent * event) override;
-                void mouseMoveEvent(QMouseEvent * event) override;
-            
-            private:
-                QPoint drag_start_pos;
-                QRect drag_start_geom;
-                enum StartPosition start_pos;
-        };
-    }
+protected:
+    void mousePressEvent(QMouseEvent * event) override;
+    void mouseMoveEvent(QMouseEvent * event) override;
+    enum StartPosition start_pos;
+
+private:
+    QPoint offset;
+    QPoint drag_start_pos;
+    QRect drag_start_geom;
+};
+}
 }
 
 #endif //ICP_BLOCKBUILDER_SRC_UI_RESIZABLE_FRAME_H

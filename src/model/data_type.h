@@ -8,137 +8,46 @@
 
 namespace icp
 {
-    namespace model 
-    {
-        struct DataType
-        {
-            std::map<std::string, double *> data;
+namespace model
+{
+struct DataType
+{
+    std::map<std::string, double *> data;
 
-            ~DataType()
-            {
-                clear();
-            }
+    ~DataType();
 
-            /**
-             * @brief Dva datove typy sa rovnaju ak maju rovnaky pocet 
-             * premennych a zaroven sa nazvy premennych rovnaju.
-             * Na poradi nezalezi.
-             * 
-             * @param other 
-             * @return true 
-             * @return false 
-             */
-            bool equals(DataType * other)
-            {   
-                if (other->data.size() != data.size())
-                {
-                    return false;
-                }
+    void add(std::string nazov);
 
-                for (auto it = data.begin(); it != data.end(); ++it)
-                {
-                    if (other->data.find(it->first) != other->data.end())
-                    {
-                        return true;
-                    }
-                }
-                
-                return false;
-            }
+    void add(std::string nazov, double hodnota);
 
-            void add(std::string nazov)
-            {
-                if (!has_name(nazov))
-                {
-                    data.insert(std::pair<std::string, double *>(nazov, nullptr));
-                }
-            }
+    void set(std::string nazov, double hodnota);
 
-            void add(std::string nazov, double hodnota)
-            {
-                if (!has_name(nazov))
-                {
-                    double * d = new double(hodnota);
-                    data.insert(std::pair<std::string, double *>(nazov, d));
-                }
-            }
+    void set(DataType other);
 
-            void set(std::string nazov, double hodnota)
-            {
-                if (has_name(nazov))
-                {
-                    double * d = new double(hodnota);
-                    data[nazov] = d;
-                }
-            }
+    double * get(std::string nazov);
 
-            double * get(std::string nazov)
-            {
-                if (!has_name(nazov)){
-                    return nullptr;
-                }
-                return data[nazov];
-            }
+    bool has_name(std::string nazov);
 
-            bool has_name(std::string nazov)
-            {
-                if (data.find(nazov) == data.end())
-                {
-                    return false;
-                } 
+    bool is_filled();
 
-                return true;
-            }
+    void clear();
 
-            bool is_filled()
-            {
-                for (auto it = data.begin(); it != data.end(); it++)
-                {
-                    if (it->second == nullptr)
-                    {
-                        return false;
-                    }
-                }
+    std::string to_string();
 
-                return true;
-            }
+       /**
+     * @brief Dva datove typy sa rovnaju ak maju rovnaky pocet
+     * premennych a zaroven sa nazvy premennych rovnaju.
+     * Na poradi nezalezi.
+     *
+     * @param other
+     * @return true
+     * @return false
+     */
+    bool equals(DataType * other);
 
-            void clear()
-            {
-                for (auto it = data.begin(); it != data.end(); it++)
-                {
-                    delete it->second;
-                }
-                data.clear();
-            }
+};
 
-            std::string to_string()
-            {
-                std::string s = "";
-
-                for (auto it = data.begin(); it != data.end(); it++)
-                {
-                    if (it->second == nullptr)
-                    {
-                        s += it->first + "=" + "null";
-                    } 
-                    else
-                    {
-                        s += it->first + "=" + std::to_string(*it->second);
-                    }
-
-                    s += "\n";
-                }
-                
-                s = s.substr(0, s.length() - 1);
-
-                return s;
-            }
-
-
-        };
-
-    }
+}
 }
 
 
