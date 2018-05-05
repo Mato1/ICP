@@ -7,6 +7,7 @@
  */
 #include "model/schema.h"
 #include "model/port.h"
+#include "model/block.h"
 #include "model/prepojenie.h"
 #include <iostream>
 #include <fstream>
@@ -206,7 +207,7 @@ void Schema::save(std::string file)
 
             for (auto it = hodnoty.begin(); it != hodnoty.end(); ++it)
             {
-                outfile << "\t\t\t\t\t\t" << it->first << std::endl;
+                outfile << "\t\t\t\t\t\t" << it->first << *(it->second) << std::endl;
             }
 
             outfile << "\t\t\t\t\t" "end type" << std::endl;
@@ -224,7 +225,7 @@ void Schema::save(std::string file)
 
             for (auto it = hodnoty.begin(); it != hodnoty.end(); ++it)
             {
-                outfile << "\t\t\t\t\t\t" << it->first << std::endl;
+                outfile << "\t\t\t\t\t\t" << it->first << *(it->second) << std::endl;
             }
 
             outfile << "\t\t\t\t\t" "end type" << std::endl;
@@ -300,6 +301,8 @@ void Schema::load(std::string file)
     std:: string str;
     std::string port_str;
     DataType data_type;
+    Block * b = nullptr;
+    Port * p = nullptr;
 
     if (! f.is_open())
     {
@@ -343,6 +346,7 @@ void Schema::load(std::string file)
             }
             else if (str.substr(4, length_str) == "port")
             {
+                b->add_port(p);
                 port = 0;
                 break;
             }
@@ -373,6 +377,8 @@ void Schema::load(std::string file)
                 outputs = 0;
                 inputs_vyp = 0;
                 outputs_vyp = 0;
+                input_cislo_portu = 1;
+                output_cislo_portu = 1;
                 break;
             }
             else if (str.substr(4, length_str) == "blocks")
@@ -457,9 +463,10 @@ void Schema::load(std::string file)
             }
             else
             {
-                input_cislo_portu +=1;
                 length_str = str.length() - 5;
                 port_str = str.substr(5, length_str);
+                Port * p = new Port(b->get_nazov(), input_cislo_portu,PortType::input);
+                input_cislo_portu +=1;
                 //vyrobim port a este ho nebudem pridavat bloku lebo nepoznam jeho type
             }
 
@@ -475,7 +482,6 @@ void Schema::load(std::string file)
             else
             {
                 type = 1;
-                // vytvorim si tu mapu na ulozenie potom typov
                 break;
             }
         }
@@ -489,7 +495,7 @@ void Schema::load(std::string file)
         }
         else if (outputs == 0)
         {
-            if (str == "inputs")
+            if (str == "outputs")
             {
                 outputs = 1;
             }
@@ -506,9 +512,10 @@ void Schema::load(std::string file)
             }
             else
             {
-                output_cislo_portu +=1;
                 length_str = str.length() - 5;
                 port_str = str.substr(5, length_str);
+                Port * p = new Port(b->get_nazov(), input_cislo_portu,PortType::output);
+                output_cislo_portu +=1;
                 //vyrobim port a este ho nebudem pridavat bloku lebo nepoznam jeho type
             }
 

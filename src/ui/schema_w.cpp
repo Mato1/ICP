@@ -81,10 +81,9 @@ void SchemaW::save_schema()
 
 void SchemaW::load_schema()
 {
-    bool ok;
-    QString text = QInputDialog::getText(this, tr("Load"),
-                                         tr("Nazov suboru:"), QLineEdit::Normal,
-                                         tr("Untitled_file"), &ok);
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
+                                                "/home",
+                                                tr("Untitled (*.txt)"));
 
     std::cout << "Load schema" << std::endl;
 }
