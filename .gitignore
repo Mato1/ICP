@@ -6,7 +6,7 @@
 .DS_Store
 .vscode
 .qmake.stash
-
+blockbuilder1.0.0.tar.gz
 #Taketo sracky generuje QT takze nasrat
 moc_* 
 
