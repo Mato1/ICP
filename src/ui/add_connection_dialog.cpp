@@ -5,6 +5,7 @@
 #include <QGridLayout>
 #include <QLabel>
 #include "ui/schema_w.h"
+#include "model/port.h"
 
 namespace icp
 {
@@ -34,8 +35,10 @@ AddConnectionDialog::AddConnectionDialog(const std::vector<model::Block *> &bloc
     glayout->addWidget(combo_output_ports, 3, 0);
     glayout->addWidget(combo_input_ports, 3, 1);
     
-    combo_input_ports->setMinimumHeight(30);
-
+    combo_input_ports->setMinimumWidth(50);
+    combo_output_blocks->setMinimumWidth(50);
+    combo_input_ports->sizePolicy().setHorizontalStretch(1);
+    combo_output_blocks->sizePolicy().setHorizontalStretch(1); 
 
     for (auto it = blocks.begin(); it != blocks.end(); it++)
     {
@@ -46,7 +49,7 @@ AddConnectionDialog::AddConnectionDialog(const std::vector<model::Block *> &bloc
 
 
     QDialogButtonBox * buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
-    glayout->addWidget(buttonBox);
+    glayout->addWidget(buttonBox, 4,0, 1, 2);
     this->setLayout(glayout);
 
     connect(combo_output_blocks, SIGNAL(activated(int)), this, SLOT(output_block_selected(int)));

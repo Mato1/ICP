@@ -9,6 +9,8 @@
 #include "ui/block_w.h"
 #include "ui/valid_dialog.h"
 #include "ui/add_connection_dialog.h"
+#include "ui/port_w.h"
+#include "ui/connection_w.h"
 
 namespace icp
 {
@@ -71,6 +73,23 @@ void SchemaW::new_connection()
 
    if (dialog.exec() == QDialog::Accepted)
    {
+       QString s_oblock = dialog.get_selected_output_block();
+       QString s_oport = dialog.get_selected_output_port();
+       QString s_iblock = dialog.get_selected_input_block();
+       QString s_iport = dialog.get_selected_input_port();
+
+       BlockW * out_block = static_cast<BlockW*>(get_block(s_oblock.toStdString()));
+       PortW *  out_port  = static_cast<PortW*>(out_block->get_port((s_oport.toStdString())));
+       BlockW * in_block  = static_cast<BlockW*>(get_block(s_iblock.toStdString()));
+       PortW *  in_port   = static_cast<PortW*>(in_block->get_port((s_iport.toStdString())));
+
+       if (out_block != in_block && out_port != in_port && out_block != nullptr && out_port != nullptr && in_block != nullptr && in_port != nullptr)
+       {
+           ConnectionW * connectionW = new ConnectionW(out_block, out_port, in_block, in_port);
+           add_prepoj(connectionW);
+           connectionW->setParent(this);
+           connectionW->show();
+       }
 
    }
 }

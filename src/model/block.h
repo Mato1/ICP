@@ -83,6 +83,8 @@ public:
      */
     void remove_port(Port * p);
 
+    Port * get_port(std::string nazov);
+
     /**
      * @brief Zisti ci port s danym nazvom existuje.
      * Ak ano vrati ukazatel na dany port.

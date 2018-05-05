@@ -4,7 +4,6 @@
 #include <QDialog>
 #include <QLineEdit>
 #include <string>
-#include "model/port.h"
 #include "model/block.h"
 #include <vector>
 #include <QComboBox>
@@ -36,8 +35,7 @@ private:
 
 
 public:
-    AddConnectionDialog(const std::vector<model::Block *> &blocks,
-                        QWidget * parent);
+    AddConnectionDialog(const std::vector<model::Block *> &blocks, QWidget * parent);
 
     ~AddConnectionDialog();
 

@@ -83,6 +83,11 @@ void Block::remove_port(Port * p)
     }
 }
 
+Port * Block::get_port(std::string nazov)
+{
+    return port_exists(nazov);
+}
+
 Port * Block::port_exists(std::string nazov)
 {
     if (nazov.find(INPUT_PORT_PREFIX) != std::string::npos)

@@ -37,9 +37,9 @@ void ConnectionW::paintEvent(QPaintEvent * event)
 
     QPoint middle_point = (b_point + e_point) / 2;
 
-    painter.drawLine(b_point.x(), b_point.y(), middle_point.x(), b_point.y());
-    painter.drawLine(middle_point.x(), b_point.y(), middle_point.x(), e_point.y());
-    painter.drawLine(middle_point.x(), e_point.y(), e_point.x(), e_point.y());
+    painter.drawLine(b_point.x(), b_point.y(), e_point.x(), e_point.y());
+    // painter.drawLine(middle_point.x(), b_point.y(), middle_point.x(), e_point.y());
+    // painter.drawLine(middle_point.x(), e_point.y(), e_point.x(), e_point.y());
     
     
 }
