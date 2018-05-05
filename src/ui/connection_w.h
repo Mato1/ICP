@@ -5,6 +5,7 @@
 #include "model/prepojenie.h"
 #include "ui/block_w.h"
 #include "ui/port_w.h"
+#include <QPaintEvent>
 
 namespace icp
 {
@@ -21,6 +22,9 @@ private:
 public:
     ConnectionW(BlockW * const output_block, PortW * const output_port,
                 BlockW * const input_block, PortW * const input_port);
+
+    void paintEvent(QPaintEvent * event);
+
 
 
 };

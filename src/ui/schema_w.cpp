@@ -8,7 +8,7 @@
 #include "main_window.h"
 #include "ui/block_w.h"
 #include "ui/valid_dialog.h"
-
+#include "ui/add_connection_dialog.h"
 
 namespace icp
 {
@@ -67,6 +67,12 @@ void SchemaW::new_block()
 
 void SchemaW::new_connection()
 {
+   AddConnectionDialog dialog(blocks, this);
+
+   if (dialog.exec() == QDialog::Accepted)
+   {
+
+   }
 }
 
 void SchemaW::save_schema()

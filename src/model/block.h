@@ -155,7 +155,7 @@ public:
      *
      * @return std::vector<Block *> Vsetci priamy prechodcovia blocku.
      */
-    inline std::vector<Block *> get_previous_blocks()
+    inline std::vector<Block *> get_previous_blocks() const
     {
         return previous_blocks;
     }
@@ -165,7 +165,7 @@ public:
      *
      * @return std::vector<Block *> Vsetci priamy nasledovnici blocku.
      */
-    inline std::vector<Block *> get_next_blocks()
+    inline std::vector<Block *> get_next_blocks() const
     {
         return next_blocks;
     }
@@ -199,7 +199,7 @@ public:
      *
      * @return const std::vector<Port*> Vsetky vstupne porty
      */
-    inline const std::vector<Port *> get_input_ports()
+    inline std::vector<Port *> get_input_ports() const
     {
         return input_ports;
     }
@@ -209,22 +209,22 @@ public:
      *
      * @return const std::vector<Port*> Vsetky vystupne porty.
      */
-    inline const std::vector<Port *> get_output_ports()
+    inline std::vector<Port *> get_output_ports() const
     {
         return output_ports;
     }
 
-    inline void set_nazov(std::string nazov)
+    inline void set_nazov(std::string nazov) 
     {
         this->nazov = nazov;
     }
 
-    inline std::string get_nazov()
+    inline const std::string&  get_nazov() const
     {
         return nazov;
     }
 
-    inline const std::vector<Vyraz *> get_vypocty()
+    inline const std::vector<Vyraz *> get_vypocty() const
     {
         return vypocty;
     }

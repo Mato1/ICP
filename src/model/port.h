@@ -61,12 +61,12 @@ public:
         return this->data_type;
     }
 
-    inline PortType get_port_type()
+    inline PortType get_port_type() const
     {
         return this->port_type;
     }
 
-    inline const std::string& get_nazov() const
+    inline const std::string&  get_nazov() const
     {
         return this->nazov;
     }
@@ -76,7 +76,7 @@ public:
        return this->data_type.is_filled();
     }
 
-    inline std::string get_nazov_bloku() const
+    inline const std::string&  get_nazov_bloku() const
     {
         return this->nazov_bloku;
     }
@@ -86,7 +86,7 @@ public:
         return get_nazov() + ": " + get_data_type().to_string();
     }
 
-    inline int get_cislo()
+    inline int get_cislo() const
     {
         return cislo;
     }
@@ -96,7 +96,7 @@ public:
         this->connected = b;
     }
 
-    inline bool is_connected()
+    inline bool is_connected() const
     {
         return this->connected;
     }
