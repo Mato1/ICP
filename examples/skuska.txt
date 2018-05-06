@@ -1,0 +1,227 @@
+schema Untitled_Schema
+blocks
+block block1
+40 280 160 160 
+inputs
+port block1_pin0
+type
+a
+b
+end type
+end port
+end inputs
+outputs
+port block1_pout0
+type
+a
+b
+end type
+end port
+end outputs
+vypocty
+a*b
+inputs_vyp
+block1_pin0
+end inputs_vyp
+outputs_vyp
+block1_pout0
+end outputs_vyp
+premenna a
+end premenna a
+end a*b
+a+b
+inputs_vyp
+block1_pin0
+end inputs_vyp
+outputs_vyp
+block1_pout0
+end outputs_vyp
+premenna b
+end premenna b
+end a+b
+end vypocty
+end block block1
+block block2
+320 0 120 120 
+inputs
+port block2_pin0
+type
+a
+b
+end type
+end port
+port block2_pin1
+type
+r
+t
+end type
+end port
+end inputs
+outputs
+port block2_pout0
+type
+x
+y
+end type
+end port
+end outputs
+vypocty
+a+b
+inputs_vyp
+block2_pin0
+end inputs_vyp
+outputs_vyp
+block2_pout0
+end outputs_vyp
+premenna x
+end premenna x
+end a+b
+r-t
+inputs_vyp
+block2_pin1
+end inputs_vyp
+outputs_vyp
+block2_pout0
+end outputs_vyp
+premenna y
+end premenna y
+end r-t
+end vypocty
+end block block2
+block block3
+560 120 120 200 
+inputs
+port block3_pin0
+type
+x
+y
+end type
+end port
+end inputs
+outputs
+port block3_pout0
+type
+x
+y
+end type
+end port
+end outputs
+vypocty
+y*y
+inputs_vyp
+block3_pin0
+end inputs_vyp
+outputs_vyp
+block3_pout0
+end outputs_vyp
+premenna x
+end premenna x
+end y*y
+x*x
+inputs_vyp
+block3_pin0
+end inputs_vyp
+outputs_vyp
+block3_pout0
+end outputs_vyp
+premenna y
+end premenna y
+end x*x
+end vypocty
+end block block3
+block block4
+840 0 160 200 
+inputs
+port block4_pin0
+type
+x
+y
+end type
+end port
+port block4_pin1
+type
+f
+end type
+end port
+end inputs
+outputs
+port block4_pout0
+type
+k
+l
+end type
+end port
+end outputs
+vypocty
+x+y
+inputs_vyp
+block4_pin0
+end inputs_vyp
+outputs_vyp
+block4_pout0
+end outputs_vyp
+premenna k
+end premenna k
+end x+y
+f
+inputs_vyp
+block4_pin1
+end inputs_vyp
+outputs_vyp
+block4_pout0
+end outputs_vyp
+premenna l
+end premenna l
+end f
+end vypocty
+end block block4
+block block5
+1120 400 120 160 
+inputs
+port block5_pin0
+type
+k
+l
+end type
+end port
+end inputs
+outputs
+port block5_pout0
+type
+k
+l
+end type
+end port
+end outputs
+vypocty
+k
+inputs_vyp
+block5_pin0
+end inputs_vyp
+outputs_vyp
+block5_pout0
+end outputs_vyp
+premenna l
+end premenna l
+end k
+l
+inputs_vyp
+block5_pin0
+end inputs_vyp
+outputs_vyp
+block5_pout0
+end outputs_vyp
+premenna k
+end premenna k
+end l
+end vypocty
+end block block5
+end blocks 
+
+prepojenia
+block1 block1_pout0 block2 block2_pin0 
+block2 block2_pout0 block3 block3_pin0 
+block3 block3_pout0 block4 block4_pin0 
+block4 block4_pout0 block5 block5_pin0 
+end prepojenia
+end schema
