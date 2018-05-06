@@ -144,12 +144,12 @@ public:
 
     inline void remove_next_block(Block * b)
     {
-        this->next_blocks.erase(std::remove(next_blocks.begin(),next_blocks.end(), b), next_blocks.end());
+        this->next_blocks.erase(std::remove(next_blocks.begin(), next_blocks.end(), b), next_blocks.end());
     }
 
     inline void remove_previous_block(Block * b)
     {
-        this->previous_blocks.erase(std::remove(next_blocks.begin(),next_blocks.end(), b), next_blocks.end());
+        this->previous_blocks.erase(std::remove(next_blocks.begin(), next_blocks.end(), b), next_blocks.end());
     }
 
     /**
@@ -216,12 +216,12 @@ public:
         return output_ports;
     }
 
-    inline void set_nazov(std::string nazov) 
+    inline void set_nazov(std::string nazov)
     {
         this->nazov = nazov;
     }
 
-    inline const std::string&  get_nazov() const
+    inline const std::string  &get_nazov() const
     {
         return nazov;
     }

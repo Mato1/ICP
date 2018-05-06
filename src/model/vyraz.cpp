@@ -29,15 +29,17 @@ int Vyraz::eval()
 {
     std::stack<double> operands;
     double vysledok;
+
     for (char &c : postfix)
     {
         if (isalpha(c))
         {
-            double * d =  input_port->get_data_type().get(std::string(1,c));
+            double * d =  input_port->get_data_type().get(std::string(1, c));
+
             if (d != nullptr)
             {
                 operands.push(*d);
-            } 
+            }
             else
             {
                 return -1;
@@ -83,7 +85,7 @@ int Vyraz::eval()
 
     vysledok = operands.top();
     output_port->get_data_type().set(premenna, vysledok);
-    
+
     return 0;
 }
 

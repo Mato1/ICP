@@ -21,7 +21,7 @@ private:
     QMenu  *  context_menu        = nullptr;
     QAction * action_insert_block = nullptr;
     QAction * action_insert_con   = nullptr;
- 
+
 
 public slots:
     void show_context_menu(const QPoint &pos);
@@ -47,7 +47,7 @@ public:
         return this->nazov;
     }
 
-    void mousePressEvent(QMouseEvent * event) override;
+    void mouseMoveEvent(QMouseEvent * event) override;
 };
 }
 }

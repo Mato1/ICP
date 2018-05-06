@@ -11,7 +11,7 @@
 #include "ui/add_connection_dialog.h"
 #include "ui/port_w.h"
 #include "ui/connection_w.h"
-
+#include <QToolTip>
 
 namespace icp
 {
@@ -31,9 +31,6 @@ SchemaW::SchemaW(std::string nazov)
     connect(this, &SchemaW::customContextMenuRequested, this, &SchemaW::show_context_menu);
     connect(action_insert_block, &QAction::triggered,   this, &SchemaW::new_block);
     connect(action_insert_con,   &QAction::triggered,   this, &SchemaW::new_connection);
-
- 
-
 }
 
 
@@ -49,7 +46,6 @@ void SchemaW::new_block()
 
     do
     {
-
         ValidDialog dialog("^\\w*$", "Novy blok", "Nazov:", text.toStdString());
         ok = dialog.exec();
 
@@ -92,8 +88,6 @@ void SchemaW::new_connection()
        {
            ConnectionW * connectionW = new ConnectionW(out_block, out_port, in_block, in_port);
            add_prepoj(connectionW);
-        //    connectionW->setParent(this);
-        //    connectionW->show();
        }
 
    }
@@ -105,28 +99,24 @@ void SchemaW::save_schema()
                        "/home/untitled.txt",
                        tr("Untitled (*.txt)"));
     save(fileName.toStdString());
-    // std::cout << "Save schema" << std::endl;
-    // std::cout << fileName.toStdString()<< std::endl;
 }
 
 void SchemaW::load_schema()
 {
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
-                                                "/home",
-                                                tr("Untitled (*.txt)"));
-
-    std::cout << "Load schema" << std::endl;
+                                                    "/home",
+                                                    tr("Untitled (*.txt)"));
+    load(fileName.toStdString());
 }
 
 void SchemaW::close_schema()
 {
-    QWidget::close();
-    std::cout << "Close schema" << std::endl;
+    QWidget::deleteLater();
 }
 
 void SchemaW::play_schema()
 {
-    std::cout << "Start play  schema" << std::endl;
+    this->eval();
 }
 
 void SchemaW::next_step()
@@ -187,7 +177,14 @@ void SchemaW::paintEvent(QPaintEvent * event)
         path.addRect(b_point.x(), b_point.y(), abs(middle_point.x()-b_point.x()), 4);
         
         painter.drawLine(middle_point.x(), b_point.y(), middle_point.x(), e_point.y());
-        path.addRect(middle_point.x(), b_point.y(), 4, abs(b_point.y()-e_point.y()));
+
+        if (middle_point.y() < e_point.y())
+        {
+            path.addRect(middle_point.x(), b_point.y(), 4, abs(b_point.y()-e_point.y()));
+        } else
+        {
+            path.addRect(middle_point.x(), e_point.y(), 4, abs(b_point.y()-e_point.y()));
+        }
         
         painter.drawLine(middle_point.x(), e_point.y(), e_point.x(), e_point.y());
         path.addRect(middle_point.x(), e_point.y(), abs(middle_point.x()-e_point.x()), 4);
@@ -198,18 +195,17 @@ void SchemaW::paintEvent(QPaintEvent * event)
     }
 }
 
-void SchemaW::mousePressEvent(QMouseEvent *event)
+void SchemaW::mouseMoveEvent(QMouseEvent *event)
 {
-    if (event->button() == Qt::LeftButton) {
-        for(auto p : prepojenia)
+    for(auto p : prepojenia)
+    {
+        ConnectionW * pp = static_cast<ConnectionW*>(p);
+        if (pp->get_painter_path().contains(event->pos()))
         {
-            ConnectionW * pp = static_cast<ConnectionW*>(p);
-            if (pp->get_painter_path().contains(event->pos()))
-            {
-                std::cout << "ToolTiping" << std::endl;
-            }
+            QToolTip::showText(event->globalPos(), tr(p->to_string().c_str()));
         }
     }
+    
 }
 
 

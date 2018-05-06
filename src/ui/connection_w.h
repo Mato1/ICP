@@ -25,8 +25,8 @@ public:
     {
         this->path = p;
     }
-    
-     inline QPainterPath get_painter_path()
+
+    inline QPainterPath get_painter_path()
     {
         return this->path;
     }

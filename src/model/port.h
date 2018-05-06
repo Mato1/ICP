@@ -55,8 +55,8 @@ public:
     Port(std::string nazov_bloku, int cislo, PortType port_type);
 
     void set_data_type(std::string retazec);
-    
-    inline DataType& get_data_type()
+
+    inline DataType &get_data_type()
     {
         return this->data_type;
     }
@@ -66,17 +66,17 @@ public:
         return this->port_type;
     }
 
-    inline const std::string&  get_nazov() const
+    inline const std::string  &get_nazov() const
     {
         return this->nazov;
     }
 
     inline bool is_active()
     {
-       return this->data_type.is_filled();
+        return this->data_type.is_filled();
     }
 
-    inline const std::string&  get_nazov_bloku() const
+    inline const std::string  &get_nazov_bloku() const
     {
         return this->nazov_bloku;
     }

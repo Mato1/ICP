@@ -39,16 +39,16 @@ BlockW::BlockW(std::string nazov)
 
 BlockW::~BlockW()
 {
-    for(model::Port * p : input_ports)
+    for (model::Port * p : input_ports)
     {
-       PortW * pp =  static_cast<PortW*>(p);
-       pp->deleteLater();
+        PortW * pp =  static_cast<PortW *>(p);
+        pp->deleteLater();
     }
-    
-    for(model::Port * p : output_ports)
+
+    for (model::Port * p : output_ports)
     {
-       PortW * pp =  static_cast<PortW*>(p);
-       pp->deleteLater();
+        PortW * pp =  static_cast<PortW *>(p);
+        pp->deleteLater();
     }
 }
 
@@ -88,20 +88,21 @@ void BlockW::eval_block()
 {
     std::cout << "Evaluating block" << std::endl;
 
-    for(PortW * p : input_ports)
+    for (PortW * p : input_ports)
     {
         if (!p->is_connected())
         {
-            for(auto it = p->get_data_type().data.begin(); it != p->get_data_type().data.end(); ++it)
+            for (auto it = p->get_data_type().data.begin(); it != p->get_data_type().data.end(); ++it)
             {
                 bool ok;
-                double n = QInputDialog::getDouble(this,tr(p->get_nazov().c_str()), tr(it->first.c_str()), 
+                double n = QInputDialog::getDouble(this, tr(p->get_nazov().c_str()), tr(it->first.c_str()),
                                                    0, -2147483647, 2147483647, 4, &ok);
+
                 if (ok)
                 {
                     p->get_data_type().set(it->first, n);
                 }
-                
+
             }
 
         }
@@ -251,7 +252,7 @@ void BlockW::add_output_port()
 
 void BlockW::mouseMoveEvent(QMouseEvent * e)
 {
-  
+
     ResizableFrame::mouseMoveEvent(e);
 
 
@@ -268,8 +269,8 @@ void BlockW::mouseMoveEvent(QMouseEvent * e)
                                      geometry().top() + (MainWindow::GRID_SQUARE_SIZE * (i+1)), output_ports[i]->width(),
                                      output_ports[i]->height());
     }
-    
-    SchemaW * p = static_cast<SchemaW*>(parent());
+
+    SchemaW * p = static_cast<SchemaW *>(parent());
     p->update();
 }
 
@@ -369,7 +370,7 @@ void BlockW::mouseReleaseEvent(QMouseEvent * e)
                                      output_ports[i]->height());
     }
 
-    SchemaW * p = static_cast<SchemaW*>(parent());
+    SchemaW * p = static_cast<SchemaW *>(parent());
     p->update();
 }
 
@@ -399,10 +400,10 @@ void BlockW::paintEvent(QPaintEvent * event)
 
             pen.setBrush(QColor(50, 240, 220));
             painter.setPen(pen);
-            
 
-    
-            painter.drawLine(0, 42 * (pin->get_cislo() + 1) ,
+
+
+            painter.drawLine(0, 42 * (pin->get_cislo() + 1),
                              v->geometry().topLeft().x(), v->geometry().topLeft().y() + (v->height() / 2));
 
             pen.setBrush(QColor(227, 140, 255));

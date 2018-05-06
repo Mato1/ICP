@@ -20,7 +20,7 @@ class AddConnectionDialog : public QDialog
 private slots:
     void output_block_selected(int a);
     void input_block_selected(int a);
-    
+
 
 private:
     QComboBox * combo_output_blocks;

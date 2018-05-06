@@ -82,7 +82,7 @@ public:
         this->output_port = port;
     }
 
-    inline const std::string&  get_infix() const
+    inline const std::string  &get_infix() const
     {
         return this->infix;
     }
@@ -97,11 +97,11 @@ public:
         return this->output_port;
     }
 
-    inline const std::string&  get_premenna() const
+    inline const std::string  &get_premenna() const
     {
         return this->premenna;
     }
-    
+
 private:
 
     /**

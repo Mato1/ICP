@@ -52,13 +52,13 @@ void MainWindow::set_up_menu()
     action_new_connection->setStatusTip(tr("Create a new connection."));
     menu_insert->addAction(action_new_connection);
 
-    menu_insert = menuBar()->addMenu(tr("&Play"));
-    action_play_schema = new QAction(tr("&Start play"), this);
-    action_play_schema->setStatusTip(tr("Start play"));
+    menu_insert = menuBar()->addMenu(tr("&Action"));
+    action_play_schema = new QAction(tr("&Eval"), this);
+    action_play_schema->setStatusTip(tr("Evaluate scheme"));
     menu_insert->addAction(action_play_schema);
 
-    action_next_step = new QAction(tr("&Next step"), this);
-    action_next_step->setStatusTip(tr("Do next step"));
+    action_next_step = new QAction(tr("&Step"), this);
+    action_next_step->setStatusTip(tr("Step"));
     menu_insert->addAction(action_next_step);
 
 }

@@ -45,7 +45,7 @@ public:
                Block * const input_block, Port * const input_port);
 
     ~Prepojenie();
- 
+
     /**
      * @brief Prenesie/nastavi data zo output_portu
      * do input_port. V pripade ze sa datove typy na oboch
@@ -73,6 +73,7 @@ public:
         return this->output_port;
     }
 
+    std::string to_string();
 
 };
 }

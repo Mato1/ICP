@@ -34,15 +34,15 @@ struct DataType
 
     std::string to_string();
 
-       /**
-     * @brief Dva datove typy sa rovnaju ak maju rovnaky pocet
-     * premennych a zaroven sa nazvy premennych rovnaju.
-     * Na poradi nezalezi.
-     *
-     * @param other
-     * @return true
-     * @return false
-     */
+    /**
+    * @brief Dva datove typy sa rovnaju ak maju rovnaky pocet
+    * premennych a zaroven sa nazvy premennych rovnaju.
+    * Na poradi nezalezi.
+    *
+    * @param other
+    * @return true
+    * @return false
+    */
     bool equals(DataType * other);
 
 };

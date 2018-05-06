@@ -133,7 +133,7 @@ public:
     //TO-DO pre Mata aj to okomentuj.
     void load(std::string file);
 
-    inline const std::string & get_nazov() const
+    inline const std::string &get_nazov() const
     {
         return nazov;
     }

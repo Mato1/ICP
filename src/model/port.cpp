@@ -33,6 +33,6 @@ void Port::set_data_type(std::string retazec)
 
     data_type.add(retazec);
 }
- 
+
 }
 }

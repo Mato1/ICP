@@ -39,13 +39,13 @@ void DataType::set(std::string nazov, double hodnota)
         {
             (*data[nazov]) = hodnota;
         }
-        
+
     }
 }
 
 void DataType::set(DataType other)
 {
-    for(auto it = other.data.begin(); it != other.data.end(); ++it)
+    for (auto it = other.data.begin(); it != other.data.end(); ++it)
     {
         this->set(it->first, *it->second);
     }
@@ -61,7 +61,7 @@ double * DataType::get(std::string nazov)
     return data[nazov];
 }
 
- bool DataType::has_name(std::string nazov)
+bool DataType::has_name(std::string nazov)
 {
     if (data.find(nazov) == data.end())
     {
