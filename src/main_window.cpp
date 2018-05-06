@@ -264,6 +264,7 @@ void MainWindow::load_schema()
     std::string input_vyraz;
     std:: string output_vyraz;
     model::DataType data_type;
+    std::string type_str;
     ui::BlockW * b = nullptr;
     ui::PortW * p = nullptr;
     ui::VyrazW * v = nullptr;
@@ -284,7 +285,10 @@ void MainWindow::load_schema()
 
             if (str.substr(4, length_str) == "type")
             {
+                type = type_str.length() -1;
+                p->set_data_type(type_str.substr(0,type));
                 type = 2;
+                type_str ="";
             }
 
             else if (str.substr(4, length_str) == "inputs")
@@ -449,15 +453,8 @@ void MainWindow::load_schema()
         }
         else if (type == 1)
         {
-            // std::cout << "type nacitavanie" << std::endl;
-            length_str = str.length() - 1;
-            data_type.add(str.substr(0, 1));
-            p->set_data_type(str.substr(0, 1));
-            // b->add_port(p);
-            // budem tu pridavat do mapy typi ktore budem ziskavat
-            // tu neviem ako rozdelim to ze jedno je hodnota a jedno nazov a neviem akej to je dlzka
-            // musim pridaj port do bloku -hotovo
-            // break;
+            // data_type.add(str.substr(0, 1));
+            type_str = type_str + str.substr(0, 1) + ",";
         }
         else if (outputs == 0 and blocks !=2)
         {
