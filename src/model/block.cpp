@@ -8,7 +8,7 @@
 #include "model/block.h"
 #include <chrono>
 #include <thread>
-#include "ui/block_w.h"
+
 
 namespace icp
 {
@@ -136,9 +136,6 @@ void Block::eval()
         v->eval();
     }
 
-    ui::BlockW * b = ( ui::BlockW *) this;
-    b->repaint();
-    
     this->evaluated = true;
 }
 
