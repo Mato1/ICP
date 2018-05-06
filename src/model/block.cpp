@@ -124,6 +124,16 @@ Port * Block::port_exists(std::string nazov)
     return nullptr;
 }
 
+void Block::evaluate()
+{
+    for (auto v : vypocty)
+    {
+        v->eval();
+    }
+
+    this->evaluated = true;
+}
+
 void Block::eval()
 {
     while (!all_input_ports_active())

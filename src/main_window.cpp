@@ -420,10 +420,6 @@ void MainWindow::load_schema()
             }
 
             ui::BlockW * blockW = static_cast<ui::BlockW*>(b);
-            std::cout<< geoms_str[0]<< std::endl;
-            std::cout<< geoms_str[1]<< std::endl;
-            std::cout<< geoms_str[2]<< std::endl;
-            std::cout<< geoms_str[3]<< std::endl;
             blockW->setGeometry(std::stoi(geoms_str[0]),std::stoi(geoms_str[1]),std::stoi(geoms_str[2]),std::stoi(geoms_str[3]));
             // tu bude nacitanie velkosti a pozicie bloku
             ui = 1;

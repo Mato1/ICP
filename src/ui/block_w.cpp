@@ -134,10 +134,12 @@ void BlockW::set_ouput_ports_ready(bool r)
 }
 
 
+
 void BlockW::eval_block()
 {
     set_data_to_input_ports();
-    this->eval();
+    this->evaluate();
+    this->update();
 }
 
 void BlockW::s_delete_block()

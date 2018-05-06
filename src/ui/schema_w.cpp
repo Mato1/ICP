@@ -146,12 +146,9 @@ void SchemaW::next_step()
         {
             temp.push_back(var);
         }
-        bw->update();
     }
 
-    current_blocks = temp;
-
-  
+    current_blocks = temp;  
 }
 
 void SchemaW::play_all_schema()
@@ -163,10 +160,10 @@ void SchemaW::play_all_schema()
         bw->set_input_ports_ready(true);
         bw->set_ouput_ports_ready(true);
         bw->set_data_to_input_ports();
-        bw->update();
     }
 
     this->eval();
+    this->repaint();
 }
 
 

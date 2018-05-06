@@ -100,6 +100,8 @@ public:
      */
     Port * port_exists(std::string nazov);
 
+    void evaluate();
+
     /**
      * @brief Vyhodnoti dany block.
      * Prejde jednotlivymi vyrazmi ktore si vezmu
