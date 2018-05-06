@@ -61,8 +61,13 @@ void MainWindow::set_up_menu()
     menu_insert->addAction(action_new_connection);
 
     menu_insert = menuBar()->addMenu(tr("&Action"));
-    action_play_schema = new QAction(tr("&Eval"), this);
-    action_play_schema->setStatusTip(tr("Evaluate scheme"));
+    action_play_all_schema = new QAction(tr("&Eval All"), this);
+    action_play_all_schema->setStatusTip(tr("Evaluate schema"));
+    menu_insert->addAction(action_play_all_schema);
+
+    
+    action_play_schema = new QAction(tr("&Eval Step"), this);
+    action_play_schema->setStatusTip(tr("Evaluate scheme step by step"));
     menu_insert->addAction(action_play_schema);
 
     action_next_step = new QAction(tr("&Step"), this);
@@ -96,6 +101,7 @@ void MainWindow::create_schema(std::string nazov)
 
     connect(action_new_block,      &QAction::triggered, schema_widget, &ui::SchemaW::new_block);
     connect(action_new_connection, &QAction::triggered, schema_widget, &ui::SchemaW::new_connection);
+    connect(action_play_all_schema,    &QAction::triggered, schema_widget, &ui::SchemaW::play_all_schema);
     connect(action_play_schema,    &QAction::triggered, schema_widget, &ui::SchemaW::play_schema);
     connect(action_next_step,      &QAction::triggered, schema_widget, &ui::SchemaW::next_step);
 }
@@ -104,6 +110,7 @@ void MainWindow::close_schema()
 {
     disconnect(action_new_block,      &QAction::triggered, schema_widget, &ui::SchemaW::new_block);
     disconnect(action_new_connection, &QAction::triggered, schema_widget, &ui::SchemaW::new_connection);
+    disconnect(action_play_all_schema,    &QAction::triggered, schema_widget, &ui::SchemaW::play_all_schema);
     disconnect(action_play_schema,    &QAction::triggered, schema_widget, &ui::SchemaW::play_schema);
     disconnect(action_next_step,      &QAction::triggered, schema_widget, &ui::SchemaW::next_step);
 

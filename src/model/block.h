@@ -121,6 +121,9 @@ public:
      */
     bool all_input_ports_active();
 
+
+    bool all_input_ports_filled();
+
     /**
      * @brief Pomocna funkcia ktora
      * prida priameho nasledovnika tomuto
@@ -208,6 +211,11 @@ public:
     inline bool is_end() const
     {
         return next_blocks.empty();
+    }
+
+    inline bool is_eval() const
+    {
+        return evaluated;
     }
 
     /**

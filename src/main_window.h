@@ -40,6 +40,7 @@ private:
     QAction * action_save_schema;
     QAction * action_load_schema;
     QAction * action_close_schema;
+    QAction * action_play_all_schema;
     QAction * action_play_schema;
     QAction * action_next_step;
     ui::SchemaW * schema_widget;

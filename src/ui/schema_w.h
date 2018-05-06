@@ -21,12 +21,13 @@ private:
     QMenu  *  context_menu        = nullptr;
     QAction * action_insert_block = nullptr;
     QAction * action_insert_con   = nullptr;
-
+    std::vector<model::Block*> current_blocks;
 
 public slots:
     void show_context_menu(const QPoint &pos);
     void new_block();
     void new_connection();
+    void play_all_schema();
     void play_schema();
     void next_step();
 

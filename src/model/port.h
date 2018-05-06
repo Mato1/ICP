@@ -77,6 +77,12 @@ public:
         return this->data_type->is_filled() && ready;
     }
 
+    inline bool is_filled()
+    {
+        return this->data_type->is_filled();
+    }
+    
+
     inline const std::string  &get_nazov_bloku() const
     {
         return this->nazov_bloku;

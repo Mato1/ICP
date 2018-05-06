@@ -1,6 +1,7 @@
 #include "model/block.h"
 #include <chrono>
 #include <thread>
+#include "ui/block_w.h"
 
 namespace icp
 {
@@ -128,10 +129,26 @@ void Block::eval()
         v->eval();
     }
 
+    ui::BlockW * b = ( ui::BlockW *) this;
+    b->repaint();
+    
     this->evaluated = true;
 }
 
 bool Block::all_input_ports_active()
+{
+    for (auto var : input_ports)
+    {
+        if (!var->is_active())
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+bool Block::all_input_ports_filled()
 {
     for (auto var : input_ports)
     {

@@ -103,16 +103,50 @@ void SchemaW::new_connection()
     if (this->detect_cycles())
     {
         QMessageBox msgBox;
-        msgBox.setText("The document has been modified.");
+        msgBox.setText("Cykly v scheme nie su povolene.");
         msgBox.exec();
         remove_prepoj(connectionW);
         delete connectionW;
     }
 }
 
-
-
 void SchemaW::play_schema()
+{
+
+    // for (model::Block * b : blocks)
+    // {
+    //     BlockW * bw = static_cast<BlockW *>(b);
+    //     bw->set_input_ports_ready(true);
+    //     bw->set_ouput_ports_ready(true);
+    //     bw->set_data_to_input_ports();
+    // }
+    current_blocks = get_root_blocks();
+    this->eval();
+}
+
+void SchemaW::next_step()
+{   
+    std::vector<model::Block *> temp;
+    for (model::Block * b : current_blocks)
+    {
+        BlockW * bw = static_cast<BlockW *>(b);
+        bw->set_data_to_input_ports();
+        bw->set_input_ports_ready(true);
+        bw->set_ouput_ports_ready(true);
+
+        for(auto var : b->get_next_blocks())
+        {
+            temp.push_back(var);
+        }
+        bw->update();
+    }
+
+    current_blocks = temp;
+
+  
+}
+
+void SchemaW::play_all_schema()
 {
 
     for (model::Block * b : blocks)
@@ -121,15 +155,12 @@ void SchemaW::play_schema()
         bw->set_input_ports_ready(true);
         bw->set_ouput_ports_ready(true);
         bw->set_data_to_input_ports();
+        bw->update();
     }
 
     this->eval();
 }
 
-void SchemaW::next_step()
-{   
-    std::cout << "Next step" << std::endl;
-}
 
 void SchemaW::paintEvent(QPaintEvent * event)
 {
