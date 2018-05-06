@@ -139,8 +139,8 @@ void MainWindow::close_schema()
 void MainWindow::save_schema()
 {
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
-                       "/home/untitled.txt",
-                       tr("Untitled (*.txt)"));
+                       "/home/untitled",
+                       tr("Untitled"));
     std::ofstream outfile(fileName.toStdString());
     outfile << "schema " << schema_widget->get_nazov() <<std::endl;
 
@@ -149,10 +149,11 @@ void MainWindow::save_schema()
     for (model::Block * b : schema_widget->get_blocks())
     {
         outfile << "block "<< b->get_nazov() << std::endl;
+        ui::BlockW * blockW = static_cast<ui::BlockW*>(b);
+        outfile << blockW->geometry().x() << " " << blockW->geometry().y() << " " << blockW->geometry().width() << " " << blockW->geometry().height() << std::endl;
         outfile << "inputs" << std::endl;
 
         // tu sa este bude ukladat velkost bloku a jeho rozmiestnenie
-        // BlockW * blockW = static_cast<BlockW*>(b);
         // tu sa doplna sirka, vyska, x,y
 
         for (auto p : b->get_input_ports())
@@ -239,7 +240,7 @@ void MainWindow::load_schema()
 
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
                        "/home",
-                       tr("Untitled (*.txt)"));
+                       tr("Untitled"));
     int schema = 0;
     int blocks = 0;
     int block = 0;
@@ -401,13 +402,30 @@ void MainWindow::load_schema()
             block = 1;
             // break;
         }
-        // else if (ui == 0 and block == 1 and blocks !=2)
-        // {
-        //
-        //     // tu bude nacitanie velkosti a pozicie bloku
-        //     ui = 1;
-        //     break;
-        // }
+        else if (ui == 0 and block == 1 and blocks !=2)
+        {
+            
+            size_t pos = 0;
+            // std::cout<<str<< std::endl;
+            std::string token;
+            std::string geoms_str[4];
+            std::string delimiter = " ";
+            int i = 0;
+
+            while ((pos = str.find(delimiter)) != std::string::npos)
+            {
+                token = str.substr(0, pos);
+                geoms_str[i] = token;
+                str.erase(0, pos + delimiter.length());
+                i++;
+            }
+
+            ui::BlockW * blockW = static_cast<ui::BlockW*>(b);
+            blockW->setGeometry(std::stoi(geoms_str[0]),std::stoi(geoms_str[1]),std::stoi(geoms_str[2]),std::stoi(geoms_str[3]));
+            // tu bude nacitanie velkosti a pozicie bloku
+            ui = 1;
+            break;
+        }
         else if (inputs == 0 and blocks !=2)
         {
             // std::cout<<"inputs som tam" << std::endl;
