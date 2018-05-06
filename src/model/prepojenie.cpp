@@ -26,7 +26,7 @@ Prepojenie::~Prepojenie()
 
 void Prepojenie::transfer() const
 {
-    input_port->get_data_type().set(output_port->get_data_type());
+    input_port->get_data_type()->set(output_port->get_data_type());
 }
 
 std::string Prepojenie::to_string()

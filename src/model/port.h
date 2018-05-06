@@ -41,7 +41,7 @@ private:
     std::string nazov;
     int cislo = 0;
     PortType port_type;
-    DataType data_type;
+    DataType * data_type;
     bool connected = false;
 
 public:
@@ -56,7 +56,7 @@ public:
 
     void set_data_type(std::string retazec);
 
-    inline DataType &get_data_type()
+    inline DataType * get_data_type() const
     {
         return this->data_type;
     }
@@ -73,7 +73,7 @@ public:
 
     inline bool is_active()
     {
-        return this->data_type.is_filled();
+        return this->data_type->is_filled();
     }
 
     inline const std::string  &get_nazov_bloku() const
@@ -83,7 +83,7 @@ public:
 
     inline std::string to_string()
     {
-        return get_nazov() + ": " + get_data_type().to_string();
+        return get_nazov() + ": " + get_data_type()->to_string();
     }
 
     inline int get_cislo() const

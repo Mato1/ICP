@@ -145,7 +145,7 @@ void MainWindow::save_schema()
         {
             outfile << "port "<< p->get_nazov() << std::endl;
             outfile << "type" << std::endl;
-            std::map<std::string, double *> hodnoty_in = p->get_data_type().data;
+            std::map<std::string, double *> hodnoty_in = p->get_data_type()->data;
 
             for (auto it_in = hodnoty_in.begin(); it_in != hodnoty_in.end(); ++it_in)
             {
@@ -163,7 +163,7 @@ void MainWindow::save_schema()
         {
             outfile << "port "<< p->get_nazov() << std::endl;
             outfile << "type" << std::endl;
-            std::map<std::string, double *> hodnoty_out = p->get_data_type().data;
+            std::map<std::string, double *> hodnoty_out = p->get_data_type()->data;
 
             for (auto it = hodnoty_out.begin(); it != hodnoty_out.end(); ++it)
             {

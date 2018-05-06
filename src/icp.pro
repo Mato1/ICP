@@ -1,7 +1,6 @@
 QT += widgets
 TARGET = blockbuilder
 CONFIG  += qt debug
-INCLUDEPATH += src
 VPATH += src
 HEADERS +=  main_window.h              \
             model/block.h              \

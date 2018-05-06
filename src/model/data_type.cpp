@@ -41,9 +41,9 @@ void DataType::set(std::string nazov, double hodnota)
     }
 }
 
-void DataType::set(DataType other)
+void DataType::set(const DataType * other)
 {
-    for (auto it = other.data.begin(); it != other.data.end(); ++it)
+    for (auto it = other->data.begin(); it != other->data.end(); ++it)
     {
         this->set(it->first, *(it->second));
     }

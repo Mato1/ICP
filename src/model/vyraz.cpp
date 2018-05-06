@@ -34,7 +34,7 @@ int Vyraz::eval()
     {
         if (isalpha(c))
         {
-            double * d =  input_port->get_data_type().get(std::string(1, c));
+            double * d =  input_port->get_data_type()->get(std::string(1, c));
 
             if (d != nullptr)
             {
@@ -84,7 +84,7 @@ int Vyraz::eval()
     }
 
     vysledok = operands.top();
-    output_port->get_data_type().set(premenna, vysledok);
+    output_port->get_data_type()->set(premenna, vysledok);
 
     return 0;
 }

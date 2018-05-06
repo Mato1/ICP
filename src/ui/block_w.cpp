@@ -93,7 +93,8 @@ void BlockW::eval_block()
     {
         if (!p->is_connected())
         {
-            for (auto it = p->get_data_type().data.begin(); it != p->get_data_type().data.end(); ++it)
+            const model::DataType* port_data = p->get_data_type();
+            for (auto it = port_data->data.begin(); it != port_data->data.end(); ++it)
             {
                 bool ok;
                 double n = QInputDialog::getDouble(this, tr(p->get_nazov().c_str()), tr(it->first.c_str()),
@@ -101,7 +102,7 @@ void BlockW::eval_block()
 
                 if (ok)
                 {
-                    p->get_data_type().set(it->first, n);
+                    p->get_data_type()->set(it->first, n);
                 }
 
             }

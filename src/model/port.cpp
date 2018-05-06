@@ -20,6 +20,7 @@ Port::Port(std::string nazov_bloku, int cislo, PortType port_type)
 
 void Port::set_data_type(std::string retazec)
 {
+    data_type = new DataType();
     size_t pos = 0;
     std::string token;
     std::string delimiter = ",";
@@ -27,11 +28,11 @@ void Port::set_data_type(std::string retazec)
     while ((pos = retazec.find(delimiter)) != std::string::npos)
     {
         token = retazec.substr(0, pos);
-        data_type.add(token);
+        data_type->add(token);
         retazec.erase(0, pos + delimiter.length());
     }
 
-    data_type.add(retazec);
+    data_type->add(retazec);
 }
 
 }

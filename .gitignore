@@ -10,9 +10,6 @@ blockbuilder1.0.0.tar.gz
 #Taketo sracky generuje QT takze nasrat
 moc_* 
 
-#Neskor odstranit ked vyriesim buildovanie
-Makefile 
-
 #Vysledny spustitelny subor
 blockbuilder
 

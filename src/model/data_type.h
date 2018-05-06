@@ -22,7 +22,7 @@ struct DataType
 
     void set(std::string nazov, double hodnota);
 
-    void set(DataType other);
+    void set(const DataType * other);
 
     double * get(std::string nazov);
 
