@@ -1,3 +1,10 @@
+/**
+ * @brief 
+ * 
+ * @file block.cpp
+ * @author Libor Moravcik, Matej Mrazik
+ * @date 2018-05-06
+ */
 #include "model/block.h"
 #include <chrono>
 #include <thread>

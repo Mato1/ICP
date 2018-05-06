@@ -1,3 +1,10 @@
+/**
+ * @brief 
+ * 
+ * @file data_type.cpp
+ * @author Libor Moravcik, Matej Mrazik
+ * @date 2018-05-06
+ */
 #include "model/data_type.h"
 
 namespace icp

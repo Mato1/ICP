@@ -1,3 +1,10 @@
+/**
+ * @brief 
+ * 
+ * @file block_w.cpp
+ * @author Libor Moravcik, Matej Mrazik
+ * @date 2018-05-06
+ */
 #include "ui/block_w.h"
 #include "ui/schema_w.h"
 #include <QInputDialog>

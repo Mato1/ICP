@@ -1,3 +1,11 @@
+/**
+ * @brief 
+ * 
+ * @file vyraz_w.cpp
+ * @author Libor Moravcik, Matej Mrazik
+ * @date 2018-05-06
+ */
+ 
 #include "ui/vyraz_w.h"
 #include <QPalette>
 #include <QColor>

@@ -1,3 +1,10 @@
+/**
+ * @brief 
+ * 
+ * @file prepojenie.cpp
+ * @author Libor Moravcik, Matej Mrazik
+ * @date 2018-05-06
+ */
 #include "model/prepojenie.h"
 
 namespace icp

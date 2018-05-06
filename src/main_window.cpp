@@ -1,3 +1,11 @@
+/**
+ * @brief 
+ * 
+ * @file main_window.cpp
+ * @author Libor Moravcik, Matej Mrazik
+ * @date 2018-05-06
+ */
+
 #include "main_window.h"
 #include <QWidget>
 #include <iostream>

@@ -1,3 +1,10 @@
+/**
+ * @brief 
+ * 
+ * @file connection_w.cpp
+ * @author Libor Moravcik, Matej Mrazik
+ * @date 2018-05-06
+ */
 #include "ui/connection_w.h"
 #include <QPalette>
 #include <QColor>
