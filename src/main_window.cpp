@@ -139,8 +139,8 @@ void MainWindow::close_schema()
 void MainWindow::save_schema()
 {
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
-                       "/home/untitled",
-                       tr("Untitled"));
+                       "/home/untitled.txt",
+                       tr("Untitled (*.txt)"));
     std::ofstream outfile(fileName.toStdString());
     outfile << "schema " << schema_widget->get_nazov() <<std::endl;
 
@@ -240,7 +240,7 @@ void MainWindow::load_schema()
 
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
                        "/home",
-                       tr("Untitled"));
+                       tr("Untitled (*.txt)"));
     int schema = 0;
     int blocks = 0;
     int block = 0;
