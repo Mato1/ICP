@@ -427,7 +427,7 @@ void MainWindow::load_schema()
             blockW->setGeometry(std::stoi(geoms_str[0]),std::stoi(geoms_str[1]),std::stoi(geoms_str[2]),std::stoi(geoms_str[3]));
             // tu bude nacitanie velkosti a pozicie bloku
             ui = 1;
-            break;
+            // break;
         }
         else if (inputs == 0 and blocks !=2)
         {

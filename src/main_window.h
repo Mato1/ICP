@@ -33,7 +33,7 @@ public:
 
 private:
 
-    const std::string DEFAULT_WINDOW_TITLE = "BlockBuilder";
+    const std::string DEFAULT_WINDOW_TITLE = "BlockEditor";
     const std::string DEFAULT_SCHEMA_TITLE = "Untitled_Schema";
     const std::string DEFAULT_WELCOME_MSG  = "Press CTRL+N to create a New schema";
 

@@ -1,5 +1,5 @@
 QT += widgets
-TARGET = blockbuilder
+TARGET = blockeditor
 CONFIG  += qt debug
 VPATH += src
 HEADERS +=  main_window.h              \
