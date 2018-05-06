@@ -1,3 +1,11 @@
+/**
+ * @brief 
+ * 
+ * @file valid_dialog.cpp
+ * @author Libor Moravcik, Matej Mrazik
+ * @date 2018-05-06
+ */
+
 #include "valid_dialog.h"
 #include <QDialogButtonBox>
 #include <QRegExpValidator>

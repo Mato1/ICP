@@ -1,3 +1,11 @@
+/**
+ * @brief 
+ * 
+ * @file main.cpp
+ * @author Libor Moravcik, Matej Mrazik
+ * @date 2018-05-06
+ */
+
 #include <QApplication>
 
 #include "main_window.h"

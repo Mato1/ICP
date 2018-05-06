@@ -1,3 +1,11 @@
+/**
+ * @brief 
+ * 
+ * @file data_type.h
+ * @author Libor Moravcik, Matej Mrazik
+ * @date 2018-05-06
+ */
+
 #ifndef ICP_BLOCKBUILDER_SRC_MODEL_DATA_TYPE_H
 #define ICP_BLOCKBUILDER_SRC_MODEL_DATA_TYPE_H
 

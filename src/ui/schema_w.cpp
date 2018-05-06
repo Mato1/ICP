@@ -1,3 +1,11 @@
+/**
+ * @brief 
+ * 
+ * @file schema_w.cpp
+ * @author Libor Moravcik, Matej Mrazik
+ * @date 2018-05-06
+ */
+
 #include "ui/schema_w.h"
 #include "model/schema.h"
 #include <QMenu>

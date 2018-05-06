@@ -1,3 +1,10 @@
+/**
+ * @brief 
+ * 
+ * @file add_connection_dialog.cpp
+ * @author Libor Moravcik, Matej Mrazik
+ * @date 2018-05-06
+ */
 #include "ui/add_connection_dialog.h"
 #include <QDialogButtonBox>
 #include <QRegExpValidator>

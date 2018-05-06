@@ -1,3 +1,10 @@
+/**
+ * @brief 
+ * 
+ * @file block_w.h
+ * @author Libor Moravcik, Matej Mrazik
+ * @date 2018-05-06
+ */
 #ifndef ICP_BLOCKBUILDER_SRC_UI_BLOCK_H
 #define ICP_BLOCKBUILDER_SRC_UI_BLOCK_H
 
