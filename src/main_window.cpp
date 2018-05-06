@@ -139,8 +139,8 @@ void MainWindow::close_schema()
 void MainWindow::save_schema()
 {
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
-                       "/home/untitled",
-                       tr("Untitled"));
+                        "/home/untitled.txt",
+                        tr("Untitled (*.txt)"));
     std::ofstream outfile(fileName.toStdString());
     outfile << "schema " << schema_widget->get_nazov() <<std::endl;
 
@@ -150,7 +150,7 @@ void MainWindow::save_schema()
     {
         outfile << "block "<< b->get_nazov() << std::endl;
         ui::BlockW * blockW = static_cast<ui::BlockW*>(b);
-        outfile << blockW->geometry().x() << " " << blockW->geometry().y() << " " << blockW->geometry().width() << " " << blockW->geometry().height() << std::endl;
+        outfile << blockW->geometry().x() << " " << blockW->geometry().y() << " " << blockW->geometry().width() << " " << blockW->geometry().height() << " " << std::endl;
         outfile << "inputs" << std::endl;
 
         // tu sa este bude ukladat velkost bloku a jeho rozmiestnenie
@@ -240,7 +240,7 @@ void MainWindow::load_schema()
 
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
                        "/home",
-                       tr("Untitled"));
+                       tr("Untitled (*.txt)"));
     int schema = 0;
     int blocks = 0;
     int block = 0;
@@ -406,7 +406,6 @@ void MainWindow::load_schema()
         {
             
             size_t pos = 0;
-            // std::cout<<str<< std::endl;
             std::string token;
             std::string geoms_str[4];
             std::string delimiter = " ";
@@ -421,6 +420,10 @@ void MainWindow::load_schema()
             }
 
             ui::BlockW * blockW = static_cast<ui::BlockW*>(b);
+            std::cout<< geoms_str[0]<< std::endl;
+            std::cout<< geoms_str[1]<< std::endl;
+            std::cout<< geoms_str[2]<< std::endl;
+            std::cout<< geoms_str[3]<< std::endl;
             blockW->setGeometry(std::stoi(geoms_str[0]),std::stoi(geoms_str[1]),std::stoi(geoms_str[2]),std::stoi(geoms_str[3]));
             // tu bude nacitanie velkosti a pozicie bloku
             ui = 1;
