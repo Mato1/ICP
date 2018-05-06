@@ -102,6 +102,10 @@ void SchemaW::new_connection()
 
     if (this->detect_cycles())
     {
+        QMessageBox msgBox;
+        msgBox.setText("The document has been modified.");
+        msgBox.exec();
+        remove_prepoj(connectionW);
         delete connectionW;
     }
 }

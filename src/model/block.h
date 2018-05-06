@@ -149,12 +149,21 @@ public:
 
     inline void remove_next_block(Block * b)
     {
-        this->next_blocks.erase(std::remove(next_blocks.begin(), next_blocks.end(), b), next_blocks.end());
+        std::vector<Block *>::iterator position = std::find(next_blocks.begin(), next_blocks.end(), b);
+        if (position != next_blocks.end())
+        {
+            next_blocks.erase(position);
+        }
     }
 
     inline void remove_previous_block(Block * b)
     {
-        this->previous_blocks.erase(std::remove(next_blocks.begin(), next_blocks.end(), b), next_blocks.end());
+       
+        std::vector<Block *>::iterator position = std::find(previous_blocks.begin(), previous_blocks.end(), b);
+        if (position != previous_blocks.end())
+        {
+            previous_blocks.erase(position);
+        }
     }
 
     /**
