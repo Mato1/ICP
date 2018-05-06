@@ -124,8 +124,8 @@ void MainWindow::close_schema()
 void MainWindow::save_schema()
 {
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
-                                                    "/home/untitled.txt",
-                                                    tr("Untitled (*.txt)"));
+                       "/home/untitled.txt",
+                       tr("Untitled (*.txt)"));
     std::ofstream outfile(fileName.toStdString());
 
     outfile << "schema " << schema_widget->get_nazov() <<std::endl;
@@ -149,7 +149,7 @@ void MainWindow::save_schema()
 
             for (auto it_in = hodnoty_in.begin(); it_in != hodnoty_in.end(); ++it_in)
             {
-                    outfile << it_in->first << std::endl;
+                outfile << it_in->first << std::endl;
             }
 
             outfile << "end type" << std::endl;
@@ -211,8 +211,8 @@ void MainWindow::save_schema()
     for (model::Prepojenie * prepoj : schema_widget->get_prepojenia())
     {
         outfile <<  prepoj->get_output_block()->get_nazov()<<" "<<
-                    prepoj->get_output_port()->get_nazov()<< " " << prepoj->get_input_block()->get_nazov()<<
-                    " "<< prepoj->get_input_port()->get_nazov() << " " << std::endl;
+                prepoj->get_output_port()->get_nazov()<< " " << prepoj->get_input_block()->get_nazov()<<
+                " "<< prepoj->get_input_port()->get_nazov() << " " << std::endl;
     }
 
     outfile << "end prepojenia" << std::endl;
@@ -224,8 +224,8 @@ void MainWindow::load_schema()
 {
 
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
-                                                    "/home",
-                                                    tr("Untitled (*.txt)"));
+                       "/home",
+                       tr("Untitled (*.txt)"));
     int schema = 0;
     int blocks = 0;
     int block = 0;
@@ -252,7 +252,7 @@ void MainWindow::load_schema()
     model::DataType data_type;
     ui::BlockW * b = nullptr;
     ui::PortW * p = nullptr;
-    ui::VyrazW * v = nullptr;  
+    ui::VyrazW * v = nullptr;
     ui::ConnectionW * prepoj = nullptr;
 
     if (! f.is_open())
@@ -352,12 +352,14 @@ void MainWindow::load_schema()
                 // break;
                 // std::cout<<"end block" <<std::endl;
             }
+
             // break;
         }
 
         else if (schema == 0)
         {
             std::string schema_str = str.substr(0, 6);
+
             if (schema_str != "schema")
             {
                 //error lebo je to zle ulozene
@@ -411,7 +413,7 @@ void MainWindow::load_schema()
         }
         // else if (ui == 0 and block == 1 and blocks !=2)
         // {
-        //     
+        //
         //     // tu bude nacitanie velkosti a pozicie bloku
         //     ui = 1;
         //     break;
@@ -631,7 +633,8 @@ void MainWindow::load_schema()
             std::string prepojenie_str[4];
             std::string delimiter = " ";
             int i = 0;
-             while ((pos = str.find(delimiter)) != std::string::npos)
+
+            while ((pos = str.find(delimiter)) != std::string::npos)
             {
                 token = str.substr(0, pos);
                 prepojenie_str[i] = token;
@@ -640,15 +643,16 @@ void MainWindow::load_schema()
             }
 
 
-            ui::BlockW * out_block = static_cast<ui::BlockW*>(schema_widget->get_block(prepojenie_str[0]));
-            ui::PortW * out_port = static_cast<ui::PortW*>(schema_widget->get_block(prepojenie_str[0])->get_port(prepojenie_str[1]));
-            ui::BlockW * in_block = static_cast<ui::BlockW*>(schema_widget->get_block(prepojenie_str[2]));
-            ui::PortW * in_port = static_cast<ui::PortW*>(schema_widget->get_block(prepojenie_str[2])->get_port(prepojenie_str[3]));
+            ui::BlockW * out_block = static_cast<ui::BlockW *>(schema_widget->get_block(prepojenie_str[0]));
+            ui::PortW * out_port = static_cast<ui::PortW *>(schema_widget->get_block(prepojenie_str[0])->get_port(prepojenie_str[1]));
+            ui::BlockW * in_block = static_cast<ui::BlockW *>(schema_widget->get_block(prepojenie_str[2]));
+            ui::PortW * in_port = static_cast<ui::PortW *>(schema_widget->get_block(prepojenie_str[2])->get_port(prepojenie_str[3]));
 
             prepoj = new ui::ConnectionW(out_block, out_port, in_block, in_port);
             schema_widget->add_prepoj(prepoj);
             // break;
         }
+
         // else
         // {
         //     // chyba nieco ine tam bolo
