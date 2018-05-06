@@ -43,6 +43,7 @@ protected:
     /////////////////////////////////////////////////////////
 
     std::vector<Block *> blocks;
+    std::vector<Block *> root_blocks;
     std::vector<Prepojenie *> prepojenia;
 
 protected:
@@ -133,7 +134,7 @@ public:
         return nazov;
     }
 
-private:
+protected:
     /**
      * @brief Zisti ci existuje block s danym nazvom.
      * Ak ano vrati ho inak vrati nullptr.
@@ -189,7 +190,7 @@ private:
     * @return true Je cyklus.
     * @return false Nie je cyklus.
     */
-    bool detect_cycle(Block * block, std::vector<Port *> visited_input_ports);
+    bool detect_cycle(Block * block, std::vector<Port *> *visited_input_ports);
 
 };
 }

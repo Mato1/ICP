@@ -11,7 +11,7 @@ namespace icp
 namespace ui
 {
 
-PortW::PortW(std::string nazov_bloku, int cislo, model::PortType type , QWidget * parent)
+PortW::PortW(std::string nazov_bloku, int cislo, model::PortType type, QWidget * parent)
     : model::Port(nazov_bloku, cislo, type)
 {
     setMaximumWidth(MainWindow::GRID_SQUARE_SIZE);

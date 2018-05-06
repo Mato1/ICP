@@ -24,7 +24,7 @@ private:
     const int MAX_HEIGHT = 8;
 public:
     PortW(std::string nazov_bloku, int cislo, model::PortType type, QWidget * parent = 0);
-    void mouseMoveEvent(QMouseEvent * event);
+    void mouseMoveEvent(QMouseEvent * event) override;
     void paintEvent(QPaintEvent * event) override;
 };
 

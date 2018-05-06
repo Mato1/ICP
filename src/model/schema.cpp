@@ -38,6 +38,8 @@ void Schema::add_block(Block * block)
     {
         blocks.push_back(block);
     }
+
+    root_blocks = get_root_blocks();
 }
 
 Block * Schema::get_block(std::string nazov)
@@ -92,22 +94,26 @@ void Schema::eval()
 bool Schema::detect_cycles()
 {
     std::vector<Block *> root_blocks = get_root_blocks();
-    std::vector<Port *> visited_input_ports;
+    bool cycle = false;
+
+    if (root_blocks.empty())
+    {
+        return true;
+    }
 
     for (auto block : root_blocks)
     {
-        fut_vec_cycles.push_back( std::async(std::launch::async, &Schema::detect_cycle, this,
-                                             block, visited_input_ports) );
+        std::vector<Port *> * visited_input_ports = new std::vector<Port*>();
+   
+        if (detect_cycle(block, visited_input_ports))
+        {
+            cycle =  true;
+        }
+   
+        delete visited_input_ports;
     }
 
-    bool result = false;
-
-    for (size_t i = 0; i < fut_vec_cycles.size(); ++i)
-    {
-        result += fut_vec_cycles[i].get();
-    }
-
-    return result;
+    return cycle;
 }
 
 Block * Schema::block_exists(std::string nazov)
@@ -138,18 +144,17 @@ std::vector<Block *> Schema::get_root_blocks()
     return root_blocks;
 }
 
-bool Schema::detect_cycle(Block * block, std::vector<Port *> visited_input_ports)
+bool Schema::detect_cycle(Block * block, std::vector<Port *> *visited_input_ports)
 {
     for (auto p : block->get_input_ports())
     {
-        if ( (std::find(visited_input_ports.begin(), visited_input_ports.end(),
-                        p)) == visited_input_ports.end() )
+        if ( (std::find(visited_input_ports->begin(), visited_input_ports->end(), p)) == visited_input_ports->end() )
         {
-            visited_input_ports.push_back(p);
+            visited_input_ports->push_back(p);
 
             for (auto b : block->get_next_blocks())
             {
-                detect_cycle(b, visited_input_ports);
+                return detect_cycle(b, visited_input_ports);
             }
         }
         else

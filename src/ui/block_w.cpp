@@ -31,8 +31,8 @@ BlockW::BlockW(std::string nazov, QWidget * parent)
     QPalette pal = palette();
     pal.setColor(QPalette::Background, QColor(18, 84, 104));
     pal.setColor(QPalette::Foreground, Qt::white);
-    setAutoFillBackground(true);
     setPalette(pal);
+    setAutoFillBackground(true);
     setGeometry(0, 0, BASE_WIDTH, BASE_HEIGHT);
     this->setParent(parent);
     show();
@@ -85,15 +85,14 @@ void BlockW::s_show_context_menu(const QPoint &pos)
 
 }
 
-void BlockW::eval_block()
+void BlockW::set_data_to_input_ports()
 {
-    std::cout << "Evaluating block" << std::endl;
-
     for (PortW * p : input_ports)
     {
         if (!p->is_connected())
         {
-            const model::DataType* port_data = p->get_data_type();
+            const model::DataType * port_data = p->get_data_type();
+
             for (auto it = port_data->data.begin(); it != port_data->data.end(); ++it)
             {
                 bool ok;
@@ -109,10 +108,29 @@ void BlockW::eval_block()
 
         }
     }
+}
 
-    // this->eval();
+void BlockW::set_input_ports_ready(bool r)
+{
+    for(PortW * p : input_ports)
+    {
+        p->set_ready(r);
+    }
+}
+
+void BlockW::set_ouput_ports_ready(bool r)
+{
+    for(PortW * p : output_ports)
+    {
+        p->set_ready(r);
+    }
+}
 
 
+void BlockW::eval_block()
+{
+    set_data_to_input_ports();
+    this->eval();
 }
 
 void BlockW::s_delete_block()
@@ -221,13 +239,13 @@ void BlockW::add_port(model::PortType type)
         }
 
         port_w->set_data_type(text.toStdString());
-        
+
         add_port(port_w);
-      
+
     }
 }
 
-void BlockW::add_port(PortW *p)
+void BlockW::add_port(PortW * p)
 {
     p->setParent((QWidget *)this->parent());
 
@@ -235,22 +253,23 @@ void BlockW::add_port(PortW *p)
     {
         input_ports.push_back(p);
         p->setGeometry(geometry().left() - MainWindow::GRID_SQUARE_SIZE,
-                                geometry().top() + (MainWindow::GRID_SQUARE_SIZE * input_ports.size()), p->width(),
-                                p->height());
+                       geometry().top() + (MainWindow::GRID_SQUARE_SIZE * input_ports.size()), p->width(),
+                       p->height());
 
-    } else if (p->get_port_type() == model::PortType::output)
+    }
+    else if (p->get_port_type() == model::PortType::output)
     {
         output_ports.push_back(p);
         p->setGeometry(geometry().left() + geometry().width(),
-                                geometry().top() + (MainWindow::GRID_SQUARE_SIZE * output_ports.size()), p->width(),
-                                p->height());
+                       geometry().top() + (MainWindow::GRID_SQUARE_SIZE * output_ports.size()), p->width(),
+                       p->height());
     }
 
     Block::add_port(p);
 
     MINIMUM_HEIGHT = (input_ports.size() < output_ports.size() ? (output_ports.size()) *
                       MainWindow::GRID_SQUARE_SIZE : (input_ports.size()) * MainWindow::GRID_SQUARE_SIZE);
-    
+
     setMinimumHeight(MINIMUM_HEIGHT);
     BASE_HEIGHT = (input_ports.size() < output_ports.size() ? (output_ports.size() + 1) *
                    MainWindow::GRID_SQUARE_SIZE : (input_ports.size() + 1) * MainWindow::GRID_SQUARE_SIZE);
@@ -435,7 +454,19 @@ void BlockW::paintEvent(QPaintEvent * event)
 
         }
 
+    }
 
+    if (evaluated)
+    {
+
+        QPalette pal = palette();
+        pal.setColor(QPalette::Foreground, QColor(100, 250, 150));
+        setPalette(pal);
+    } else 
+    {
+        QPalette pal = palette();
+        pal.setColor(QPalette::Foreground, Qt::white);
+        setPalette(pal);
     }
 }
 

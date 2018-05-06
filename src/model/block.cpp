@@ -127,6 +127,8 @@ void Block::eval()
     {
         v->eval();
     }
+
+    this->evaluated = true;
 }
 
 bool Block::all_input_ports_active()

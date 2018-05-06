@@ -32,6 +32,7 @@ private slots:
 public slots:
     void eval_block();
 
+
 private:
     int MINIMUM_WIDTH  = icp::MainWindow::GRID_SQUARE_SIZE * 1;
     int MINIMUM_HEIGHT = icp::MainWindow::GRID_SQUARE_SIZE * 1;
@@ -58,6 +59,10 @@ public:
     void mouseReleaseEvent(QMouseEvent * e) override;
     void mouseMoveEvent(QMouseEvent * event) override;
     void paintEvent(QPaintEvent * event) override;
+
+    void set_data_to_input_ports();
+    void set_input_ports_ready(bool r);
+    void set_ouput_ports_ready(bool r);
 
     inline void set_nazov(std::string nazov)
     {

@@ -12,6 +12,7 @@
 #include "ui/port_w.h"
 #include "ui/connection_w.h"
 #include <QToolTip>
+#include <QMessageBox>
 
 namespace icp
 {
@@ -35,7 +36,7 @@ SchemaW::SchemaW(std::string nazov)
 
 SchemaW::~SchemaW()
 {
-  
+
 }
 
 
@@ -75,44 +76,54 @@ void SchemaW::new_block()
 
 void SchemaW::new_connection()
 {
-   AddConnectionDialog dialog(blocks, this);
+    AddConnectionDialog dialog(blocks, this);
+    ConnectionW * connectionW = nullptr;
 
-   if (dialog.exec() == QDialog::Accepted)
-   {
-       QString s_oblock = dialog.get_selected_output_block();
-       QString s_oport = dialog.get_selected_output_port();
-       QString s_iblock = dialog.get_selected_input_block();
-       QString s_iport = dialog.get_selected_input_port();
+    if (dialog.exec() == QDialog::Accepted)
+    {
+        QString s_oblock = dialog.get_selected_output_block();
+        QString s_oport = dialog.get_selected_output_port();
+        QString s_iblock = dialog.get_selected_input_block();
+        QString s_iport = dialog.get_selected_input_port();
 
-       BlockW * out_block = static_cast<BlockW*>(get_block(s_oblock.toStdString()));
-       PortW *  out_port  = static_cast<PortW*>(out_block->get_port((s_oport.toStdString())));
-       BlockW * in_block  = static_cast<BlockW*>(get_block(s_iblock.toStdString()));
-       PortW *  in_port   = static_cast<PortW*>(in_block->get_port((s_iport.toStdString())));
+        BlockW * out_block = static_cast<BlockW *>(get_block(s_oblock.toStdString()));
+        PortW  * out_port  = static_cast<PortW *>(out_block->get_port((s_oport.toStdString())));
+        BlockW * in_block  = static_cast<BlockW *>(get_block(s_iblock.toStdString()));
+        PortW  * in_port   = static_cast<PortW *>(in_block->get_port((s_iport.toStdString())));
 
-       if (out_block != in_block && out_port != in_port && out_block != nullptr && out_port != nullptr && in_block != nullptr && in_port != nullptr)
-       {
-           ConnectionW * connectionW = new ConnectionW(out_block, out_port, in_block, in_port);
-           add_prepoj(connectionW);
-       }
+        if (out_block != in_block && out_port != in_port && out_block != nullptr && out_port != nullptr && in_block != nullptr && in_port != nullptr)
+        {
+            connectionW = new ConnectionW(out_block, out_port, in_block, in_port);
+            add_prepoj(connectionW);
+        }
+    }
 
-   }
+    dialog.close();
+
+    if (this->detect_cycles())
+    {
+        delete connectionW;
+    }
 }
 
 
 
 void SchemaW::play_schema()
 {
-    for(model::Block * b : blocks)
+
+    for (model::Block * b : blocks)
     {
-        BlockW * bw = static_cast<BlockW*>(b);
-        bw->eval_block();
+        BlockW * bw = static_cast<BlockW *>(b);
+        bw->set_input_ports_ready(true);
+        bw->set_ouput_ports_ready(true);
+        bw->set_data_to_input_ports();
     }
 
     this->eval();
 }
 
 void SchemaW::next_step()
-{
+{   
     std::cout << "Next step" << std::endl;
 }
 
@@ -139,7 +150,7 @@ void SchemaW::paintEvent(QPaintEvent * event)
         painter.drawLine(0, y, width(), y);
     }
 
-    for(auto p : prepojenia)
+    for (auto p : prepojenia)
     {
         QPainter painter(this);
         QPen pen;
@@ -149,17 +160,17 @@ void SchemaW::paintEvent(QPaintEvent * event)
         pen.setBrush(QColor(255, 175, 0));
         painter.setPen(pen);
 
-        PortW * out_p = static_cast<PortW*>(p->get_output_port());
-        PortW * in_p = static_cast<PortW*>(p->get_input_port());
+        PortW * out_p = static_cast<PortW *>(p->get_output_port());
+        PortW * in_p = static_cast<PortW *>(p->get_input_port());
 
         QRect out_geom = out_p->geometry();
         QRect in_geom = in_p->geometry();
-    
+
         QPoint b_point = out_geom.topRight();
         QPoint e_point = in_geom.topLeft();
         b_point.setY(b_point.y() + 2);
         e_point.setY(e_point.y() + 2);
-        
+
         QPoint middle_point = ((b_point + e_point) / 2);
         middle_point.setX(middle_point.x() + 20);
 
@@ -167,37 +178,39 @@ void SchemaW::paintEvent(QPaintEvent * event)
 
         QPainterPath path;
         path.addRect(b_point.x(), b_point.y(), abs(middle_point.x()-b_point.x()), 4);
-        
+
         painter.drawLine(middle_point.x(), b_point.y(), middle_point.x(), e_point.y());
 
         if (middle_point.y() < e_point.y())
         {
             path.addRect(middle_point.x(), b_point.y(), 4, abs(b_point.y()-e_point.y()));
-        } else
+        }
+        else
         {
             path.addRect(middle_point.x(), e_point.y(), 4, abs(b_point.y()-e_point.y()));
         }
-        
+
         painter.drawLine(middle_point.x(), e_point.y(), e_point.x(), e_point.y());
         path.addRect(middle_point.x(), e_point.y(), abs(middle_point.x()-e_point.x()), 4);
 
-        ConnectionW * pp = static_cast<ConnectionW*>(p);
+        ConnectionW * pp = static_cast<ConnectionW *>(p);
         pp->set_painter_path(path);
-       
+
     }
 }
 
-void SchemaW::mouseMoveEvent(QMouseEvent *event)
+void SchemaW::mouseMoveEvent(QMouseEvent * event)
 {
-    for(auto p : prepojenia)
+    for (auto p : prepojenia)
     {
-        ConnectionW * pp = static_cast<ConnectionW*>(p);
+        ConnectionW * pp = static_cast<ConnectionW *>(p);
+
         if (pp->get_painter_path().contains(event->pos()))
         {
             QToolTip::showText(event->globalPos(), tr(p->to_string().c_str()));
         }
     }
-    
+
 }
 
 

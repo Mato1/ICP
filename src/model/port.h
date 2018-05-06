@@ -43,6 +43,7 @@ private:
     PortType port_type;
     DataType * data_type;
     bool connected = false;
+    bool ready = false;
 
 public:
     /**
@@ -73,7 +74,7 @@ public:
 
     inline bool is_active()
     {
-        return this->data_type->is_filled();
+        return this->data_type->is_filled() && ready;
     }
 
     inline const std::string  &get_nazov_bloku() const
@@ -99,6 +100,11 @@ public:
     inline bool is_connected() const
     {
         return this->connected;
+    }
+
+    inline void set_ready(bool b)
+    {
+        this->ready = b;
     }
 
 

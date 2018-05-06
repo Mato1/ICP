@@ -34,7 +34,8 @@ void DataType::set(std::string nazov, double hodnota)
         if (data[nazov] == nullptr)
         {
             data[nazov] = new double(hodnota);
-        } else
+        }
+        else
         {
             (*data[nazov]) = hodnota;
         }

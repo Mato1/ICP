@@ -14,6 +14,7 @@
 #include <vector>
 #include <algorithm>
 #include <map>
+#include <QObject>
 
 namespace icp
 {
@@ -27,10 +28,14 @@ namespace model
  * na vytvorenie a zmazanie vypoctov a vytvorenie
  * vstupnych a vystupnych portov.
  */
-class Block
+class Block 
 {
 
-private:
+
+
+
+protected:
+    bool evaluated = false;
     std::string nazov;
     std::vector<Vyraz *> vypocty;
     std::vector<Port *>  input_ports;
