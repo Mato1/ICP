@@ -300,6 +300,7 @@ void Schema::load(std::string file)
     int length_str = 0;
     int input_cislo_portu = 0;
     int output_cislo_portu = 0;
+    int ui = 0;
     std::string infix_str;
     std::ifstream f(file);
     std:: string str;
@@ -405,6 +406,7 @@ void Schema::load(std::string file)
                 output_cislo_portu = 0;
                 vypocty = 0;
                 infix = 0;
+                ui = 0;
                 // break;
                 // std::cout<<"end block" <<std::endl;
             }
@@ -465,8 +467,9 @@ void Schema::load(std::string file)
             block = 1;
             // break;
         }
-        // else if (ui == 0)
+        // else if (ui == 0 and block == 1 and blocks !=2)
         // {
+        //     
         //     // tu bude nacitanie velkosti a pozicie bloku
         //     ui = 1;
         //     break;
