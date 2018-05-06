@@ -178,16 +178,40 @@ void SchemaW::paintEvent(QPaintEvent * event)
         b_point.setY(b_point.y() + 2);
         e_point.setY(e_point.y() + 2);
         
-
         QPoint middle_point = ((b_point + e_point) / 2);
         middle_point.setX(middle_point.x() + 20);
 
         painter.drawLine(b_point.x(), b_point.y(), middle_point.x(), b_point.y());
-        painter.drawLine(middle_point.x(), b_point.y(), middle_point.x(), e_point.y());
-        painter.drawLine(middle_point.x(), e_point.y(), e_point.x(), e_point.y());
-    }
 
-   
+        QPainterPath path;
+        path.addRect(b_point.x(), b_point.y(), abs(middle_point.x()-b_point.x()), 4);
+        
+        painter.drawLine(middle_point.x(), b_point.y(), middle_point.x(), e_point.y());
+        path.addRect(middle_point.x(), b_point.y(), 4, abs(b_point.y()-e_point.y()));
+        
+        painter.drawLine(middle_point.x(), e_point.y(), e_point.x(), e_point.y());
+        path.addRect(middle_point.x(), e_point.y(), abs(middle_point.x()-e_point.x()), 4);
+
+        ConnectionW * pp = static_cast<ConnectionW*>(p);
+        pp->set_painter_path(path);
+       
+    }
 }
+
+void SchemaW::mousePressEvent(QMouseEvent *event)
+{
+    if (event->button() == Qt::LeftButton) {
+        for(auto p : prepojenia)
+        {
+            ConnectionW * pp = static_cast<ConnectionW*>(p);
+            if (pp->get_painter_path().contains(event->pos()))
+            {
+                std::cout << "ToolTiping" << std::endl;
+            }
+        }
+    }
+}
+
+
 }
 }

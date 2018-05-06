@@ -46,6 +46,8 @@ public:
     {
         return this->nazov;
     }
+
+    void mousePressEvent(QMouseEvent * event) override;
 };
 }
 }
