@@ -270,12 +270,12 @@ void Schema::save(std::string file)
 
     outfile << "prepojenia" << std::endl;
 
-    // for (Prepojenie * prepoj : prepojenia)
-    // {
-    //     outfile <<  prepoj->get_output_block()->get_nazov()<<" "<<
-    //             prepoj->get_output_port()->get_nazov()<< " " << prepoj->get_input_block()->get_nazov()<<
-    //             " "<< prepoj->get_input_port()->get_nazov() << std::endl;
-    // }
+    for (Prepojenie * prepoj : prepojenia)
+    {
+        outfile <<  prepoj->get_output_block()->get_nazov()<<" "<<
+                prepoj->get_output_port()->get_nazov()<< " " << prepoj->get_input_block()->get_nazov()<<
+                " "<< prepoj->get_input_port()->get_nazov() << " " << std::endl;
+    }
 
     outfile << "end prepojenia" << std::endl;
 
@@ -284,7 +284,6 @@ void Schema::save(std::string file)
 
 void Schema::load(std::string file)
 {
-    std::cout << "som vo funkcii load " << std::endl;
     int schema = 0;
     int blocks = 0;
     int block = 0;
@@ -297,11 +296,10 @@ void Schema::load(std::string file)
     int inputs_vyp = 0;
     int outputs_vyp = 0;
     int type = 0;
-    int ui  = 0;
     int premenna = 0;
     int length_str = 0;
-    int input_cislo_portu = 1;
-    int output_cislo_portu = 1;
+    int input_cislo_portu = 0;
+    int output_cislo_portu = 0;
     std::string infix_str;
     std::ifstream f(file);
     std:: string str;
@@ -344,61 +342,76 @@ void Schema::load(std::string file)
 
             //     break;
             // }
-            if (str.substr(4, length_str) == "inputs")
+            if (str.substr(4, length_str) == "type")
             {
+                type = 2;
+            }
+
+            else if (str.substr(4, length_str) == "inputs")
+            {
+                // std::cout << "end inputs" << std::endl;
                 inputs = 2;
-                break;
+                // break;
             }
             else if (str.substr(4, length_str) == "outputs")
             {
+                // std::cout << "end outputs" << std::endl;
                 outputs = 2;
-                break;
+                // break;
             }
             else if (str.substr(4, length_str) == "port")
             {
                 b->add_port(p);
                 port = 0;
-                break;
+                // std::cout << "end port" << std::endl;
+                type = 0;
+                // break;
             }
             else if (str.substr(4, length_str) == "inputs_vyp")
             {
                 inputs_vyp = 2;
-                break;
+                // break;
             }
             else if (str.substr(4, length_str) == "outputs_vyp")
             {
                 outputs_vyp = 2;
-                break;
+                // break;
             }
             else if (str.substr(4, length_str) == "premenna")
             {
                 premenna = 0;
-                break;
+                // break;
             }
             else if (str.substr(4, length_str) == "prepojenia")
             {
                 prepojenie = 0;
-                break;
+                // break;
             }
-            else if (str.substr(4, length_str) == "block")
+            else if (str.substr(4, 6) == "blocks")
+            {
+                // std::cout << "end blocks" << std::endl;
+                blocks = 2;
+                // break;
+            }
+            else if (str.substr(4, 5) == "block")
             {
                 block = 0;
                 inputs = 0;
                 outputs = 0;
                 inputs_vyp = 0;
                 outputs_vyp = 0;
-                input_cislo_portu = 1;
-                output_cislo_portu = 1;
-                break;
+                premenna = 0;
+                input_cislo_portu = 0;
+                output_cislo_portu = 0;
+                vypocty = 0;
+                infix = 0;
+                // break;
+                // std::cout<<"end block" <<std::endl;
             }
-            else if (str.substr(4, length_str) == "blocks")
-            {
-                blocks =2;
-                break;
-            }
+            // break;
         }
 
-        if (schema == 0)
+        else if (schema == 0)
         {
             std::string schema_str = str.substr(0, 6);
             if (schema_str != "schema")
@@ -407,19 +420,19 @@ void Schema::load(std::string file)
             }
             else
             {
-                std::cout << "som tu schema" << std::endl;
+                // std::cout << "som tu schema" << std::endl;
                 length_str = str.length() - 7;
-                std::cout << str.substr(7, length_str) << std::endl;
+                // std::cout << str.substr(7, length_str) << std::endl;
                 Schema(str.substr(7, length_str));
             }
 
             schema = 1;
             // break;
         }
-        else if (blocks == 0 and schema == 1)
+        else if (blocks == 0 and schema == 1 and blocks !=2)
         {
-            std::cout << "som tu blocks" << std::endl;
-            std::cout << str << std::endl;
+            // std::cout << "som tu blocks" << std::endl;
+            // std::cout << str << std::endl;
             if (str == "blocks")
             {
                 // std::cout << "aj tu som bol" << std::endl;
@@ -432,10 +445,10 @@ void Schema::load(std::string file)
 
             // break;
         }
-        else if (block == 0)
+        else if (block == 0 and blocks !=2)
         {
             std::string block_str = str.substr(0, 5);
-            std::cout << block_str << std::endl;
+            // std::cout << block_str << std::endl;
 
             if (block_str != "block")
             {
@@ -443,23 +456,24 @@ void Schema::load(std::string file)
             }
             else
             {
-                std::cout << "som tu" << std::endl;
+                // std::cout << "som tu" << std::endl;
                 length_str = str.length() - 6;
-                Block * b = new Block(str.substr(6, length_str));
+                b = new Block(str.substr(6, length_str));
                 add_block(b);
             }
 
             block = 1;
             // break;
         }
-        else if (ui == 0)
+        // else if (ui == 0)
+        // {
+        //     // tu bude nacitanie velkosti a pozicie bloku
+        //     ui = 1;
+        //     break;
+        // }
+        else if (inputs == 0 and blocks !=2)
         {
-            // tu bude nacitanie velkosti a pozicie bloku
-            ui = 1;
-            break;
-        }
-        else if (inputs == 0)
-        {
+            // std::cout<<"inputs som tam" << std::endl;
             if (str == "inputs")
             {
                 inputs = 1;
@@ -467,7 +481,7 @@ void Schema::load(std::string file)
 
             // break;
         }
-        else if (inputs != 2 and port == 0)
+        else if (inputs != 2 and port == 0 and blocks !=2)
         {
             port_str = str.substr(0, 4);
 
@@ -479,7 +493,8 @@ void Schema::load(std::string file)
             {
                 length_str = str.length() - 5;
                 port_str = str.substr(5, length_str);
-                Port * p = new Port(b->get_nazov(), input_cislo_portu,PortType::input);
+                p = new Port(b->get_nazov(), input_cislo_portu, PortType::input);
+                // std::cout << "port nacitavanie" << std::endl;
                 input_cislo_portu +=1;
                 //vyrobim port a este ho nebudem pridavat bloku lebo nepoznam jeho type-hotovo
             }
@@ -487,7 +502,7 @@ void Schema::load(std::string file)
             port = 1;
             // break;
         }
-        else if (inputs == 1 and port == 1 and type == 0)
+        else if (inputs == 1 and port == 1 and type == 0 and blocks !=2)
         {
             if (str != "type")
             {
@@ -501,16 +516,17 @@ void Schema::load(std::string file)
         }
         else if (type == 1)
         {
+            // std::cout << "type nacitavanie" << std::endl;
             length_str = str.length() - 1;
-            data_type.add(str.substr(0, 1),std::stod(str.substr(1, length_str)));
+            data_type.add(str.substr(0, 1));
             p->set_data_type(str.substr(0, 1));
-            b->add_port(p);
+            // b->add_port(p);
             // budem tu pridavat do mapy typi ktore budem ziskavat
             // tu neviem ako rozdelim to ze jedno je hodnota a jedno nazov a neviem akej to je dlzka
             // musim pridaj port do bloku -hotovo
             // break;
         }
-        else if (outputs == 0)
+        else if (outputs == 0 and blocks !=2)
         {
             if (str == "outputs")
             {
@@ -519,7 +535,7 @@ void Schema::load(std::string file)
 
             // break;
         }
-        else if (outputs != 2 and port == 0)
+        else if (outputs != 2 and port == 0 and blocks !=2)
         {
             port_str = str.substr(0, 4);
 
@@ -529,9 +545,10 @@ void Schema::load(std::string file)
             }
             else
             {
+                // std::cout << "nacitavam output" << std::endl;
                 length_str = str.length() - 5;
                 port_str = str.substr(5, length_str);
-                Port * p = new Port(b->get_nazov(), input_cislo_portu,PortType::output);
+                p = new Port(b->get_nazov(), output_cislo_portu,PortType::output);
                 output_cislo_portu +=1;
                 //vyrobim port a este ho nebudem pridavat bloku lebo nepoznam jeho type -hotovo
             }
@@ -539,7 +556,7 @@ void Schema::load(std::string file)
             port = 1;
             // break;
         }
-        else if (outputs == 1 and port == 1 and type == 0)
+        else if (outputs == 1 and port == 1 and type == 0 and blocks !=2)
         {
             if (str != "type")
             {
@@ -552,18 +569,18 @@ void Schema::load(std::string file)
                 // break;
             }
         }
-        else if (type == 1)
+        else if (type == 1 and blocks !=2)
         {
             length_str = str.length() - 1;
-            data_type.add(str.substr(0, 1),std::stod(str.substr(1, length_str)));
+            data_type.add(str.substr(0, 1));
             p->set_data_type(str.substr(0, 1));
-            b->add_port(p);
+            // b->add_port(p);
             // budem tu pridavat do mapy typi ktore budem ziskavat
             // tu neviem ako rozdelim to ze jedno je hodnota a jedno nazov a neviem akej to je dlzky
             // musim pridaj port do bloku - hotovo
             // break;
         }
-        else if (vypocty == 0)
+        else if (vypocty == 0 and blocks !=2)
         {
             if (str == "vypocty")
             {
@@ -576,14 +593,15 @@ void Schema::load(std::string file)
 
             // break;
         }
-        else if (vypocty == 1 and infix == 0)
+        else if (vypocty == 1 and infix == 0 and blocks !=2)
         {
+            // std::cout << "infix" << std::endl;
             // nastavim vyrazu infix
             infix_str = str;
             infix = 1;
-            break;
+            // break;
         }
-        else if (infix == 1 and inputs_vyp == 0)
+        else if (infix == 1 and inputs_vyp == 0 and blocks !=2)
         {
             if (str == "inputs_vyp")
             {
@@ -596,14 +614,15 @@ void Schema::load(std::string file)
 
             // break;
         }
-        else if (inputs_vyp == 1)
+        else if (inputs_vyp == 1 and blocks !=2)
         {
+            std::cout << "input vyraz" << std::endl;
             input_vyraz = str;
 
             // budem tu nacitavav nazov vstupnych portov pre vyraz
             // break;
         }
-        else if (infix == 1 and inputs_vyp == 2 and outputs_vyp == 0)
+        else if (infix == 1 and inputs_vyp == 2 and outputs_vyp == 0 and blocks !=2)
         {
             if (str == "outputs_vyp")
             {
@@ -616,13 +635,14 @@ void Schema::load(std::string file)
 
             // break;
         }
-        else if (infix == 1 and outputs_vyp == 1)
+        else if (infix == 1 and outputs_vyp == 1 and blocks !=2)
         {
             // budem tu nacitavav nazov vstupnych portov pre vyraz
+            // std::cout << "output vyraz" << std::endl;
             output_vyraz = str;
             // break;
         }
-        else if (infix == 1 and premenna == 0)
+        else if (infix == 1 and premenna == 0 and blocks !=2)
         {
             std::string premenna_str = str.substr(0, 8);
 
@@ -634,7 +654,7 @@ void Schema::load(std::string file)
             {
                 length_str = str.length() - 9;
                 premenna_str = str.substr(9, length_str);
-                Vyraz * v = new Vyraz(infix_str, premenna_str);
+                v = new Vyraz(infix_str, premenna_str);
                 b->add_vyraz(v);
                 v->set_input_port(b->get_port(input_vyraz));
                 v->set_output_port(b->get_port(output_vyraz));
@@ -661,18 +681,19 @@ void Schema::load(std::string file)
         {
             // nacitam informacie pre prepojenie
             size_t pos = 0;
+            // std::cout<<str<< std::endl;
             std::string token;
             std::string prepojenie_str[4];
-            std::string delimiter = ",";
+            std::string delimiter = " ";
             int i = 0;
              while ((pos = str.find(delimiter)) != std::string::npos)
             {
                 token = str.substr(0, pos);
                 prepojenie_str[i] = token;
                 str.erase(0, pos + delimiter.length());
-                i+=1;
+                i++;
             }
-            Prepojenie * prepoj = new Prepojenie(get_block(prepojenie_str[0]),get_block(prepojenie_str[0])->get_port(prepojenie_str[1]), get_block(prepojenie_str[2]),get_block(prepojenie_str[2])->get_port(prepojenie_str[3]));
+            prepoj = new Prepojenie(get_block(prepojenie_str[0]),get_block(prepojenie_str[0])->get_port(prepojenie_str[1]), get_block(prepojenie_str[2]),get_block(prepojenie_str[2])->get_port(prepojenie_str[3]));
             add_prepoj(prepoj);
             // break;
         }
