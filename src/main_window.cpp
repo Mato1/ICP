@@ -123,11 +123,10 @@ void MainWindow::close_schema()
 
 void MainWindow::save_schema()
 {
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save"),
                                                     "/home/untitled.txt",
                                                     tr("Untitled (*.txt)"));
     std::ofstream outfile(fileName.toStdString());
-
     outfile << "schema " << schema_widget->get_nazov() <<std::endl;
 
     outfile << "blocks" << std::endl;
@@ -268,23 +267,6 @@ void MainWindow::load_schema()
         {
             length_str = str.length() - 4;
 
-            // if (str.substr(4, length_str) == "type")
-            // {
-            //     type = 0;
-            //     data_type.clear();
-
-            //     if (inputs == 1)
-            //     {
-
-            //         // tu pridam blok do inputs port aj s jeho typom
-            //     }
-            //     else
-            //     {
-            //         // je to outputs port takze ho pridam do outputs port
-            //     }
-
-            //     break;
-            // }
             if (str.substr(4, length_str) == "type")
             {
                 type = 2;
@@ -292,49 +274,47 @@ void MainWindow::load_schema()
 
             else if (str.substr(4, length_str) == "inputs")
             {
-                // std::cout << "end inputs" << std::endl;
                 inputs = 2;
-                // break;
             }
             else if (str.substr(4, length_str) == "outputs")
             {
-                // std::cout << "end outputs" << std::endl;
                 outputs = 2;
-                // break;this
             }
             else if (str.substr(4, length_str) == "port")
             {
                 b->add_port(p);
                 port = 0;
-                // std::cout << "end port" << std::endl;
                 type = 0;
-                // break;
             }
             else if (str.substr(4, length_str) == "inputs_vyp")
             {
                 inputs_vyp = 2;
-                // break;
             }
             else if (str.substr(4, length_str) == "outputs_vyp")
             {
                 outputs_vyp = 2;
-                // break;
             }
-            else if (str.substr(4, length_str) == "premenna")
+            else if (str.substr(4, length_str) == "vypocty")
+            {
+                vypocty = 2;
+            }
+            else if (str.substr(4, 8) == "premenna")
             {
                 premenna = 0;
-                // break;
+            }
+            else if (str.substr(4, length_str) == infix_str)
+            {
+                infix = 0;
+                inputs_vyp = 0;
+                outputs_vyp = 0;
             }
             else if (str.substr(4, length_str) == "prepojenia")
             {
                 prepojenie = 0;
-                // break;
             }
             else if (str.substr(4, 6) == "blocks")
             {
-                // std::cout << "end blocks" << std::endl;
                 blocks = 2;
-                // break;
             }
             else if (str.substr(4, 5) == "block")
             {
@@ -349,10 +329,7 @@ void MainWindow::load_schema()
                 vypocty = 0;
                 infix = 0;
                 ui = 0;
-                // break;
-                // std::cout<<"end block" <<std::endl;
             }
-            // break;
         }
 
         else if (schema == 0)
@@ -364,22 +341,16 @@ void MainWindow::load_schema()
             }
             else
             {
-                // std::cout << "som tu schema" << std::endl;
                 length_str = str.length() - 7;
-                // std::cout << str.substr(7, length_str) << std::endl;
                 create_schema(str.substr(7, length_str));
             }
 
             schema = 1;
-            // break;
         }
         else if (blocks == 0 and schema == 1 and blocks !=2)
         {
-            // std::cout << "som tu blocks" << std::endl;
-            // std::cout << str << std::endl;
             if (str == "blocks")
             {
-                // std::cout << "aj tu som bol" << std::endl;
                 blocks = 1;
             }
             else
@@ -387,7 +358,6 @@ void MainWindow::load_schema()
                 //mam tu error lebo som cakal blocks ale dostal som daco ine
             }
 
-            // break;
         }
         else if (block == 0 and blocks !=2)
         {
@@ -540,11 +510,9 @@ void MainWindow::load_schema()
         }
         else if (vypocty == 1 and infix == 0 and blocks !=2)
         {
-            // std::cout << "infix" << std::endl;
             // nastavim vyrazu infix
             infix_str = str;
             infix = 1;
-            // break;
         }
         else if (infix == 1 and inputs_vyp == 0 and blocks !=2)
         {
@@ -561,11 +529,7 @@ void MainWindow::load_schema()
         }
         else if (inputs_vyp == 1 and blocks !=2)
         {
-            std::cout << "input vyraz" << std::endl;
             input_vyraz = str;
-
-            // budem tu nacitavav nazov vstupnych portov pre vyraz
-            // break;
         }
         else if (infix == 1 and inputs_vyp == 2 and outputs_vyp == 0 and blocks !=2)
         {
@@ -582,8 +546,6 @@ void MainWindow::load_schema()
         }
         else if (infix == 1 and outputs_vyp == 1 and blocks !=2)
         {
-            // budem tu nacitavav nazov vstupnych portov pre vyraz
-            // std::cout << "output vyraz" << std::endl;
             output_vyraz = str;
             // break;
         }
