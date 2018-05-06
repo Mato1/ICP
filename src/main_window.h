@@ -47,13 +47,16 @@ private:
 
 private:
     void set_up_menu();
+    void create_schema(std::string nazov);
 
 public:
     MainWindow();
 
 private slots:
     void new_schema();
-
+    void close_schema();
+    void save_schema();
+    void load_schema();
 };
 
 }

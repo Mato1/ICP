@@ -57,7 +57,7 @@ protected:
      * @brief Odstrani schemu.
      *
      */
-    ~Schema();
+    virtual ~Schema();
 
 public:
 
@@ -127,11 +127,6 @@ public:
      * @return false  Ak sa cykly nenachadzaju.
      */
     bool detect_cycles();
-
-    //TO-DO pre Mata aj to okomentuj.
-    void save(std::string file);
-    //TO-DO pre Mata aj to okomentuj.
-    void load(std::string file);
 
     inline const std::string &get_nazov() const
     {

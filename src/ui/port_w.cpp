@@ -11,12 +11,14 @@ namespace icp
 namespace ui
 {
 
-PortW::PortW(std::string nazov_bloku, int cislo, model::PortType type)
+PortW::PortW(std::string nazov_bloku, int cislo, model::PortType type , QWidget * parent)
     : model::Port(nazov_bloku, cislo, type)
 {
     setMaximumWidth(MainWindow::GRID_SQUARE_SIZE);
     setMaximumHeight(MAX_HEIGHT);
     setMouseTracking(true);
+    this->setParent(parent);
+    this->show();
 }
 
 void PortW::mouseMoveEvent(QMouseEvent * event)

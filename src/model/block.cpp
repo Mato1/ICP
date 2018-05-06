@@ -1,4 +1,6 @@
 #include "model/block.h"
+#include <chrono>
+#include <thread>
 
 namespace icp
 {
@@ -116,6 +118,11 @@ Port * Block::port_exists(std::string nazov)
 
 void Block::eval()
 {
+    while (!all_input_ports_active())
+    {
+        std::this_thread::sleep_for(std::chrono::milliseconds(200));
+    }
+
     for (auto v : vypocty)
     {
         v->eval();

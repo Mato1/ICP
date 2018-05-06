@@ -13,7 +13,7 @@ namespace icp
 namespace ui
 {
 
-BlockW::BlockW(std::string nazov)
+BlockW::BlockW(std::string nazov, QWidget * parent)
     : model::Block(nazov)
 {
     setContentsMargins(0, 0, 0, 0);
@@ -26,7 +26,7 @@ BlockW::BlockW(std::string nazov)
     label_nazov.setAlignment(Qt::AlignHCenter);
     layout_block.addWidget(&label_nazov);
     this->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(this, &BlockW::customContextMenuRequested, this, &BlockW::show_context_menu);
+    connect(this, &BlockW::customContextMenuRequested, this, &BlockW::s_show_context_menu);
 
     QPalette pal = palette();
     pal.setColor(QPalette::Background, QColor(18, 84, 104));
@@ -34,6 +34,8 @@ BlockW::BlockW(std::string nazov)
     setAutoFillBackground(true);
     setPalette(pal);
     setGeometry(0, 0, BASE_WIDTH, BASE_HEIGHT);
+    this->setParent(parent);
+    show();
 
 }
 
@@ -52,7 +54,7 @@ BlockW::~BlockW()
     }
 }
 
-void BlockW::show_context_menu(const QPoint &pos)
+void BlockW::s_show_context_menu(const QPoint &pos)
 {
     QMenu contextMenu(tr("Context menu"), this);
 
@@ -60,27 +62,26 @@ void BlockW::show_context_menu(const QPoint &pos)
     contextMenu.addAction(&action_eval_block);
     connect(&action_eval_block, &QAction::triggered, this, &BlockW::eval_block);
 
-
     QAction action_edit_block("Rename Block", this);
     contextMenu.addAction(&action_edit_block);
-    connect(&action_edit_block, &QAction::triggered, this, &BlockW::rename_block);
+    connect(&action_edit_block, &QAction::triggered, this, &BlockW::s_rename_block);
 
     QAction action_add_expression("Add expression", this);
     contextMenu.addAction(&action_add_expression);
-    connect(&action_add_expression, &QAction::triggered, this, &BlockW::add_expression);
+    connect(&action_add_expression, &QAction::triggered, this, &BlockW::s_add_expression);
 
     QAction action_add_input_port("Add input port", this);
     contextMenu.addAction(&action_add_input_port);
-    connect(&action_add_input_port, &QAction::triggered, this, &BlockW::add_input_port);
+    connect(&action_add_input_port, &QAction::triggered, this, &BlockW::s_add_input_port);
 
     QAction action_add_output_port("Add output port", this);
     contextMenu.addAction(&action_add_output_port);
-    connect(&action_add_output_port, &QAction::triggered, this, &BlockW::add_output_port);
+    connect(&action_add_output_port, &QAction::triggered, this, &BlockW::s_add_output_port);
     contextMenu.exec(mapToGlobal(pos));
 
     QAction action_delete_block("Delete Block", this);
     contextMenu.addAction(&action_delete_block);
-    connect(&action_delete_block, &QAction::triggered, this, &BlockW::delete_block);
+    connect(&action_delete_block, &QAction::triggered, this, &BlockW::s_delete_block);
 
 }
 
@@ -108,17 +109,17 @@ void BlockW::eval_block()
         }
     }
 
-    this->eval();
+    // this->eval();
 
 
 }
 
-void BlockW::delete_block()
+void BlockW::s_delete_block()
 {
     this->deleteLater();
 }
 
-void BlockW::rename_block()
+void BlockW::s_rename_block()
 {
     SchemaW * schema = (SchemaW *) parent();
     QString text = tr(get_nazov().c_str());
@@ -142,7 +143,7 @@ void BlockW::rename_block()
     set_nazov(text.toStdString());
 }
 
-void BlockW::add_expression()
+void BlockW::s_add_expression()
 {
     QString expr = "";
     QString premenna = "";
@@ -176,12 +177,17 @@ void BlockW::add_expression()
             }
         }
 
-        VyrazW * vyraz_w = new VyrazW(expr.toStdString(), premenna.toStdString());
-        this->add_vyraz(vyraz_w);
-        layout_block.addWidget(vyraz_w);
+        VyrazW * vyraz_w = new VyrazW(expr.toStdString(), premenna.toStdString(), this);
         vyraz_w->set_input_port(input_port);
         vyraz_w->set_output_port(output_port);
+        add_expression(vyraz_w);
     }
+}
+
+void BlockW::add_expression(VyrazW * v)
+{
+    this->add_vyraz(v);
+    layout_block.addWidget(v);
 }
 
 void BlockW::add_port(model::PortType type)
@@ -206,46 +212,61 @@ void BlockW::add_port(model::PortType type)
 
         if (type == model::PortType::input)
         {
-            port_w = new PortW(get_nazov(), get_input_ports().size(), type);
-            input_ports.push_back(port_w);
-            port_w->setGeometry(geometry().left() - MainWindow::GRID_SQUARE_SIZE,
-                                geometry().top() + (MainWindow::GRID_SQUARE_SIZE * input_ports.size()), port_w->width(),
-                                port_w->height());
+            port_w = new PortW(get_nazov(), get_input_ports().size(), type, (QWidget *)this->parent());
         }
         else if (type == model::PortType::output)
         {
-            port_w = new PortW(get_nazov(), get_output_ports().size(), type);
-            output_ports.push_back(port_w);
-            port_w->setGeometry(geometry().left() + geometry().width(),
-                                geometry().top() + (MainWindow::GRID_SQUARE_SIZE * output_ports.size()), port_w->width(),
-                                port_w->height());
+            port_w = new PortW(get_nazov(), get_output_ports().size(), type, (QWidget *)this->parent());
         }
 
         port_w->set_data_type(text.toStdString());
-        port_w->setParent((QWidget *)this->parent());
-
-        Block::add_port(port_w);
-        MINIMUM_HEIGHT = (input_ports.size() < output_ports.size() ? (output_ports.size()) *
-                          MainWindow::GRID_SQUARE_SIZE : (input_ports.size()) * MainWindow::GRID_SQUARE_SIZE);
-        setMinimumHeight(MINIMUM_HEIGHT);
-        BASE_HEIGHT = (input_ports.size() < output_ports.size() ? (output_ports.size() + 1) *
-                       MainWindow::GRID_SQUARE_SIZE : (input_ports.size() + 1) * MainWindow::GRID_SQUARE_SIZE);
-
-        if (height() < BASE_HEIGHT)
-        {
-            resize(width(), BASE_HEIGHT);
-        }
-
-        port_w->show();
+        
+        add_port(port_w);
+      
     }
 }
 
-void BlockW::add_input_port()
+void BlockW::add_port(PortW *p)
+{
+    p->setParent((QWidget *)this->parent());
+
+    if (p->get_port_type() == model::PortType::input)
+    {
+        input_ports.push_back(p);
+        p->setGeometry(geometry().left() - MainWindow::GRID_SQUARE_SIZE,
+                                geometry().top() + (MainWindow::GRID_SQUARE_SIZE * input_ports.size()), p->width(),
+                                p->height());
+
+    } else if (p->get_port_type() == model::PortType::output)
+    {
+        output_ports.push_back(p);
+        p->setGeometry(geometry().left() + geometry().width(),
+                                geometry().top() + (MainWindow::GRID_SQUARE_SIZE * output_ports.size()), p->width(),
+                                p->height());
+    }
+
+    Block::add_port(p);
+
+    MINIMUM_HEIGHT = (input_ports.size() < output_ports.size() ? (output_ports.size()) *
+                      MainWindow::GRID_SQUARE_SIZE : (input_ports.size()) * MainWindow::GRID_SQUARE_SIZE);
+    
+    setMinimumHeight(MINIMUM_HEIGHT);
+    BASE_HEIGHT = (input_ports.size() < output_ports.size() ? (output_ports.size() + 1) *
+                   MainWindow::GRID_SQUARE_SIZE : (input_ports.size() + 1) * MainWindow::GRID_SQUARE_SIZE);
+
+    if (height() < BASE_HEIGHT)
+    {
+        resize(width(), BASE_HEIGHT);
+    }
+
+}
+
+void BlockW::s_add_input_port()
 {
     this->add_port(model::PortType::input);
 }
 
-void BlockW::add_output_port()
+void BlockW::s_add_output_port()
 {
     this->add_port(model::PortType::output);
 }

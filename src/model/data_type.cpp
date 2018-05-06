@@ -34,12 +34,10 @@ void DataType::set(std::string nazov, double hodnota)
         if (data[nazov] == nullptr)
         {
             data[nazov] = new double(hodnota);
-        }
-        else
+        } else
         {
             (*data[nazov]) = hodnota;
         }
-
     }
 }
 
@@ -47,7 +45,7 @@ void DataType::set(DataType other)
 {
     for (auto it = other.data.begin(); it != other.data.end(); ++it)
     {
-        this->set(it->first, *it->second);
+        this->set(it->first, *(it->second));
     }
 }
 

@@ -6,8 +6,8 @@ namespace icp
 {
 namespace ui
 {
-VyrazW::VyrazW(std::string expression, std::string premenna)
-    :model::Vyraz(expression, premenna)
+VyrazW::VyrazW(std::string expression, std::string premenna, QWidget * parent)
+    : model::Vyraz(expression, premenna)
 {
     setAutoFillBackground(true);
     setAlignment(Qt::AlignHCenter);
@@ -18,6 +18,7 @@ VyrazW::VyrazW(std::string expression, std::string premenna)
     QPalette p = palette();
     p.setColor(QPalette::Background, QColor(15, 70, 90));
     setPalette(p);
+    this->setParent(parent);
     show();
 }
 }

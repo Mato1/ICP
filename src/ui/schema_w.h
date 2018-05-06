@@ -27,9 +27,6 @@ public slots:
     void show_context_menu(const QPoint &pos);
     void new_block();
     void new_connection();
-    void save_schema();
-    void load_schema();
-    void close_schema();
     void play_schema();
     void next_step();
 
@@ -38,7 +35,7 @@ private:
 
 public:
     SchemaW(std::string nazov);
-
+    ~SchemaW();
 
     void paintEvent(QPaintEvent * event) override;
 
@@ -48,6 +45,16 @@ public:
     }
 
     void mouseMoveEvent(QMouseEvent * event) override;
+
+    std::vector<model::Block*> get_blocks()
+    {
+        return blocks;
+    }
+
+    std::vector<model::Prepojenie*> get_prepojenia()
+    {
+        return prepojenia;
+    }
 };
 }
 }

@@ -21,17 +21,18 @@ class BlockW : public ResizableFrame, public model::Block
 {
     Q_OBJECT
 
+private slots:
+    void s_show_context_menu(const QPoint &pos);
+    void s_rename_block();
+    void s_add_expression();
+    void s_add_input_port();
+    void s_add_output_port();
+    void s_delete_block();
+
 public slots:
-    void show_context_menu(const QPoint &pos);
     void eval_block();
-    void rename_block();
-    void add_expression();
-    void add_input_port();
-    void add_output_port();
-    void delete_block();
 
 private:
-    void add_port(model::PortType type);
     int MINIMUM_WIDTH  = icp::MainWindow::GRID_SQUARE_SIZE * 1;
     int MINIMUM_HEIGHT = icp::MainWindow::GRID_SQUARE_SIZE * 1;
     int BASE_WIDTH     = icp::MainWindow::GRID_SQUARE_SIZE * 2;
@@ -43,24 +44,26 @@ private:
 
     std::vector<PortW *> input_ports;
     std::vector<PortW *> output_ports;
+    void add_port(model::PortType type);
 
 
 
 public:
-    BlockW(std::string nazov);
+    BlockW(std::string nazov, QWidget * parent = 0);
     ~BlockW();
+
+    void add_expression(VyrazW * v);
+    void add_port(PortW * p);
 
     void mouseReleaseEvent(QMouseEvent * e) override;
     void mouseMoveEvent(QMouseEvent * event) override;
+    void paintEvent(QPaintEvent * event) override;
 
     inline void set_nazov(std::string nazov)
     {
         Block::set_nazov(nazov);
         this->label_nazov.setText(nazov.c_str());
     }
-
-    void paintEvent(QPaintEvent * event) override;
-
 };
 
 }

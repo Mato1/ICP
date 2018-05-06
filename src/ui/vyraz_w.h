@@ -15,7 +15,7 @@ class VyrazW : public QLabel, public model::Vyraz
 public slots:
 
 public:
-    VyrazW(std::string expression, std::string premenna);
+    VyrazW(std::string expression, std::string premenna, QWidget * parent = 0);
 
 };
 }

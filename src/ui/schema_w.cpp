@@ -33,6 +33,11 @@ SchemaW::SchemaW(std::string nazov)
     connect(action_insert_con,   &QAction::triggered,   this, &SchemaW::new_connection);
 }
 
+SchemaW::~SchemaW()
+{
+  
+}
+
 
 void SchemaW::show_context_menu(const QPoint &pos)
 {
@@ -93,29 +98,16 @@ void SchemaW::new_connection()
    }
 }
 
-void SchemaW::save_schema()
-{
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
-                       "/home/untitled.txt",
-                       tr("Untitled (*.txt)"));
-    save(fileName.toStdString());
-}
 
-void SchemaW::load_schema()
-{
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
-                                                    "/home",
-                                                    tr("Untitled (*.txt)"));
-    load(fileName.toStdString());
-}
-
-void SchemaW::close_schema()
-{
-    QWidget::deleteLater();
-}
 
 void SchemaW::play_schema()
 {
+    for(model::Block * b : blocks)
+    {
+        BlockW * bw = static_cast<BlockW*>(b);
+        bw->eval_block();
+    }
+
     this->eval();
 }
 
